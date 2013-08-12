@@ -1,49 +1,65 @@
+-# coding: utf-8
 !!! 5
-%html{:lang => 'en'}
+%html{:lang => "en"}
   %head
-    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
-    <!--[if lt IE 9]>
-    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
-    %meta{:content => 'text/html; charset=utf-8', 'http-equiv' => 'Content-Type'}
-    %meta{:name => :viewport, :content => 'width=device-width,initial-scale=1'}
-    %title= @title.present? ? "#{@title} | Padrino Admin" : "Padrino Admin"
-    =favicon_tag 'favicon.ico'
-    %link{:href => 'http://fonts.googleapis.com/css?family=Varela', :rel => :stylesheet}
-    =stylesheet_link_tag 'bootstrap', 'application'
+    %link{:href => "http://fonts.googleapis.com/css?family=PT+Sans:400,700&subset=latin,latin-ext", :rel=>'stylesheet', :type=>'text/css'}/
+    %meta{:charset => "utf-8"}/
+    %title= @title ? @title + ' ' + $title : $title
+    %meta{:content => "width=device-width, initial-scale=1.0", :name => "viewport"}/
+    %meta{:content => 'text/html;charset=UTF-8', 'http-equiv' => "content-type"}/
+    %meta{:content => $pagedesc, :name => "description"}/
+    %meta{:content => $pageauthor, :name => "author"}/
+    %meta{:content => $pagekeyws, :name => "keywords"}/
 
-  %body
-    .navbar.navbar-fixed-top
-      .navbar-inner
-        .container
-          =link_to 'Padrino', url(:base_index), :class => 'navbar-brand', :title => 'Padrino Admin'
-          %ul.nav.navbar-nav.pull-right
-            %li.navbar-edit-account=link_to tag_icon(:user), url(:accounts, :edit, :id => current_account.id), :title => pat(:profile), :class => 'navbar-nav-link'
-            %li.navbar-logout
-              =button_to :logout, url(:sessions, :destroy), :method => :delete, :class => 'navbar-nav-form' do
-                =content_tag :button, tag_icon(:off), :type => :submit, :title => pat(:logout), :class => 'navbar-nav-form-link'
+    %link{:href => "/stylesheets/bootstrap.less", :rel => "stylesheet/less"}/
+    %script{:src => "/javascripts/less.js"}
+    /=stylesheet_link_tag 'bootstrap'
+    =javascript_include_tag 'jquery', 'collapse', 'tab', 'transition', 'dropdown'
+    =yield_content :include
 
-          %ul.nav.navbar-nav.pull-left
-            - project_modules.each do |project_module|
-              %li{:class => "navbar-module #{('active' if request.path_info =~ /^#{project_module.path}/)}"}
-                =link_to project_module.human_name, project_module.path('/admin')
+    / Le HTML5 shim, for IE6-8 support of HTML5 elements
+    /[if lt IE 9]
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    %link{:href => "/images/favicon.ico", :rel => "shortcut icon"}/
+    / %link{:href => "assets/ico/apple-touch-icon-114-precomposed.png", :rel => "apple-touch-icon-precomposed", :sizes => "114x114"}/
+    / %link{:href => "assets/ico/apple-touch-icon-72-precomposed.png", :rel => "apple-touch-icon-precomposed", :sizes => "72x72"}/
+    / %link{:href => "assets/ico/apple-touch-icon-57-precomposed.png", :rel => "apple-touch-icon-precomposed"}/
 
-    .container.main
-      .main-wrapper
-        =[:error, :warning, :success, :notice].map { |type| flash_tag(type, :class => "alert alert-#{type} fade in", :bootstrap => true) }.join.html_safe
-        .row=yield
-        .main-wrapper-push
+  %body{"data-offset" => "50", "data-spy" => "scroll", "data-target" => ".subnav"}
+    #top.contentwrapper
+      .navbar
+        .navbar-inner
+          .container
+            %a.btn.btn-navbar{"data-target" => ".nav-collapse", "data-toggle" => "collapse"}
+              %span.icon-bar
+              %span.icon-bar
+              %span.icon-bar
+            %a.brand{:href => "/"} D2D
+            .nav-collapse.collapse
+              %ul.nav.pull-right
+                %li
+                  %a{:href=>'/new'} New Supporter
+                %li.divider-vertical
+                -if current_account.nil?
+                  %li
+                    %a{:href=>'/sessions/new'} Login
+                -else
+                  %li.dropdown#user
+                    = current_account.name
+      .container
+        %header.jumbotron.masthead
+          .alert.hide=[:error, :warning, :notice].map { |type| flash_tag(type, :class => "message #{type}") }.join
+          =yield_content :outer
+          .inner= yield
+      .push
+    %footer.footer
+      .container
+        .row
+          .span12
+            #footerbottom
+              %a.large{:href=>'http://greenpeace.org.il/'} Greenpeace Israel
+              %span.large , 2013
+              .pull-right
+                #totop.btn.btn-inverse{:onclick=>'window.location = "#top";'} ^
 
-    %footer
-      .footer-wrapper.container
-        %p.pull-left
-          Copyright &copy;
-          =Time.now.year
-          Your Site - Powered by Padrino v.#{Padrino.version}
-        %ul.pull-right.footer-links
-          %li= link_to tag_icon(:home, 'web'), 'http://www.padrinorb.com', :target => :_blank, :class => 'footer-links-link'
-          %li= link_to tag_icon(:heart, 'blog'), 'http://www.padrinorb.com/blog', :target => :_blank, :class => 'footer-links-link'
-          %li= link_to tag_icon(:github, 'code'), 'https://github.com/padrino/padrino-framework', :target => :_blank, :class => 'footer-links-link'
-          %li= link_to tag_icon(:twitter, 'twitter'), 'http://twitter.com/padrinorb', :target => :_blank, :class => 'footer-links-link'
 
-    =javascript_include_tag 'jquery-1.9.0.min', (Padrino.env == :production ? 'bootstrap/bootstrap.min' : %w[bootstrap/affix bootstrap/alert bootstrap/button bootstrap/carousel bootstrap/collapse bootstrap/dropdown  bootstrap/tooltip bootstrap/transition  bootstrap/modal bootstrap/popover bootstrap/scrollspy bootstrap/tab]), :application

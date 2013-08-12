@@ -23,19 +23,64 @@ module D2d
     #
 
     set :admin_model, 'Account'
-    set :login_page,  '/admin/sessions/new'
+    set :login_page,  '/sessions/new'
 
     enable  :sessions
     disable :store_location
 
     access_control.roles_for :any do |role|
-      role.protect '/'
+      role.protect '/accounts'
+      role.protect '/supporters'
       role.allow   '/sessions'
     end
+
 
     access_control.roles_for :admin do |role|
     role.project_module :supporters, '/supporters'
     role.project_module :accounts, '/accounts'
+    end
+
+    access_control.roles_for :user do |role|
+    end
+
+    $title = 'd2d'
+    $pagedesc = 'Greenpeace Israel Donation Site'
+    $pageauthor = 'GP Israel'
+    $pagekeyws = 'envirnment, greenpeace, donation'
+    $sitemail = 'donation@greenpeace.org.il'
+    $cities = ['Tel Aviv', 'Jerusalem','Haifa']
+    $prices = [150,100,75]
+
+    enable :sessions
+
+    get :index do
+      @title = "Supporters"
+      @supporters = Supporter.all
+      render 'index'
+    end
+
+    get :new do
+      @title = pat(:new_title, :model => 'supporter')
+      @supporter = Supporter.new
+      render 'new'
+    end
+
+    get :thanks, :with => :id do
+      @supporter = Supporter.find params[:id]
+      render 'thanks'
+    end
+
+    post :create do
+      @supporter = Supporter.new(params[:supporter])
+      if @supporter.save
+        @title = pat(:create_title, :model => "supporter #{@supporter.id}")
+        flash[:success] = pat(:create_success, :model => 'Supporter')
+        params[:save_and_continue] ? redirect(url(:supporters, :index)) : redirect(url(:thanks, :id => @supporter.id))
+      else
+        @title = pat(:create_title, :model => 'supporter')
+        flash.now[:error] = pat(:create_error, :model => 'supporter')
+        render 'new'
+      end
     end
 
     # Custom error management 

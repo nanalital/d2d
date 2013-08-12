@@ -32,7 +32,4 @@ Padrino.configure_apps do
   set :protect_from_csrf, true
 end
 
-# Mounts the core application for this project
-Padrino.mount('D2d::App', :app_file => Padrino.root('app/app.rb')).to('/')
-
-Padrino.mount("D2d::Admin", :app_file => File.expand_path('../../admin/app.rb', __FILE__)).to("/admin")
+Padrino.mount("D2d::Admin", :app_file => File.expand_path('../../admin/app.rb', __FILE__)).to("/")
