@@ -34,6 +34,7 @@ module D2d
     end
 
     access_control.roles_for :admin do |role|
+    role.project_module :supporters, '/supporters'
     role.project_module :accounts, '/accounts'
     end
 

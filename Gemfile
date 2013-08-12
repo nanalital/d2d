@@ -15,7 +15,7 @@ gem 'rake'
 
 # Component requirements
 gem 'bcrypt-ruby', :require => 'bcrypt'
-gem 'slim'
+gem 'haml'
 gem 'activerecord', '>= 3.1', :require => 'active_record'
 gem 'pg'
 

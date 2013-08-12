@@ -14,7 +14,6 @@ class Account < ActiveRecord::Base
 
   # Callbacks
   before_save :encrypt_password, :if => :password_required
-  has_many :supporters
 
   ##
   # This method is for authentication purpose

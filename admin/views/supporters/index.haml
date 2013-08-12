@@ -1,0 +1,98 @@
+%ul.nav.nav-tabs
+  %li.active=link_to tag_icon(:list, pat(:list)), url(:supporters, :index)
+  %li=link_to tag_icon(:plus, pat(:new)), url(:supporters, :new)
+
+.tabs-content
+  %table#list.table.table-striped.table-hover.table-condensed
+    %thead
+      %tr
+        %th.header.list-menu
+          .dropdown
+            %a.list-menu-toggle.dropdown-toggle{:href => '#', :'data-toggle' => :dropdown}
+              =tag_icon :magic
+              %span.caret
+            %ul.list-menu.dropdown-menu{:role => :menu}
+              %li.list-menu-wrapper=link_to tag_icon(:check, pat(:select_all)), '#', :id => 'select-all', :class => 'list-menu-link'
+              %li.list-menu-wrapper.list-menu-wrapper-disabled
+                =link_to tag_icon(:'check-empty', pat(:deselect_all)), '#', :id => 'deselect-all', :class => 'list-menu-link list-menu-link-disabled'
+              %li.list-menu-divider.divider
+              %li.list-menu-wrapper.list-menu-wrapper-disabled
+                =link_to tag_icon(:trash, pat(:delete_selected)), '#', :id => 'delete-selected', :class => 'list-menu-link list-menu-link-disabled'
+                .list-menu-popover-delete-selected.popover.right
+                  .arrow
+                  %h3.popover-title=pat(:delete_selected_title)
+                  .popover-content
+                    -form_tag url(:supporters, :destroy_many), :method => :delete do
+                      =hidden_field_tag :supporter_ids, :'data-delete-many-ids' => true
+                      =submit_tag pat(:delete), :class =>'list-menu-popover-delete-selected-btn btn btn-danger btn-small'
+                      .btn.btn-small.cancel=pat(:cancel)
+        %th.header= mat(:supporter, :id)
+        %th.header= mat(:supporter, :uniqnum)
+        %th.header= mat(:supporter, :acquired)
+        %th.header= mat(:supporter, :account_id)
+        %th.header= mat(:supporter, :dd_city)
+        %th.header= mat(:supporter, :dd_location)
+        %th.header= mat(:supporter, :first_name)
+        %th.header= mat(:supporter, :last_name)
+        %th.header= mat(:supporter, :gender)
+        %th.header= mat(:supporter, :birthday)
+        %th.header= mat(:supporter, :occupation)
+        %th.header= mat(:supporter, :city)
+        %th.header= mat(:supporter, :street_name)
+        %th.header= mat(:supporter, :num_building)
+        %th.header= mat(:supporter, :num_apartment)
+        %th.header= mat(:supporter, :zip_code)
+        %th.header= mat(:supporter, :home_phone)
+        %th.header= mat(:supporter, :mobile_phone)
+        %th.header= mat(:supporter, :email)
+        %th.header= mat(:supporter, :receive_updates)
+        %th.header= mat(:supporter, :existing)
+        %th.header= mat(:supporter, :ap_monthly)
+        %th.header= mat(:supporter, :ap_one_off)
+        %th.header= mat(:supporter, :notes)
+        %th.header= mat(:supporter, :created_at)
+        %th.header= mat(:supporter, :updated_at)
+        %th.header.list-row-action-header
+
+    %tbody
+      -@supporters.each do |supporter|
+        %tr.list-row
+          %td.list-column.list-selectable
+            =check_box_tag 'supporter_ids[]', :value => supporter.id, :class => 'list-selectable-checkbox'
+          %td.list-column=supporter.id
+          %td.list-column=supporter.uniqnum
+          %td.list-column=supporter.acquired
+          %td.list-column=supporter.account_id
+          %td.list-column=supporter.dd_city
+          %td.list-column=supporter.dd_location
+          %td.list-column=supporter.first_name
+          %td.list-column=supporter.last_name
+          %td.list-column=supporter.gender
+          %td.list-column=supporter.birthday
+          %td.list-column=supporter.occupation
+          %td.list-column=supporter.city
+          %td.list-column=supporter.street_name
+          %td.list-column=supporter.num_building
+          %td.list-column=supporter.num_apartment
+          %td.list-column=supporter.zip_code
+          %td.list-column=supporter.home_phone
+          %td.list-column=supporter.mobile_phone
+          %td.list-column=supporter.email
+          %td.list-column= supporter.receive_updates ? tag_icon(:ok) : tag_icon(:remove)
+          %td.list-column= supporter.existing ? tag_icon(:ok) : tag_icon(:remove)
+          %td.list-column=supporter.ap_monthly
+          %td.list-column=supporter.ap_one_off
+          %td.list-column=supporter.notes
+          %td.list-column=time_ago_in_words supporter.created_at
+          %td.list-column=time_ago_in_words supporter.updated_at
+          %td.list-column.list-row-action
+            .list-row-action-wrapper
+              =link_to tag_icon(:edit), :href => url(:supporters, :edit, :id => supporter.id), :rel => :tooltip, :title => "#{pat(:edit)} supporter", :class => 'list-row-action-wrapper-link'
+              =link_to tag_icon(:trash), :rel => :tooltip, :title => "#{pat(:delete)} supporter", :class => 'list-row-action-delete-one list-row-action-wrapper-link'
+              .popover.list-row-action-popover-delete-one.left
+                .arrow
+                %h3.popover-title=pat(:delete, :model => "supporter")
+                .popover-content
+                  -form_tag url(:supporters, :destroy, :id => supporter.id), :method => :delete do
+                    =submit_tag pat(:delete), :class =>'list-row-action-popover-delete-one-btn btn btn-danger btn-small'
+                    .btn.btn-small.cancel=pat(:cancel)
