@@ -7,3 +7,4 @@
 :stylesheet: none
 :namespace: D2d
 :migration_format: number
+:admin_renderer: slim

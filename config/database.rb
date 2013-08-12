@@ -14,21 +14,28 @@
 #   }
 #
 ActiveRecord::Base.configurations[:development] = {
-  :adapter => 'sqlite3',
-  :database => Padrino.root('db', 'd2d_development.db')
-
+  :adapter  => 'postgresql',
+  :encoding => 'utf8',
+  :database => 'd2d',
+  :username => 'yakup',
+  :password => 'a4k70ch1',
+  :host     => '127.0.0.1'
 }
 
-ActiveRecord::Base.configurations[:production] = {
-  :adapter => 'sqlite3',
-  :database => Padrino.root('db', 'd2d_production.db')
+postgres = URI.parse(ENV['DATABASE_URL'] || '')
 
+ActiveRecord::Base.configurations[:production] = {
+  :adapter  => 'postgresql',
+  :encoding => 'utf8',
+  :database => postgres.path[1..-1], 
+  :username => postgres.user,
+  :password => postgres.password,
+  :host     => postgres.host
 }
 
 ActiveRecord::Base.configurations[:test] = {
   :adapter => 'sqlite3',
   :database => Padrino.root('db', 'd2d_test.db')
-
 }
 
 # Setup our logger

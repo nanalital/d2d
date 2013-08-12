@@ -1,0 +1,49 @@
+# coding: utf-8
+
+email     = '@greenpeace.org'
+password  = 'supp0rter'
+name      = 'Ahmet'
+surname   = 'Greenpeace'
+
+admin = false
+user = false
+accounts = Account.all
+
+accounts.each do |acc|
+  if acc.role == 'admin' then admin = true end
+  if acc.role == 'user' then user = true end
+end
+
+unless admin
+  if accounts == []
+    account = Account.create(:email => 'admin'+email, :name => name, :surname => 'Admin', :password => password, :password_confirmation => password, :role => "admin")
+    if account.valid?
+      shell.say "================================================================="
+      shell.say "Account has been successfully created, now you can login with:"
+      shell.say "================================================================="
+      shell.say "   email: admin#{email}"
+      shell.say "   password: #{password}"
+      shell.say "================================================================="
+    else
+      shell.say "Sorry but something went wrong!"
+      shell.say ""
+      account.errors.full_messages.each { |m| shell.say "   - #{m}" }
+    end
+  else
+    adm = Account.first
+    adm.password = password
+    adm.password_confirmation = password
+    adm.role = 'admin'
+    if adm.save
+      shell.say "================================================================="
+      shell.say "Account has been successfully modified, now you can login with:"
+      shell.say "================================================================="
+      shell.say "   email: #{adm.email}"
+      shell.say "   password: #{password}"
+      shell.say "================================================================="
+    end
+  end
+end
+unless user
+  Account.create(:email => 'user'+email, :name => name, :surname => 'User', :password => password, :password_confirmation => password, :role => "user")
+end
