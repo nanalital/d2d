@@ -9,8 +9,20 @@
   margin-bottom: @navbar-margin-bottom;
   padding-left: @navbar-padding-horizontal;
   padding-right: @navbar-padding-horizontal;
-  background-color: @navbar-bg;
   border-radius: @navbar-border-radius;
+
+  background: #66cc00; /* Old browsers */
+  background: -moz-linear-gradient(top,  #66cc00 0%, #50a000 100%); /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom,
+  color-stop(0%,#66cc00), color-stop(100%,#50a000)); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top,  #66cc00 0%,#50a000 100%); /*
+  Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top,  #66cc00 0%,#50a000 100%); /* Opera 11.10+
+  */
+  background: -ms-linear-gradient(top,  #66cc00 0%,#50a000 100%); /* IE10+ */
+  background: linear-gradient(to bottom,  #66cc00 0%,#50a000 100%); /* W3C */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#66cc00',
+  endColorstr='#50a000',GradientType=0 ); /* IE6-9 */
 
   // Prevent floats from breaking the navbar
   .clearfix();

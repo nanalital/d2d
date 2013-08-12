@@ -14,7 +14,7 @@
     %link{:href => "/stylesheets/bootstrap.less", :rel => "stylesheet/less"}/
     %script{:src => "/javascripts/less.js"}
     /=stylesheet_link_tag 'bootstrap'
-    =javascript_include_tag 'jquery', 'collapse', 'tab', 'transition', 'dropdown'
+    =javascript_include_tag 'jquery', 'collapse', 'tab', 'transition', 'dropdown', 'maskedinput'
     =yield_content :include
 
     / Le HTML5 shim, for IE6-8 support of HTML5 elements
@@ -34,8 +34,9 @@
               %span.icon-bar
               %span.icon-bar
               %span.icon-bar
-            %a.brand{:href => "/"} D2D
-            .nav-collapse.collapse
+            %a.brand{:href => "/"}
+              %img{:src=>'/images/gp_logo.png',:width=>270,:height=>74,:alt=>'Greenpeace'}
+            -#.nav-collapse.collapse
               %ul.nav.pull-right
                 %li
                   %a{:href=>'/new'} New Supporter

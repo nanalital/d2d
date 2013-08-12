@@ -19,6 +19,8 @@ ActiveRecord::Schema.define(:version => 2) do
     t.string   "email"
     t.string   "crypted_password"
     t.string   "role"
+    t.string   "city"
+    t.string   "location"
     t.datetime "created_at",       :null => false
     t.datetime "updated_at",       :null => false
   end

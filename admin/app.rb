@@ -6,6 +6,8 @@ module D2d
     register Padrino::Helpers
     register Padrino::Admin::AccessControl
 
+    require 'net/http'
+
     ##
     # Application configuration options
     #
@@ -71,11 +73,23 @@ module D2d
     end
 
     post :create do
+      puts params
       @supporter = Supporter.new(params[:supporter])
+      @supporter.account = current_account
       if @supporter.save
         @title = pat(:create_title, :model => "supporter #{@supporter.id}")
         flash[:success] = pat(:create_success, :model => 'Supporter')
-        params[:save_and_continue] ? redirect(url(:supporters, :index)) : redirect(url(:thanks, :id => @supporter.id))
+
+        uri = URI.parse("https://online.premiumfs.co.il/Sites/opencarttest/pfsAuth.aspx")
+        http = Net::HTTP.new(uri.host)
+        http.use_ssl = true
+        http.verify_mode = OpenSSL::SSL::VERIFY_NONE
+        request = Net::HTTP::Post.new("/v1.1/auth")
+        request.add_field('Content-Type', 'application/x-www-form-urlencoded')
+        request.body = {'a' => @supporter.amount, 'uniqnum'=>@supporter.uniqnum, 'pfsAuthCode'=>'2851500dbdf34ad3a21e3eb417ffef28'}
+        response = http.request(request)
+
+        puts response
       else
         @title = pat(:create_title, :model => 'supporter')
         flash.now[:error] = pat(:create_error, :model => 'supporter')

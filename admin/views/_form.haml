@@ -1,14 +1,15 @@
+-#coding:utf-8
 .row
   .col-sm-6.col-6
     - error = @supporter.errors.include?(:first_name)
     %fieldset.control-group{:class => error ? 'has-error' : ''}
-      =f.label :first_name, :class => 'control-label'
+      =f.label 'שם פרטי', :class => 'control-label'
       .controls
         =f.text_field :first_name, :class => 'input-xlarge input-with-feedback'
   .col-sm-6.col-6
     - error = @supporter.errors.include?(:last_name)
     %fieldset.control-group{:class => error ? 'has-error' : ''}
-      =f.label :last_name, :class => 'control-label'
+      =f.label 'שם משפחה', :class => 'control-label'
       .controls
         =f.text_field :last_name, :class => 'input-xlarge input-with-feedback'
 
@@ -16,25 +17,25 @@
   .col-sm-6.col-6
     - error = @supporter.errors.include?(:birthday)
     %fieldset.control-group{:class => error ? 'has-error' : ''}
-      =f.label :birthday, :class => 'control-label'
+      =f.label 'תאריך לידה', :class => 'control-label'
       .controls
-        =f.text_field :birthday, :class => 'input-xlarge input-with-feedback'
+        =f.text_field :birthday, :class => 'input-xlarge input-with-feedback datemask'
   .col-sm-6.col-6
     - error = @supporter.errors.include?(:gender)
     %fieldset.control-group{:class => error ? 'has-error' : ''}
-      =f.label :gender, :class => 'control-label'
+      =f.label 'מין', :class => 'control-label'
       .controls
         .row
           .col-sm-6.col-6
-            %input{:type=>'radio',:name=>'supporter[gender]',:value=>1} &nbsp; Male &nbsp;
+            %input{:type=>'radio',:name=>'supporter[gender]',:value=>1} &nbsp; זכר &nbsp;
           .col-sm-6.col-6
-            %input{:type=>'radio',:name=>'supporter[gender]',:value=>1} &nbsp; Female &nbsp;
+            %input{:type=>'radio',:name=>'supporter[gender]',:value=>1} &nbsp; נקבה &nbsp;
 
 .row
   .col-sm-12.col-12
     - error = @supporter.errors.include?(:occupation)
     %fieldset.control-group{:class => error ? 'has-error' : ''}
-      =f.label :occupation, :class => 'control-label'
+      =f.label 'מקצוע', :class => 'control-label'
       .controls
         =f.text_field :occupation, :class => 'input-xlarge input-with-feedback'
     %hr/
@@ -43,7 +44,7 @@
   .col-sm-6.col-6
     - error = @supporter.errors.include?(:city)
     %fieldset.control-group{:class => error ? 'has-error' : ''}
-      =f.label :city, :class => 'control-label'
+      =f.label 'עיר', :class => 'control-label'
       .controls{:style=>'height:52px;'}
         %select#supporter_city.input-xlarge.input-with-feedback{:name=>'supporter[city]'}
           %optgroup
@@ -61,35 +62,35 @@
         %fieldset.control-group{:class => error ? 'has-error' : ''}
           =f.label '#bld', :class => 'control-label'
           .controls
-            =f.text_field :num_building, :class => 'input-xlarge input-with-feedback'
+            =f.text_field :num_building, :class => 'input-xlarge input-with-feedback number'
       .col-sm-4.col-4
         - error = @supporter.errors.include?(:num_apartment)
         %fieldset.control-group{:class => error ? 'has-error' : ''}
           =f.label '#apt', :class => 'control-label'
           .controls
-            =f.text_field :num_apartment, :class => 'input-xlarge input-with-feedback'
+            =f.text_field :num_apartment, :class => 'input-xlarge input-with-feedback number'
       .col-sm-4.col-4
         - error = @supporter.errors.include?(:zip_code)
         %fieldset.control-group{:class => error ? 'has-error' : ''}
-          =f.label :zip, :class => 'control-label'
+          =f.label 'מיקוד', :class => 'control-label'
           .controls
-            =f.text_field :zip_code, :class => 'input-xlarge input-with-feedback'
+            =f.text_field :zip_code, :class => 'input-xlarge input-with-feedback number'
     %hr/
 
   .col-sm-6.col-6
     - error = @supporter.errors.include?(:home_phone)
     %fieldset.control-group{:class => error ? 'has-error' : ''}
-      =f.label :home_phone, :class => 'control-label'
+      =f.label 'טלפון בבית', :class => 'control-label'
       .controls
-        =f.text_field :home_phone, :class => 'input-xlarge input-with-feedback'
+        =f.text_field :home_phone, :class => 'input-xlarge input-with-feedback phonemask'
     - error = @supporter.errors.include?(:mobile_phone)
     %fieldset.control-group{:class => error ? 'has-error' : ''}
-      =f.label :mobile_phone, :class => 'control-label'
+      =f.label 'טלפון נייד', :class => 'control-label'
       .controls
-        =f.text_field :mobile_phone, :class => 'input-xlarge input-with-feedback'
+        =f.text_field :mobile_phone, :class => 'input-xlarge input-with-feedback phonemask'
     - error = @supporter.errors.include?(:email)
     %fieldset.control-group{:class => error ? 'has-error' : ''}
-      =f.label :email, :class => 'control-label'
+      =f.label 'אי-מייל', :class => 'control-label'
       .controls
         =f.text_field :email, :class => 'input-xlarge input-with-feedback'
     %hr/
@@ -98,14 +99,14 @@
   .col-sm-6.col-6
     - error = @supporter.errors.include?(:receive_updates)
     %fieldset.control-group{:class => error ? 'has-error' : ''}
-      =f.label :receive_updates, :class => 'control-label'
+      =f.label 'מעוניין לקבל עדכונים?', :class => 'control-label'
       =f.check_box :receive_updates, :class => 'input-xlarge input-with-feedback'
     %hr/
 
   .col-sm-6.col-6
     - error = @supporter.errors.include?(:existing)
     %fieldset.control-group{:class => error ? 'has-error' : ''}
-      =f.label :existing, :class => 'control-label'
+      =f.label 'תומך קיים?', :class => 'control-label'
       =f.check_box :existing, :class => 'input-xlarge input-with-feedback'
     %hr/
 
@@ -162,7 +163,6 @@
             $('#supporter_ap_one_off').val(x)
           }
 
-
   :javascript
     $('#dontypes a').click(function (e) {
       e.preventDefault();
@@ -176,12 +176,23 @@
   .col-sm-12.col-12
     - error = @supporter.errors.include?(:notes)
     %fieldset.control-group{:class => error ? 'has-error' : ''}
-      =f.label :notes, :class => 'control-label'
+      =f.label 'הערות', :class => 'control-label'
       .controls
-        ~f.text_area :notes, :class => 'input-xlarge input-with-feedback', :rows=>4
+        ~f.text_area :notes, :class => 'input-xlarge input-with-feedback', :rows=>4, :style=>'max-width:100%;'
     %hr/
 
 .row
   .col-sm-12.col-12
     .form-actions
-      =f.submit pat(:save), :class => 'btn btn-success input-xlarge', :style => 'height: 72px; padding:24px 0;'
+      =f.submit pat(:submit), :class => 'btn btn-success input-xlarge', :style => 'height: 72px; padding:24px 0;'
+
+:javascript
+  $(document).ready(function(){
+    $(".datemask").mask("99/99/9999");
+    $('.datemask').attr('placeholder','__/__/____');
+    $('.datemask').css('direction','ltr');
+    $(".phonemask").mask("999 999 9999");
+    $('.phonemask').attr('placeholder','___ ___ ____');
+    $('.phonemask').css('direction','ltr');
+    $('.number').css('direction','ltr');
+  });
