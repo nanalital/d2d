@@ -1,2 +1,9 @@
+-# coding: utf-8
+-content_for :outer do
+  %img{:src=>'/images/donateTop.jpg',:style=>'width:100%',:alt=>'Greenpeace'}
+
+%h2 טופס הצטרפות כחבר גרינפיס -
+%p.large גרינפיס הוא ארגון ללא מטרות רווח המתבסס אך ורק על אנשים פרטיים - כמוך. תרומה לגרינפיס היא תרומה לעתיד ולאיכות החיים של כולנו.
+
 -form_for :supporter, url(:create), :class => 'form-horizontal' do |f|
   =partial 'form', :locals => { :f => f }

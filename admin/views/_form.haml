@@ -110,13 +110,14 @@
 
 .row
   .col-sm-12.col-12
-    %ul.nav.nav-tabs#dontypes
-      %li.active
-        %a{:href=>'#monthly'} Monthly
-      %li
-        %a{:href=>'#oneoff'} One-off
+    -#
+      %ul.nav.nav-tabs#dontypes
+        %li.active
+          %a{:href=>'#monthly'} Monthly
+        %li
+          %a{:href=>'#oneoff'} One-off
 
-    .tab-content.whitebg
+    .tab-content
       .tab-pane.active#monthly
         .row
           -$prices.each do |p|
@@ -138,7 +139,7 @@
           function setMonthly(x) {
             $('#supporter_ap_monthly').val(x)
           }
-
+    -#
       .tab-pane#oneoff
         .row
           -$prices.each do |p|
@@ -160,7 +161,7 @@
           function setOneoff(x) {
             $('#supporter_ap_one_off').val(x)
           }
-
+-#
   :javascript
     $('#dontypes a').click(function (e) {
       e.preventDefault();

@@ -59,4 +59,41 @@ select {
 
 body, html {
   direction: rtl;
+  background: #e2ead8;
+  h2 {
+    color: #060;
+  }
 }
+.small { font-size: 80%; line-height: 22px;}
+.large { font-size: 120%; line-height: 22px;}
+footer {
+  ul {
+    list-style-type: none;
+    clear:both;
+    li {
+      float:right;
+      padding-left: 24px;
+    }
+  }
+  color: white;
+  a {
+    color:white;
+    &:hover {
+      color:white;
+    }
+  }
+  font-size: 16px;
+  //#gradient > .vertical(rgba(224,224,224,0.8),rgba(255,255,255,0.4));
+  background: #060;
+  border-top: 12px solid @brand-success;
+}
+.contentwrapper {
+  min-height: 100%;
+  height: auto !important;
+  height: 100%;
+  margin: 0 auto -4em;
+}
+footer, .push {
+  height: 4em;
+}
+

@@ -36,6 +36,8 @@
               %span.icon-bar
             %a.brand{:href => "/"}
               %img{:src=>'/images/gp_logo.png',:width=>270,:height=>74,:alt=>'Greenpeace'}
+            .pull-left
+              %img#lock{:src=>'/images/lock.gif',:alt=>'',:style=>'margin-top:14px;'}
             -#.nav-collapse.collapse
               %ul.nav.pull-right
                 %li
@@ -48,9 +50,9 @@
                   %li.dropdown#user
                     = current_account.name
       .container
+        .outer= yield_content :outer
         %header.jumbotron.masthead
           .alert.hide=[:error, :warning, :notice].map { |type| flash_tag(type, :class => "message #{type}") }.join
-          =yield_content :outer
           .inner= yield
       .push
     %footer.footer
@@ -58,9 +60,22 @@
         .row
           .span12
             #footerbottom
-              %a.large{:href=>'http://greenpeace.org.il/'} Greenpeace Israel
-              %span.large , 2013
-              .pull-right
-                #totop.btn.btn-inverse{:onclick=>'window.location = "#top";'} ^
+              %ul
+                %li{:style=>'margin-top:1px'}
+                  %a.small{:href=>'http://greenpeace.org.il/'} GREENPEACE IL
+                  %span &copy;
+                  %span.small= Date.today.year.to_s
+                %li
+                  %a.large{:href=>'http://www.greenpeace.org/israel/contactus'} צור קשר
+                %li
+                  %a.large{:href=>'http://www.greenpeace.org/israel/footer/privacy'} פרטיות
+
+                %li
+                  -if current_account
+                    %a{:href=>'/sessions/new'} Log in
+                  -else
+                    -form_for :account, url(:sessions, :destroy), :class => 'hide', :id=>'signout', :method=>'post'  do |f|
+                      %input{:value=>'delete',:name=>'_method',:type=>'hidden'}
+                    %a{:href=>'#',:onclick=>'$("#signout").submit()'} Logout
 
 

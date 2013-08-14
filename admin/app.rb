@@ -76,6 +76,8 @@ module D2d
       puts params
       @supporter = Supporter.new(params[:supporter])
       @supporter.account = current_account
+      @supporter.dd_city = current_account.city
+      @supporter.dd_location = current_account.location
       if @supporter.save
         @title = pat(:create_title, :model => "supporter #{@supporter.id}")
         flash[:success] = pat(:create_success, :model => 'Supporter')
