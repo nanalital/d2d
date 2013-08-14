@@ -45,11 +45,9 @@
     - error = @supporter.errors.include?(:city)
     %fieldset.control-group{:class => error ? 'has-error' : ''}
       =f.label 'עיר', :class => 'control-label'
-      .controls{:style=>'height:52px;'}
-        %select#supporter_city.input-xlarge.input-with-feedback{:name=>'supporter[city]'}
-          %optgroup
-            -$cities.each do |c|
-              %option{:value=>c}= c
+      .controls
+        =f.text_field :city, :class => 'input-xlarge input-with-feedback'
+
     - error = @supporter.errors.include?(:street_name)
     %fieldset.control-group{:class => error ? 'has-error' : ''}
       =f.label :street_name, :class => 'control-label'

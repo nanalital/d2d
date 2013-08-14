@@ -1,4 +1,5 @@
 class Supporter < ActiveRecord::Base
+  validates_uniqueness_of :uniqnum
   validate :unique
   belongs_to :account
 
@@ -13,7 +14,7 @@ class Supporter < ActiveRecord::Base
   end
 
   def self.randomize
-    'p'+(0..6).map{ ((0..9).to_a)[rand(10)] }.join
+    'p'+(0..5).map{ ((0..9).to_a)[rand(10)] }.join
   end
 
   def inspect
@@ -22,7 +23,7 @@ class Supporter < ActiveRecord::Base
 
   private
   def unique
-    if self.new_record? && (self.uniqnum == nil || Supporter.find_by_uniqnum(self.uniqnum))
+    while self.new_record? && (self.uniqnum == nil || Supporter.find_by_uniqnum(self.uniqnum))
       self.uniqnum = Supporter.randomize
     end
   end
