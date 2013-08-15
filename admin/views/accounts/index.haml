@@ -30,7 +30,7 @@
         %th.header= mat(:account, :name)
         %th.header= mat(:account, :surname)
         %th.header= mat(:account, :email)
-        %th.header.list-row-action-header
+        %th.header= mat(:account, :role)
 
     %tbody
       -@accounts.each do |account|
@@ -38,17 +38,8 @@
           %td.list-column.list-selectable
             =check_box_tag 'account_ids[]', :value => account.id, :class => 'list-selectable-checkbox'
           %td.list-column=account.id
-          %td.list-column=account.name
+          %td.list-column
+            %a{:href=>'/accounts/edit/'+account.id.to_s}=account.name
           %td.list-column=account.surname
           %td.list-column=account.email
-          %td.list-column.list-row-action
-            .list-row-action-wrapper
-              =link_to tag_icon(:edit), :href => url(:accounts, :edit, :id => account.id), :rel => :tooltip, :title => "#{pat(:edit)} account", :class => 'list-row-action-wrapper-link'
-              =link_to tag_icon(:trash), :rel => :tooltip, :title => "#{pat(:delete)} account", :class => 'list-row-action-delete-one list-row-action-wrapper-link'
-              .popover.list-row-action-popover-delete-one.left
-                .arrow
-                %h3.popover-title=pat(:delete, :model => "account")
-                .popover-content
-                  -form_tag url(:accounts, :destroy, :id => account.id), :method => :delete do
-                    =submit_tag pat(:delete), :class =>'list-row-action-popover-delete-one-btn btn btn-danger btn-small'
-                    .btn.btn-small.cancel=pat(:cancel)
+          %td.list-column=account.role

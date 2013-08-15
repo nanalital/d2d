@@ -28,13 +28,11 @@ D2d::Admin.controllers :cities do
     @title = pat(:edit_title, :model => "city #{params[:id]}")
     @city = City.find(params[:id])
     if @city
-      puts @city.locations.last.name
-      puts @city.locations.count
-      if @city.locations.last.name
-        l = @city.locations.build if @city.locations.last.name.length > 0
+      if @city.locations.last
+        if @city.locations.last.name
+          l = @city.locations.build if @city.locations.last.name.length > 0
+        end
       end
-      puts @city.locations.count
-      puts l
       render 'cities/edit'
     else
       flash[:warning] = pat(:create_error, :model => 'city', :id => "#{params[:id]}")

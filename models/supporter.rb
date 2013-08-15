@@ -4,13 +4,7 @@ class Supporter < ActiveRecord::Base
   belongs_to :account
 
   def amount
-    if self.ap_monthly > 0
-      return self.ap_monthly
-    elsif self.ap_one_off > 0
-      return self.ap_one_off
-    else
-      return 50
-    end
+    return self.ap_monthly
   end
 
   def self.randomize

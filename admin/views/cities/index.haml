@@ -1,3 +1,5 @@
+-content_for :header do
+  %link{:src=>'/admin/stylesheets/application.css', :type=>'text/css' }
 %ul.nav.nav-tabs
   %li.active=link_to tag_icon(:list, pat(:list)), url(:cities, :index)
   %li=link_to tag_icon(:plus, pat(:new)), url(:cities, :new)
@@ -38,17 +40,8 @@
           %td.list-column.list-selectable
             =check_box_tag 'city_ids[]', :value => city.id, :class => 'list-selectable-checkbox'
           %td.list-column=city.id
-          %td.list-column=city.name
+          %td.list-column
+            %a{:href=>'/cities/edit/'+city.id.to_s}=city.name
           %td.list-column=time_ago_in_words city.created_at
           %td.list-column=time_ago_in_words city.updated_at
           %td.list-column.list-row-action
-            .list-row-action-wrapper
-              =link_to tag_icon(:edit), :href => url(:cities, :edit, :id => city.id), :rel => :tooltip, :title => "#{pat(:edit)} city", :class => 'list-row-action-wrapper-link'
-              =link_to tag_icon(:trash), :rel => :tooltip, :title => "#{pat(:delete)} city", :class => 'list-row-action-delete-one list-row-action-wrapper-link'
-              .popover.list-row-action-popover-delete-one.left
-                .arrow
-                %h3.popover-title=pat(:delete, :model => "city")
-                .popover-content
-                  -form_tag url(:cities, :destroy, :id => city.id), :method => :delete do
-                    =submit_tag pat(:delete), :class =>'list-row-action-popover-delete-one-btn btn btn-danger btn-small'
-                    .btn.btn-small.cancel=pat(:cancel)

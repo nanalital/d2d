@@ -7,8 +7,24 @@
 %p משימתנו דורשת כמות עצומה של משאבים, אנושיים וכספיים כאחד, תמיכתך בנו תעזור להבטיח עולם ירוק ובריא יותר עבור כולנו.
 
 -if current_account
-  %h2= 'Hello '+current_account.name
-  %p
-    Click
-    %a{:href=>'/new'} here
-    to add a new supporter.
+  -if current_account.role = 'admin'
+    %h2 Hello Tomer!
+    %p
+      Click
+      %a{:href=>'/cities'} here
+      to manage cities &amp; locations;
+    %p
+      Click
+      %a{:href=>'/supporters'} here
+      to see supporters.
+    %p
+      Click
+      %a{:href=>'/accounts'} here
+      to manage people.
+
+  -else
+    %h2= 'Hello '+current_account.name
+    %p
+      Click
+      %a{:href=>'/new'} here
+      to add a new supporter.
