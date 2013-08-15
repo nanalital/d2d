@@ -38,6 +38,7 @@ module D2d
 
 
     access_control.roles_for :admin do |role|
+    role.project_module :cities, '/cities'
     role.project_module :supporters, '/supporters'
     role.project_module :accounts, '/accounts'
     end
@@ -71,6 +72,18 @@ module D2d
       @supporter = Supporter.find params[:id]
       render 'thanks'
     end
+
+    get :deletelocation, :with => :id do
+      if current_account
+        if current_account.role = 'admin'
+          l = Location.find params[:id]
+          c = l.city
+          l.destroy
+          redirect to '/cities/edit/'+c.id.to_s
+        end
+      end
+    end
+
 
     post :create do
       puts params

@@ -1,0 +1,30 @@
+- error = @city.errors.include?(:name)
+%fieldset.control-group{:class => error ? 'has-error' : ''}
+  =f.label :name, :class => 'control-label'
+  .controls
+    =f.text_field :name, :class => 'input-with-feedback', :autofocus => true
+
+%label.control-label Locations
+- @city.locations.order('updated_at DESC').each do |l|
+  %fieldset.control-group{:class => error ? 'has-error' : ''}
+  .controls
+    %input.input-with-feedback{:id=>'location_'+l.id.to_s+'_name',:name=>'location['+l.id.to_s+']',:value=>l.name,:type=>'text'}
+    %a.btn.btn-danger{:href=>'/deletelocation/'+l.id.to_s} DELETE
+
+%fieldset.control-group{:class => error ? 'has-error' : ''}
+.controls
+  %input.input-with-feedback{:id=>'location_new',:name=>'location[new]',:value=>'',:type=>'text',:style=>'display:none;'}
+  %a.btn.btn-success{:onclick=>'slideNew();'} NEW
+
+:javascript
+  function slideNew() {
+    console.log('niye?');
+    $("#location_new").slideDown();
+  }
+
+.form-actions
+  =f.submit pat(:save), :class => 'btn btn-primary'
+  &nbsp;
+  =f.submit pat(:save_and_continue), :class => 'btn btn-info', :name => 'save_and_continue'
+  &nbsp;
+  =link_to pat(:cancel), url(:cities, :index), :class => 'btn btn-default'
