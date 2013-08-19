@@ -1,0 +1,10 @@
+!!!
+%head
+  %title Redirection
+%body
+  %form{:action=>@url,:method=>'post',:name=>'primum'}
+    -@post.each do |k,v|
+      %input{:type=>'hidden',:name=>k,:value=>v}
+    %input{:type=>"submit",:value=>"Please wait while redirecting to G.B Premium"}
+  :javascript
+    document.primum.submit();

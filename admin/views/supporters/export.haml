@@ -1,0 +1,25 @@
+-form_for :supporter, url(:supporters, :export), :class => 'form-horizontal' do |f|
+  .row
+    .col-sm-2.col-2
+      %fieldset.control-group
+        =f.label 'Start date', :class => 'control-label'
+        .controls
+          =f.text_field :start, :class => 'input-xlarge input-with-feedback datemask'
+    .col-sm-2.col-2
+      %fieldset.control-group
+        =f.label 'End date', :class => 'control-label'
+        .controls
+          =f.text_field :end, :class => 'input-xlarge input-with-feedback datemask', :value=>Date.today.strftime('%d/%m/%Y')
+
+  .row
+    %br/
+    .col-sm-4.col-4
+      .form-actions
+        =f.submit pat(:submit), :class => 'btn btn-success input-xlarge', :style => 'height: 72px; padding:24px 0;'
+
+:javascript
+  $(document).ready(function(){
+    $(".datemask").mask("99/99/9999");
+    $('.datemask').attr('placeholder','__/__/____');
+    $('.datemask').css('direction','ltr');
+    });

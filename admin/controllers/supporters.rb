@@ -5,6 +5,59 @@ D2d::Admin.controllers :supporters do
     render 'supporters/index'
   end
 
+  get :export do
+    @title = "Export Supporters"
+    render 'supporters/export'
+  end
+
+  post :export do
+    puts params
+    strd = Date.parse Supporter.first.created_at.to_s
+    endd = Date.today
+    if params[:supporter][:start].length > 0
+      strd = Date.strptime(params[:supporter][:start],'%d/%m/%Y')
+    end
+    if params[:supporter][:end].length > 0
+      endd = Date.strptime(params[:supporter][:end],'%d/%m/%Y')
+    end
+    puts strd
+    puts endd
+    @sups = Supporter.where('created_at <= ?',endd+1.days).where('created_at >= ?',strd)
+    hdrline = '"UniqNum","Date","DD_Recruiter","DD_City","DD_Location","First Name","Last Name","Gender","Birthday","Occupation","City","Address","Post code","Home Phone","Mobile Phone","E-mail","Receive updates?","AP amount"'
+    File.open('tmp/sup.csv',"w:utf-8") do |output|
+      output << hdrline+"\n"
+      @sups.each do |s|
+        line = []
+        line << s.uniqnum
+        line << s.acquired.strftime('%d/%m/%Y')
+        line << s.account.id.to_s
+        line << s.dd_city
+        line << s.dd_location
+        line << s.first_name
+        line << s.last_name
+        line << s.gender == 1 ? 'm' : 'f'
+        if s.birthday
+          line << s.birthday.strftime('%d/%m/%Y')
+        else
+          line << ''
+        end
+        line << s.occupation
+        line << s.city
+        line << s.street_name+' '+s.num_building+' / '+s.num_apartment
+        line << s.zip_code
+        line << s.home_phone
+        line << s.mobile_phone
+        line << s.email
+        line << s.receive_updates ? 't' : 'f'
+        line << s.ap_monthly
+        output << '"'+line.join('","')+'"'+"\n"
+      end
+    end
+
+    send_file 'tmp/sup.csv', :type=> :csv
+
+  end
+
   get :new do
     @title = pat(:new_title, :model => 'supporter')
     @supporter = Supporter.new
