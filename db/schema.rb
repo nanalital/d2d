@@ -23,6 +23,7 @@ ActiveRecord::Schema.define(:version => 4) do
     t.string   "location"
     t.datetime "created_at",       :null => false
     t.datetime "updated_at",       :null => false
+    t.string   "type"
   end
 
   create_table "cities", :force => true do |t|
@@ -58,7 +59,6 @@ ActiveRecord::Schema.define(:version => 4) do
     t.string   "mobile_phone",    :limit => 12
     t.string   "email"
     t.boolean  "receive_updates"
-    t.boolean  "existing"
     t.integer  "ap_monthly"
     t.integer  "ap_one_off"
     t.text     "notes"

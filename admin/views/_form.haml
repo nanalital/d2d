@@ -101,13 +101,6 @@
       =f.check_box :receive_updates, :class => 'input-with-feedback'
     %hr/
 
-  .col-sm-6.col-6
-    - error = @supporter.errors.include?(:existing)
-    %fieldset.control-group{:class => error ? 'has-error' : ''}
-      =f.label 'תומך קיים?', :class => 'control-label'
-      =f.check_box :existing, :class => 'input-with-feedback'
-    %hr/
-
 .row
   .col-sm-12.col-12
     -#

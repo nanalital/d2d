@@ -96,15 +96,19 @@ module D2d
         flash[:success] = pat(:create_success, :model => 'Supporter')
 
         uri = URI.parse("https://online.premiumfs.co.il/Sites/opencarttest/pfsAuth.aspx")
-        http = Net::HTTP.new(uri.host)
+        http = Net::HTTP.new(uri.host, uri.port)
         http.use_ssl = true
         http.verify_mode = OpenSSL::SSL::VERIFY_NONE
         request = Net::HTTP::Post.new("/v1.1/auth")
         request.add_field('Content-Type', 'application/x-www-form-urlencoded')
-        request.body = {'a' => @supporter.amount, 'uniqnum'=>@supporter.uniqnum, 'pfsAuthCode'=>'2851500dbdf34ad3a21e3eb417ffef28'}
+        request.body = "a="+@supporter.amount.to_s+"&uniqnum="+@supporter.uniqnum+"&pfsAuthCode=2851500dbdf34ad3a21e3eb417ffef28"
+        puts request.class
+        puts request.content_type
+        puts request.body
         response = http.request(request)
 
-        puts response
+        puts response.body
+        return "<html>"+response.body+"</html>"
       else
         @title = pat(:create_title, :model => 'supporter')
         flash.now[:error] = pat(:create_error, :model => 'supporter')
