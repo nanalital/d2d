@@ -26,6 +26,7 @@ module D2d
 
     set :admin_model, 'Account'
     set :login_page,  '/sessions/new'
+    set :protection, :except => :frame_options
 
     enable  :sessions
     disable :store_location
@@ -102,12 +103,14 @@ module D2d
         request = Net::HTTP::Post.new("/v1.1/auth")
         request.add_field('Content-Type', 'application/x-www-form-urlencoded')
         request.body = "a="+@supporter.amount.to_s+"&uniqnum="+@supporter.uniqnum+"&pfsAuthCode=2851500dbdf34ad3a21e3eb417ffef28"
-        puts request.class
-        puts request.content_type
+        puts request.to_hash
         puts request.body
+
         response = http.request(request)
 
-        puts response.body
+        puts response.message
+        puts response.code
+        puts response.read_body
         return "<html>"+response.body+"</html>"
       else
         @title = pat(:create_title, :model => 'supporter')
