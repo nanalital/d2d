@@ -32,19 +32,24 @@ module D2d
     disable :store_location
 
     access_control.roles_for :any do |role|
+      role.allow   '/'
       role.protect '/accounts'
-      role.protect '/supporters'
-      role.allow   '/sessions'
     end
-
 
     access_control.roles_for :admin do |role|
-    role.project_module :cities, '/cities'
-    role.project_module :supporters, '/supporters'
-    role.project_module :accounts, '/accounts'
+      role.project_module :cities, '/cities'
+      role.project_module :supporters, '/supporters'
+      role.project_module :accounts, '/accounts'
     end
 
-    access_control.roles_for :user do |role|
+    access_control.roles_for :coach do |role|
+      role.project_module :cities, '/cities'
+      role.project_module :supporters, '/supporters'
+      role.project_module :accounts, '/accounts'
+    end
+
+    access_control.roles_for :recruiter do |role|
+      role.allow '/supporters/mine'
     end
 
     $title = 'd2d'

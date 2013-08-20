@@ -1,7 +1,7 @@
 - error = @account.errors.include?(:name)
 %fieldset.control-group{:class => error ? 'has-error' : ''}
   =f.label :name, :class => 'control-label'
-  .controls
+  .controls.rtl
     =f.text_field :name, :class => 'input-xlarge input-with-feedback', :autofocus => true
 
 - error = @account.errors.include?(:surname)
@@ -16,20 +16,33 @@
   .controls
     =f.text_field :email, :class => 'input-xlarge input-with-feedback'
 
-- error = @account.errors.include?(:city)
+- error = @account.errors.include?(:city_id)
 %fieldset.control-group{:class => error ? 'has-error' : ''}
   =f.label :city, :class => 'control-label'
   .controls{:style=>'height:52px;'}
-    %select#supporter_city.input-xlarge.input-with-feedback{:name=>'account[city]'}
-      %optgroup
-        -$cities.each do |c|
-          %option{:value=>c}= c
+    %select#account_city.input-xlarge{:name=>'account[city_id]'}
+      -City.all.each do |c|
+        %option{:value=>c.id, :selected=>@account.city_id == c.id}= c.name
 
-- error = @account.errors.include?(:location)
+- error = @account.errors.include?(:location_id)
 %fieldset.control-group{:class => error ? 'has-error' : ''}
   =f.label :location, :class => 'control-label'
   .controls
-    =f.text_field :location, :class => 'input-xlarge input-with-feedback'
+    %select#account_location.input-xlarge{:name=>'account[location_id]'}
+      -@account.city.locations.each do |l|
+        -puts @account.location_id == l.id
+        %option{:value=>l.id, :selected=>@account.location_id == l.id}= l.name
+
+:javascript
+  var citylocs = #{@citylocs}
+  $('#account_city').on('change',function(){
+    lc = $('#account_city option:selected').val();
+    locs = '';
+    $.each(citylocs[lc], function(i,v) {
+      locs += "<option value="+v[0]+">"+v[1]+"</option>";
+    });
+    $('#account_location').html(locs)
+  });
 
 - error = @account.errors.include?(:password)
 %fieldset.control-group{:class => error ? 'has-error' : ''}

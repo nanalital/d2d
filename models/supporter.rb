@@ -11,9 +11,11 @@ class Supporter < ActiveRecord::Base
     'p'+(0..5).map{ ((0..9).to_a)[rand(10)] }.join
   end
 
+=begin
   def inspect
     self.uniqnum
   end
+=end
 
   private
   def unique

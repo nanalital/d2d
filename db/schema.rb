@@ -19,11 +19,12 @@ ActiveRecord::Schema.define(:version => 4) do
     t.string   "email"
     t.string   "crypted_password"
     t.string   "role"
-    t.string   "city"
-    t.string   "location"
     t.datetime "created_at",       :null => false
     t.datetime "updated_at",       :null => false
-    t.string   "type"
+    t.integer  "city_id"
+    t.integer  "location_id"
+    t.string   "stype"
+    t.integer  "old_id"
   end
 
   create_table "cities", :force => true do |t|

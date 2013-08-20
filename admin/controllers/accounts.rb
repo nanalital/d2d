@@ -1,17 +1,35 @@
 D2d::Admin.controllers :accounts do
-  get :index do
+
+  def self.protect(protected)
+    condition do
+      return redirect back if current_account.nil? 
+      redirect to '/' unless ['admin','coach'].include? current_account.role
+    end if protected
+  end
+
+  before do
+    citylocs = {}
+    City.all.each do |c|
+      locs = []
+      c.locations.each {|l| locs << [l.id,l.name] }
+      citylocs[c.id] = locs
+    end
+    @citylocs = citylocs.to_json
+  end
+
+  get :index, :protect => true do
     @title = "Accounts"
     @accounts = Account.all
     render 'accounts/index'
   end
 
-  get :new do
+  get :new, :protect => true do
     @title = pat(:new_title, :model => 'account')
     @account = Account.new
     render 'accounts/new'
   end
 
-  post :create do
+  post :create, :protect => true do
     @account = Account.new(params[:account])
     if @account.save
       @title = pat(:create_title, :model => "account #{@account.id}")
@@ -24,7 +42,7 @@ D2d::Admin.controllers :accounts do
     end
   end
 
-  get :edit, :with => :id do
+  get :edit, :protect => true, :with => :id do
     @title = pat(:edit_title, :model => "account #{params[:id]}")
     @account = Account.find(params[:id])
     if @account
@@ -35,10 +53,11 @@ D2d::Admin.controllers :accounts do
     end
   end
 
-  put :update, :with => :id do
+  put :update, :protect => true, :with => :id do
     @title = pat(:update_title, :model => "account #{params[:id]}")
     @account = Account.find(params[:id])
     if @account
+      puts params[:account]
       if @account.update_attributes(params[:account])
         flash[:success] = pat(:update_success, :model => 'Account', :id =>  "#{params[:id]}")
         params[:save_and_continue] ?
@@ -54,7 +73,7 @@ D2d::Admin.controllers :accounts do
     end
   end
 
-  delete :destroy, :with => :id do
+  delete :destroy, :protect => true, :with => :id do
     @title = "Accounts"
     account = Account.find(params[:id])
     if account
@@ -70,7 +89,7 @@ D2d::Admin.controllers :accounts do
     end
   end
 
-  delete :destroy_many do
+  delete :destroy_many, :protect => true do
     @title = "Accounts"
     unless params[:account_ids]
       flash[:error] = pat(:destroy_many_error, :model => 'account')

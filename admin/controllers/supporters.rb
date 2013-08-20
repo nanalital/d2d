@@ -1,18 +1,25 @@
 D2d::Admin.controllers :supporters do
-  get :index do
+  get :index, :protect => true do
     @title = "Supporters"
     @supporters = Supporter.all
     render 'supporters/index'
   end
 
-  get :export do
+  get :mine, :protect => false do
+    @title = "My Supporters"
+    @supporters = current_account.supporters
+    puts @supporters
+    render 'supporters/index'
+  end
+
+  get :export, :protect => true do
     @title = "Export Supporters"
     render 'supporters/export'
   end
 
-  post :export do
+  post :export, :protect => true do
     puts params
-    strd = Date.parse Supporter.first.created_at.to_s
+    strd = Date.parse Supporter.first.acquired.to_s
     endd = Date.today
     if params[:supporter][:start].length > 0
       strd = Date.strptime(params[:supporter][:start],'%d/%m/%Y')
@@ -22,7 +29,7 @@ D2d::Admin.controllers :supporters do
     end
     puts strd
     puts endd
-    @sups = Supporter.where('created_at <= ?',endd+1.days).where('created_at >= ?',strd)
+    @sups = Supporter.where('acquired <= ?',endd+1.days).where('acquired >= ?',strd)
     hdrline = '"UniqNum","Date","DD_Recruiter","DD_City","DD_Location","First Name","Last Name","Gender","Birthday","Occupation","City","Address","Post code","Home Phone","Mobile Phone","E-mail","Receive updates?","AP amount"'
     File.open('tmp/sup.csv',"w:utf-8") do |output|
       output << hdrline+"\n"
@@ -58,13 +65,13 @@ D2d::Admin.controllers :supporters do
 
   end
 
-  get :new do
+  get :new, :protect => true do
     @title = pat(:new_title, :model => 'supporter')
     @supporter = Supporter.new
     render 'supporters/new'
   end
 
-  post :create do
+  post :create, :protect => true do
     @supporter = Supporter.new(params[:supporter])
     if @supporter.save
       @title = pat(:create_title, :model => "supporter #{@supporter.id}")
@@ -77,7 +84,7 @@ D2d::Admin.controllers :supporters do
     end
   end
 
-  get :edit, :with => :id do
+  get :edit, :protect => true, :with => :id do
     @title = pat(:edit_title, :model => "supporter #{params[:id]}")
     @supporter = Supporter.find(params[:id])
     if @supporter
@@ -88,7 +95,7 @@ D2d::Admin.controllers :supporters do
     end
   end
 
-  put :update, :with => :id do
+  put :update, :protect => true, :with => :id do
     @title = pat(:update_title, :model => "supporter #{params[:id]}")
     @supporter = Supporter.find(params[:id])
     if @supporter
@@ -107,7 +114,7 @@ D2d::Admin.controllers :supporters do
     end
   end
 
-  delete :destroy, :with => :id do
+  delete :destroy, :protect => true, :with => :id do
     @title = "Supporters"
     supporter = Supporter.find(params[:id])
     if supporter
@@ -123,7 +130,7 @@ D2d::Admin.controllers :supporters do
     end
   end
 
-  delete :destroy_many do
+  delete :destroy_many, :protect => true do
     @title = "Supporters"
     unless params[:supporter_ids]
       flash[:error] = pat(:destroy_many_error, :model => 'supporter')

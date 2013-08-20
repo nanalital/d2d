@@ -11,9 +11,9 @@
     %meta{:content => $pageauthor, :name => "author"}/
     %meta{:content => $pagekeyws, :name => "keywords"}/
 
-    %link{:href => "/stylesheets/bootstrap.less", :rel => "stylesheet/less"}/
-    %script{:src => "/javascripts/less.js"}
-    /=stylesheet_link_tag 'bootstrap'
+    /%link{:href => "/stylesheets/bootstrap.less", :rel => "stylesheet/less"}/
+    /%script{:src => "/javascripts/less.js"}
+    =stylesheet_link_tag 'app'
     =javascript_include_tag 'jquery', 'collapse', 'tab', 'transition', 'dropdown', 'maskedinput'
     =yield_content :include
 
@@ -73,7 +73,7 @@
                   %a.large{:href=>'http://www.greenpeace.org/israel/footer/privacy'} פרטיות
 
                 %li
-                  -if current_account
+                  -unless current_account
                     %a{:href=>'/sessions/new'} Log in
                   -else
                     -form_for :account, url(:sessions, :destroy), :class => 'hide', :id=>'signout', :method=>'post'  do |f|

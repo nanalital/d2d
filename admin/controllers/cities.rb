@@ -1,17 +1,17 @@
 D2d::Admin.controllers :cities do
-  get :index do
+  get :index, :protect => true do
     @title = "Cities"
     @cities = City.all
     render 'cities/index'
   end
 
-  get :new do
+  get :new, :protect => true do
     @title = pat(:new_title, :model => 'city')
     @city = City.new
     render 'cities/new'
   end
 
-  post :create do
+  post :create, :protect => true do
     @city = City.new(params[:city])
     if @city.save
       @title = pat(:create_title, :model => "city #{@city.id}")
@@ -24,7 +24,7 @@ D2d::Admin.controllers :cities do
     end
   end
 
-  get :edit, :with => :id do
+  get :edit, :protect => true, :with => :id do
     @title = pat(:edit_title, :model => "city #{params[:id]}")
     @city = City.find(params[:id])
     if @city
@@ -40,7 +40,7 @@ D2d::Admin.controllers :cities do
     end
   end
 
-  put :update, :with => :id do
+  put :update, :protect => true, :with => :id do
     @title = pat(:update_title, :model => "city #{params[:id]}")
     @city = City.find(params[:id])
     if @city
@@ -76,7 +76,7 @@ D2d::Admin.controllers :cities do
     end
   end
 
-  delete :destroy, :with => :id do
+  delete :destroy, :protect => true, :with => :id do
     @title = "Cities"
     city = City.find(params[:id])
     if city
@@ -92,7 +92,7 @@ D2d::Admin.controllers :cities do
     end
   end
 
-  delete :destroy_many do
+  delete :destroy_many, :protect => true do
     @title = "Cities"
     unless params[:city_ids]
       flash[:error] = pat(:destroy_many_error, :model => 'city')

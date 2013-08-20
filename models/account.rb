@@ -1,5 +1,10 @@
 class Account < ActiveRecord::Base
   attr_accessor :password, :password_confirmation
+  attr_protected :crypted_password
+
+  belongs_to :city
+  belongs_to :location
+  has_many :supporters
 
   # Validations
   validates_presence_of     :email, :role

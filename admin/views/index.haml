@@ -2,27 +2,32 @@
 -content_for :outer do
   %img{:src=>'/images/donateTop.jpg',:style=>'width:100%',:alt=>'Greenpeace'}
 
-%h2 מדיניות גרינפיס
-%p גרינפיס אינו מקבל תמיכה כלכלית מממשלות, תאגידים, גופים מסחריים או חוגים פוליטיים, וזאת בכדי שנוכל לשמור על עצמאות, אובייקטיביות וחופש פעולה במאבקינו. הארגון נתמך אך ורק על- ידי פעילות של מתנדבים ותרומות מתומכים פרטיים. בדיוק כמוך!
-%p משימתנו דורשת כמות עצומה של משאבים, אנושיים וכספיים כאחד, תמיכתך בנו תעזור להבטיח עולם ירוק ובריא יותר עבור כולנו.
-
 -if current_account
-  -if current_account.role = 'admin'
-    %h2 Hello Tomer!
-    %p
-      Click
-      %a{:href=>'/cities'} here
-      to manage cities &amp; locations;
-    %p
-      Click
-      %a{:href=>'/supporters'} here
-      to see supporters.
-    %p
-      Click
-      %a{:href=>'/accounts'} here
-      to manage people.
+  -if current_account.role == 'admin'
+    .ltr
+      %h2 Hello Tomer!
+      %p
+        Click
+        %a{:href=>'/cities'} here
+        to manage cities &amp; locations;
+      %p
+        Click
+        %a{:href=>'/accounts'} here
+        to manage people.
+      %p
+        Click
+        %a{:href=>'/supporters'} here
+        to see supporters.
+      %p
+        Click
+        %a{:href=>'/new'} here
+        to add a new supporter.
 
   -else
+    %h2 מדיניות גרינפיס
+    %p גרינפיס אינו מקבל תמיכה כלכלית מממשלות, תאגידים, גופים מסחריים או חוגים פוליטיים, וזאת בכדי שנוכל לשמור על עצמאות, אובייקטיביות וחופש פעולה במאבקינו. הארגון נתמך אך ורק על- ידי פעילות של מתנדבים ותרומות מתומכים פרטיים. בדיוק כמוך!
+    %p משימתנו דורשת כמות עצומה של משאבים, אנושיים וכספיים כאחד, תמיכתך בנו תעזור להבטיח עולם ירוק ובריא יותר עבור כולנו.
+
     %h2= 'Hello '+current_account.name
     %p
       Click
