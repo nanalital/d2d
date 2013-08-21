@@ -37,9 +37,9 @@ D2d::Admin.controllers :supporters do
         line = []
         line << s.uniqnum
         line << s.acquired.strftime('%d/%m/%Y')
-        line << s.account.id.to_s
-        line << s.dd_city
-        line << s.dd_location
+        line << s.account.name
+        line << s.dd_city.name
+        line << s.dd_location.name
         line << s.first_name
         line << s.last_name
         line << s.gender == 1 ? 'm' : 'f'
