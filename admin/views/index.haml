@@ -26,6 +26,11 @@
         Click
         %a{:href=>'/supporters/export'} here
         to export supporters.
+      %p
+        Click
+        %a{:href=>'/new'} here
+        to add a new supporter.
+
 
   -elsif current_account.role == 'coach'
     .ltr
@@ -42,6 +47,10 @@
         Click
         %a{:href=>'/supporters'} here
         to see supporters.
+      %p
+        Click
+        %a{:href=>'/new'} here
+        to add a new supporter.
 
   -else
     %h2= 'Hello '+current_account.name
