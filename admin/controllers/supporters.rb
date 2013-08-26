@@ -30,6 +30,8 @@ D2d::Admin.controllers :supporters do
     puts strd
     puts endd
     @sups = Supporter.where('acquired <= ?',endd+1.days).where('acquired >= ?',strd)
+    puts @sups
+    puts @sups.count
     hdrline = '"UniqNum","Date","DD_Recruiter","DD_City","DD_Location","First Name","Last Name","Gender","Birthday","Occupation","City","Address","Post code","Home Phone","Mobile Phone","E-mail","Receive updates?","AP amount"'
     File.open('tmp/sup.csv',"w:utf-8") do |output|
       output << hdrline+"\n"
@@ -37,9 +39,9 @@ D2d::Admin.controllers :supporters do
         line = []
         line << s.uniqnum
         line << s.acquired.strftime('%d/%m/%Y')
-        line << s.account.name
-        line << s.dd_city.name
-        line << s.dd_location.name
+        line << s.account.name if s.account
+        line << s.dd_city.name if s.dd_city
+        line << s.dd_location.name if s.dd_location
         line << s.first_name
         line << s.last_name
         line << s.gender == 1 ? 'm' : 'f'

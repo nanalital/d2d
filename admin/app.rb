@@ -108,13 +108,15 @@ module D2d
         http.verify_mode = OpenSSL::SSL::VERIFY_NONE
         request = Net::HTTP::Post.new(uri.path)
         request.add_field('Content-Type', 'application/x-www-form-urlencoded')
-        request.body = "a="+@supporter.amount.to_s+"&uniqnum="+@supporter.uniqnum+"&pfsAuthCode=2851500dbdf34ad3a21e3eb417ffef28"
+        testauth = "2851500dbdf34ad3a21e3eb417ffef28"
+        paymauth = "22d9e751aade4446ab3dc61209b4fe52"
+        request.body = "a="+@supporter.amount.to_s+"&uniqnum="+@supporter.uniqnum+"&pfsAuthCode="+paymauth
         response = http.request(request)
         puts response.value
 
         if response.code[0].to_i < 3
           dt = response.read_body.split('~')[1].gsub('MD=','').split('&TT=')
-          @url = 'https://online.premiumfs.co.il/Sites/OpenCartTest/payment.aspx'
+          @url = 'https://online.premiumfs.co.il/Sites/greenpeace/payment.aspx'
           @post = {:a=>@supporter.amount.to_s,:uniqnum=>@supporter.uniqnum,:id=>'',:refURL=>"https%3A%2F%2Fd2d.herokuapp.com%2F",:refURL_Cancel=>"",:TT=>dt[1],:MD=>dt[0],:pfsAuthCode=>'2851500dbdf34ad3a21e3eb417ffef28',:multi_settings_id=>""}
           render 'redirect', :layout=>false
         else
