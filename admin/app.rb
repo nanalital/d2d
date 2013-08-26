@@ -102,22 +102,23 @@ module D2d
         @title = pat(:create_title, :model => "supporter #{@supporter.id}")
         flash[:success] = pat(:create_success, :model => 'Supporter')
 
-        uri = URI.parse("https://online.premiumfs.co.il/Sites/opencarttest/pfsAuth.aspx")
+        uri = URI.parse("https://online.premiumfs.co.il/Sites/greenpeace/pfsAuth.aspx")
         http = Net::HTTP.new(uri.host, uri.port)
         http.use_ssl = true
+        amount = (@supporter.amount*100).to_s
         http.verify_mode = OpenSSL::SSL::VERIFY_NONE
         request = Net::HTTP::Post.new(uri.path)
         request.add_field('Content-Type', 'application/x-www-form-urlencoded')
         testauth = "2851500dbdf34ad3a21e3eb417ffef28"
         paymauth = "22d9e751aade4446ab3dc61209b4fe52"
-        request.body = "a="+@supporter.amount.to_s+"&uniqnum="+@supporter.uniqnum+"&pfsAuthCode="+paymauth
+        request.body = "a="+amount+"&uniqnum="+@supporter.uniqnum+"&pfsAuthCode="+paymauth
         response = http.request(request)
-        puts response.value
+        #puts response.value
 
         if response.code[0].to_i < 3
           dt = response.read_body.split('~')[1].gsub('MD=','').split('&TT=')
           @url = 'https://online.premiumfs.co.il/Sites/greenpeace/payment.aspx'
-          @post = {:a=>@supporter.amount.to_s,:uniqnum=>@supporter.uniqnum,:id=>'',:refURL=>"https%3A%2F%2Fd2d.herokuapp.com%2F",:refURL_Cancel=>"",:TT=>dt[1],:MD=>dt[0],:pfsAuthCode=>'2851500dbdf34ad3a21e3eb417ffef28',:multi_settings_id=>""}
+          @post = {:a=>amount,:uniqnum=>@supporter.uniqnum,:id=>'',:refURL=>"https%3A%2F%2Fd2d.herokuapp.com%2F",:refURL_Cancel=>"",:TT=>dt[1],:MD=>dt[0],:pfsAuthCode=>'2851500dbdf34ad3a21e3eb417ffef28',:multi_settings_id=>""}
           render 'redirect', :layout=>false
         else
           return "<html>"+response.body+"<br /><h3>response type</h3>"+response.code.to_s+' '+response.msg+"<br /><h5>--- end response ---</h5><h2>uri:</h2>"+uri.host+':'+uri.port.to_s+''+uri.path+"<br/><h2>request header:</h2>"+request.to_hash.to_s+"<br/><br/><h2>request body:</h2>"+request.body+"</html>"
