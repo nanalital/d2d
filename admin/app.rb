@@ -119,6 +119,7 @@ module D2d
           dt = response.read_body.split('~')[1].gsub('MD=','').split('&TT=')
           @url = 'https://online.premiumfs.co.il/Sites/greenpeace/payment.aspx'
           @post = {:a=>amount,:uniqnum=>@supporter.uniqnum,:id=>'',:refURL=>"https%3A%2F%2Fd2d.herokuapp.com%2F",:refURL_Cancel=>"",:TT=>dt[1],:MD=>dt[0],:pfsAuthCode=>paymauth,:multi_settings_id=>""}
+          @verbose = true
           render 'redirect', :layout=>false
         else
           return "<html>"+response.body+"<br /><h3>response type</h3>"+response.code.to_s+' '+response.msg+"<br /><h5>--- end response ---</h5><h2>uri:</h2>"+uri.host+':'+uri.port.to_s+''+uri.path+"<br/><h2>request header:</h2>"+request.to_hash.to_s+"<br/><br/><h2>request body:</h2>"+request.body+"</html>"
