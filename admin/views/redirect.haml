@@ -2,6 +2,9 @@
 %head
   %title Redirection
 %body
+  -if @verbose
+    %h2 Response:
+    =@verbose
   %form{:action=>@url,:method=>'post',:name=>'primum'}
     -@post.each do |k,v|
       -if @verbose

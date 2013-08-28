@@ -98,6 +98,7 @@ module D2d
       @supporter.acquired = Time.now
       @supporter.dd_city = current_account.city
       @supporter.dd_location = current_account.location
+      amount = (@supporter.amount*100).to_s
       if @supporter.save
         @title = pat(:create_title, :model => "supporter #{@supporter.id}")
         flash[:success] = pat(:create_success, :model => 'Supporter')
@@ -105,7 +106,6 @@ module D2d
         uri = URI.parse("https://online.premiumfs.co.il/Sites/greenpeace/pfsAuth.aspx")
         http = Net::HTTP.new(uri.host, uri.port)
         http.use_ssl = true
-        amount = (@supporter.amount*100).to_s
         http.verify_mode = OpenSSL::SSL::VERIFY_NONE
         request = Net::HTTP::Post.new(uri.path)
         request.add_field('Content-Type', 'application/x-www-form-urlencoded')
@@ -118,8 +118,8 @@ module D2d
         if response.code[0].to_i < 3
           dt = response.read_body.split('~')[1].gsub('MD=','').split('&TT=')
           @url = 'https://online.premiumfs.co.il/Sites/greenpeace/payment.aspx'
-          @post = {:a=>amount,:uniqnum=>@supporter.uniqnum,:id=>'',:refURL=>"https://d2d.herokuapp.com/",:refURL_Cancel=>"",:TT=>dt[1],:MD=>dt[0],:pfsAuthCode=>paymauth,:multi_settings_id=>""}
-          @verbose = true
+          @post = {:a=>amount,:uniqnum=>@supporter.uniqnum,:id=>"",:refURL=>"https://d2d.herokuapp.com/",:refURL_Cancel=>"",:TT=>dt[1],:MD=>dt[0],:pfsAuthCode=>paymauth,:multi_settings_id=>""}
+          @verbose = response.read_body
           render 'redirect', :layout=>false
         else
           return "<html>"+response.body+"<br /><h3>response type</h3>"+response.code.to_s+' '+response.msg+"<br /><h5>--- end response ---</h5><h2>uri:</h2>"+uri.host+':'+uri.port.to_s+''+uri.path+"<br/><h2>request header:</h2>"+request.to_hash.to_s+"<br/><br/><h2>request body:</h2>"+request.body+"</html>"
