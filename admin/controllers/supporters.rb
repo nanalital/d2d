@@ -39,17 +39,13 @@ D2d::Admin.controllers :supporters do
         line = []
         line << s.uniqnum
         line << s.acquired.strftime('%d/%m/%Y')
-        line << s.account.name if s.account
-        line << s.dd_city.name if s.dd_city
-        line << s.dd_location.name if s.dd_location
+        line << s.account ? s.account.name : ''
+        line << s.dd_city ? s.dd_city.name : ''
+        line << s.dd_location ? s.dd_location.name : ''
         line << s.first_name
         line << s.last_name
         line << s.gender == 1 ? 'm' : 'f'
-        if s.birthday
-          line << s.birthday.strftime('%d/%m/%Y')
-        else
-          line << ''
-        end
+        line << s.birthday ? s.birthday.strftime('%d/%m/%Y') : ''
         line << s.occupation
         line << s.city
         line << s.street_name+' '+s.num_building+' / '+s.num_apartment

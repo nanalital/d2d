@@ -5,7 +5,7 @@
   -if @verbose
     %h2 Response:
     =@verbose
-  %form{:action=>@url,:method=>'post',:name=>'primum',:enctype=>'text/plain'}
+  %form{:action=>@url,:method=>'post',:name=>'primum',:enctype=>'multipart/form-data'}
     -@post.each do |k,v|
       -if @verbose
         %p
