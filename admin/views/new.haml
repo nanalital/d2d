@@ -1,4 +1,6 @@
 -# coding: utf-8
+-content_for :header do
+  =javascript_include_tag 'validate', 'maskedinput'
 -content_for :outer do
   %img{:src=>'/images/donateTop.jpg',:style=>'width:100%',:alt=>'Greenpeace'}
   
@@ -8,3 +10,76 @@
 
 -form_for :supporter, url(:create), :class => 'form-horizontal' do |f|
   =partial 'form', :locals => { :f => f }
+
+:javascript
+  $.validator.addMethod("ildate", function(value, element) { 
+    var parts = value.split('/');
+    if (parts[1] > 12) return false
+    return new Date(parts[2],parts[1]-1,parts[0]);
+  }, $.validator.format("Please specify a reasonable birthdate."));
+  $.validator.addMethod('ilphone', function(value, element, arg) {
+    if (value.match(/^((\+972|972)|0)( |-)?([1-468-9]( |-)?\d{7}|(5|7)[0-9]( |-)?\d{7})$/)) { return true; } else return false
+  }, $.validator.format("Please a valid phone number for Israel."))
+  $.validator.addMethod('daterange', function(value, element, arg) {
+       var startDate = new Date().getFullYear()-120,
+           endDate = new Date().getFullYear()-18,
+           enteredDate = value.split('/')[2]
+       if (enteredDate < endDate && enteredDate > startDate ) { return true; } else return false
+   }, $.validator.format("Please specify a reasonable birthdate."))
+  $("form").validate({
+     errorPlacement: function(error, element) {
+       error.appendTo( element.closest("fieldset").find("label") );
+     },
+     rules: {
+       "supporter[first_name]": {
+         "required": true,
+         "minlength": 2},
+
+       "supporter[last_name]": {
+         "required": true,
+         "minlength": 2},
+
+       "supporter[birthday]": {
+         "ildate": true,
+         "daterange": true},
+
+       "supporter[gender]": "required",
+
+       "supporter[occupation]": {
+         "required": true,
+         "minlength": 2},
+
+       "supporter[city]": {
+         "required": true,
+         "minlength": 2},
+
+       "supporter[street_name]": {
+         "required": true,
+         "minlength": 2},
+
+       "supporter[num_building]": "required",
+
+       "supporter[num_apartment]": "required",
+
+       "supporter[zip_code]": {
+         "required": true,
+         "minlength": 5},
+
+       "supporter[home_phone]": {
+         "required": true,
+         "ilphone": true},
+
+       "supporter[mobile_phone]": {
+         "required": true,
+         "ilphone": true},
+
+       "supporter[email]": {
+         "email": true,
+         "required": true},
+
+       "supporter[ap_monthly]": {
+         "digits": true,
+         "min": 50},
+
+     }
+   });

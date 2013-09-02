@@ -3,13 +3,13 @@
   .col-sm-6.col-6
     - error = @supporter.errors.include?(:first_name)
     %fieldset.control-group{:class => error ? 'has-error' : ''}
-      =f.label 'שם פרטי', :class => 'control-label'
+      %label.control-label{:for=>'supporter_first_name'}= 'שם פרטי'
       .controls
         =f.text_field :first_name, :class => 'input-xlarge input-with-feedback'
   .col-sm-6.col-6
     - error = @supporter.errors.include?(:last_name)
     %fieldset.control-group{:class => error ? 'has-error' : ''}
-      =f.label 'שם משפחה', :class => 'control-label'
+      %label.control-label{:for=>'supporter_last_name'}= 'שם משפחה'
       .controls
         =f.text_field :last_name, :class => 'input-xlarge input-with-feedback'
 
@@ -17,13 +17,13 @@
   .col-sm-6.col-6
     - error = @supporter.errors.include?(:birthday)
     %fieldset.control-group{:class => error ? 'has-error' : ''}
-      =f.label 'תאריך לידה', :class => 'control-label'
+      %label.control-label{:for=>'supporter_birthday'}= 'תאריך לידה'
       .controls
         =f.text_field :birthday, :class => 'input-xlarge input-with-feedback datemask'
   .col-sm-6.col-6
     - error = @supporter.errors.include?(:gender)
     %fieldset.control-group{:class => error ? 'has-error' : ''}
-      =f.label 'מין', :class => 'control-label'
+      %label.control-label{:for=>'supporter_gender'}= 'מין'
       .controls
         .row
           .col-sm-6.col-6
@@ -35,7 +35,7 @@
   .col-sm-12.col-12
     - error = @supporter.errors.include?(:occupation)
     %fieldset.control-group{:class => error ? 'has-error' : ''}
-      =f.label 'מקצוע', :class => 'control-label'
+      %label.control-label{:for=>'supporter_occupation'}= 'מקצוע'
       .controls
         =f.text_field :occupation, :class => 'input-xlarge input-with-feedback'
     %hr/
@@ -44,13 +44,13 @@
   .col-sm-6.col-6
     - error = @supporter.errors.include?(:city)
     %fieldset.control-group{:class => error ? 'has-error' : ''}
-      =f.label 'עיר', :class => 'control-label'
+      %label.control-label{:for=>'supporter_city'}= 'עיר'
       .controls
         =f.text_field :city, :class => 'input-xlarge input-with-feedback'
 
     - error = @supporter.errors.include?(:street_name)
     %fieldset.control-group{:class => error ? 'has-error' : ''}
-      =f.label :street_name, :class => 'control-label'
+      %label.control-label{:for=>'supporter_street_name'}= :street_name
       .controls
         =f.text_field :street_name, :class => 'input-xlarge input-with-feedback'
 
@@ -58,19 +58,19 @@
       .col-sm-4.col-4
         - error = @supporter.errors.include?(:num_building)
         %fieldset.control-group{:class => error ? 'has-error' : ''}
-          =f.label '#bld', :class => 'control-label'
+          %label.control-label{:for=>'supporter_num_building'}= '#bld'
           .controls
             =f.text_field :num_building, :class => 'input-xlarge input-with-feedback number'
       .col-sm-4.col-4
         - error = @supporter.errors.include?(:num_apartment)
         %fieldset.control-group{:class => error ? 'has-error' : ''}
-          =f.label '#apt', :class => 'control-label'
+          %label.control-label{:for=>'supporter_num_apartment'}= '#apt'
           .controls
             =f.text_field :num_apartment, :class => 'input-xlarge input-with-feedback number'
       .col-sm-4.col-4
         - error = @supporter.errors.include?(:zip_code)
         %fieldset.control-group{:class => error ? 'has-error' : ''}
-          =f.label 'מיקוד', :class => 'control-label'
+          %label.control-label{:for=>'supporter_zip_code'}= 'מיקוד'
           .controls
             =f.text_field :zip_code, :class => 'input-xlarge input-with-feedback number'
     %hr/
@@ -78,17 +78,17 @@
   .col-sm-6.col-6
     - error = @supporter.errors.include?(:home_phone)
     %fieldset.control-group{:class => error ? 'has-error' : ''}
-      =f.label 'טלפון בבית', :class => 'control-label'
+      %label.control-label{:for=>'supporter_home_phone'}= 'טלפון בבית'
       .controls
         =f.text_field :home_phone, :class => 'input-xlarge input-with-feedback phonemask'
     - error = @supporter.errors.include?(:mobile_phone)
     %fieldset.control-group{:class => error ? 'has-error' : ''}
-      =f.label 'טלפון נייד', :class => 'control-label'
+      %label.control-label{:for=>'supporter_mobile_phone'}= 'טלפון נייד'
       .controls
         =f.text_field :mobile_phone, :class => 'input-xlarge input-with-feedback phonemask'
     - error = @supporter.errors.include?(:email)
     %fieldset.control-group{:class => error ? 'has-error' : ''}
-      =f.label 'אי-מייל', :class => 'control-label'
+      %label.control-label{:for=>'supporter_email'}= 'אי-מייל'
       .controls
         =f.text_field :email, :class => 'input-xlarge input-with-feedback'
     %hr/
@@ -97,7 +97,7 @@
   .col-sm-6.col-6
     - error = @supporter.errors.include?(:receive_updates)
     %fieldset.control-group{:class => error ? 'has-error' : ''}
-      =f.label 'מעוניין לקבל עדכונים?', :class => 'control-label'
+      %label.control-label{:for=>'supporter_receive_updates'}= 'מעוניין לקבל עדכונים?'
       =f.check_box :receive_updates, :class => 'input-with-feedback'
     %hr/
 
@@ -121,7 +121,7 @@
           .col-12.col-sm-12
             - error = @supporter.errors.include?(:ap_monthly)
             %fieldset.control-group{:class => error ? 'has-error' : ''}
-              -#=f.label :ap_monthly, :class => 'control-label'
+              %label.control-label{:for=>'supporter_ap_monthly'}= ''
               .controls
                 =f.text_field :ap_monthly, :class => 'input-xlarge input-with-feedback'
         :javascript
@@ -143,7 +143,7 @@
           .col-12.col-sm-12
             - error = @supporter.errors.include?(:ap_one_off)
             %fieldset.control-group{:class => error ? 'has-error' : ''}
-              -#=f.label :ap_one_off, :class => 'control-label'
+              -#%label.control-label{:for=>'supporter_'}= :ap_one_off
               .controls
                 =f.text_field :ap_one_off, :class => 'input-xlarge input-with-feedback'
         :javascript
@@ -168,7 +168,7 @@
   .col-sm-12.col-12
     - error = @supporter.errors.include?(:notes)
     %fieldset.control-group{:class => error ? 'has-error' : ''}
-      =f.label 'הערות', :class => 'control-label'
+      %label.control-label{:for=>'supporter_notes'}= 'הערות'
       .controls
         ~f.text_area :notes, :class => 'input-xlarge input-with-feedback', :rows=>4, :style=>'max-width:100%;'
     %hr/

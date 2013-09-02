@@ -64,6 +64,16 @@ body, html {
     color: #060;
   }
 }
+
+label.error {
+  color: red;
+  font-size: 80%;
+  margin-bottom: -5px;
+  &:before, &:after {
+    content: '\00a0';
+  }
+}
+
 .ltr { direction: ltr; }
 .rtl { direction: rtl; }
 .small { font-size: 80%; line-height: 22px;}

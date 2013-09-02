@@ -4261,6 +4261,15 @@ body h2,
 html h2 {
   color: #060;
 }
+label.error {
+  color: red;
+  font-size: 80%;
+  margin-bottom: -5px;
+}
+label.error:before,
+label.error:after {
+  content: '\00a0';
+}
 .ltr {
   direction: ltr;
 }
