@@ -119,7 +119,7 @@ module D2d
           dt = response.read_body.split('~')[1].gsub('MD=','').split('&TT=')
           puts dt
           @url = 'https://online.premiumfs.co.il/Sites/greenpeace/payment.aspx'
-          @post = {:a=>amount,:uniqnum=>@supporter.uniqnum,:id=>"",:refURL=>refURL,:refURL_Cancel=>"",:TT=>dt[1],:MD=>dt[0],:pfsAuthCode=>paymauth,:multi_settings_id=>""}
+          @post = {:a=>amount,:uniqNum=>@supporter.uniqnum,:id=>"",:refURL=>refURL,:refURL_Cancel=>"",:TT=>dt[1],:MD=>dt[0],:pfsAuthCode=>paymauth,:multi_settings_id=>""}
           @verbose = response.read_body
           render 'redirect', :layout=>false
         else
