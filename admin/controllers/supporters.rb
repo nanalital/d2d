@@ -45,7 +45,7 @@ D2d::Admin.controllers :supporters do
         line << s.first_name
         line << s.last_name
         line << s.gender == 1 ? 'm' : 'f'
-        line << s.birthday ? s.birthday.strftime('%d/%m/%Y') : ''
+        line << s.birthday.nil? ? '' : s.birthday.strftime('%d/%m/%Y')
         line << s.occupation
         line << s.city
         line << s.street_name+' '+s.num_building+' / '+s.num_apartment
