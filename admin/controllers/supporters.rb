@@ -40,8 +40,8 @@ D2d::Admin.controllers :supporters do
         line << s.uniqnum
         line << s.acquired.strftime('%d/%m/%Y')
         line << s.account ? s.account.name : ''
-        line << s.dd_city ? s.dd_city.name : ''
-        line << s.dd_location ? s.dd_location.name : ''
+        line << s.dd_city
+        line << s.dd_location
         line << s.first_name
         line << s.last_name
         line << s.gender == 1 ? 'm' : 'f'

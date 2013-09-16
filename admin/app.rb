@@ -107,6 +107,7 @@ module D2d
       paympaymurl = 'https://online.premiumfs.co.il/Sites/greenpeace/payment.aspx'
 
       refURL = 'https://med.greenpeace.org/israel/d2d/thankyou/'#request.url
+
       @supporter = Supporter.new(params[:supporter])
       @supporter.account = current_account
       @supporter.acquired = Time.now
@@ -117,21 +118,21 @@ module D2d
         @title = pat(:create_title, :model => "supporter #{@supporter.id}")
         flash[:success] = pat(:create_success, :model => 'Supporter')
 
-        uri = URI.parse(testauthurl)
+        uri = URI.parse(paymauthurl)
         http = Net::HTTP.new(uri.host, uri.port)
         http.use_ssl = true
         http.verify_mode = OpenSSL::SSL::VERIFY_NONE
         request = Net::HTTP::Post.new(uri.path)
         request.add_field('Content-Type', 'application/x-www-form-urlencoded')
-        request.body = "a="+amount+"&uniqnum="+@supporter.uniqnum+"&pfsAuthCode="+testauth
+        request.body = "a="+amount+"&uniqnum="+@supporter.uniqnum+"&pfsAuthCode="+paymauth
         response = http.request(request)
         #puts response.value
 
         if response.code[0].to_i < 3
           dt = response.read_body.split('~')[1].gsub('MD=','').split('&TT=')
           puts dt
-          @url = testpaymurl
-          @post = {:a=>amount,:uniqNum=>@supporter.uniqnum,:id=>"",:refURL=>refURL,:refURL_Cancel=>"",:TT=>dt[1],:MD=>dt[0],:pfsAuthCode=>testauth,:multi_settings_id=>""}
+          @url = paympaymurl
+          @post = {:a=>amount,:uniqNum=>@supporter.uniqnum,:id=>"",:refURL=>refURL,:refURL_Cancel=>"",:TT=>dt[1],:MD=>dt[0],:pfsAuthCode=>paymauth,:multi_settings_id=>""}
           @verbose = nil#response.read_body
           render 'redirect', :layout=>false
         else
