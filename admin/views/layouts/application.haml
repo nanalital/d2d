@@ -40,17 +40,7 @@
             .pull-left{:style=>'width:60px'} &nbsp;
             .pull-left
               %img#lock{:src=>'/images/lock.gif',:alt=>'',:style=>'margin-top:14px;'}
-            -#.nav-collapse.collapse
-              %ul.nav.pull-right
-                %li
-                  %a{:href=>'/new'} New Supporter
-                %li.divider-vertical
-                -if current_account.nil?
-                  %li
-                    %a{:href=>'/sessions/new'} Login
-                -else
-                  %li.dropdown#user
-                    = current_account.name
+
       .container
         .outer= yield_content :outer
         %header.jumbotron.masthead

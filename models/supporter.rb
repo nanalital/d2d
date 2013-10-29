@@ -3,10 +3,6 @@ class Supporter < ActiveRecord::Base
   validate :unique
   belongs_to :account
 
-  def amount
-    return self.ap_monthly
-  end
-
   def self.randomize
     'p'+(0..5).map{ ((0..9).to_a)[rand(10)] }.join
   end

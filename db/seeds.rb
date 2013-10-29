@@ -16,7 +16,7 @@ end
 
 unless admin
   if accounts == []
-    account = Account.create(:email => 'admin'+email, :name => name, :surname => 'Admin', :password => password, :password_confirmation => password, :role => "admin")
+    account = Account.create(:email => 'tomer.harpaz'+email, :name => name, :surname => 'Admin', :password => password, :password_confirmation => password, :role => "admin")
     if account.valid?
       shell.say "================================================================="
       shell.say "Account has been successfully created, now you can login with:"
@@ -52,7 +52,7 @@ cities = {
 }
 
 unless user
-  Account.create(:email => 'user'+email, :name => name, :surname => 'User', :password => password, :password_confirmation => password, :role => "user")
+  Account.create(:email => 'dd'+email, :name => name, :surname => 'User', :password => password, :password_confirmation => password, :role => "user")
 end
 
 cities.each do |k,v|

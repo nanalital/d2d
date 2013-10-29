@@ -75,7 +75,7 @@ module D2d
     end
 
     get :thanks, :with => :id do
-      @supporter = Supporter.find params[:id]
+      @sup = Supporter.find params[:id]
       render 'thanks'
     end
 
@@ -90,8 +90,25 @@ module D2d
       end
     end
 
-    get :success do
-      puts params
+    get :result do
+      @sup = Supporter.find_by_uniqnum("p"+params["p120"].split('p')[1])
+      return render 'failure' unless params["p1"] == "000"
+      unless @sup
+        puts params.to_s
+        return render 'failure'
+      else
+        @sup.key = params["key"]
+        @sup.cc_last4d = params["p5"]
+        @sup.cc_expiry = params["p30"]
+        @sup.amount = params["p36"].to_i
+        @sup.citizen_id = params["71"]
+        @sup.cc_voucher = params["p96"]
+        if @sup.save
+          return render 'thanks'
+        else
+          return render 'failure'
+        end
+      end
     end
 
 

@@ -41,30 +41,40 @@ ActiveRecord::Schema.define(:version => 4) do
   end
 
   create_table "supporters", :force => true do |t|
+
     t.string   "uniqnum"
     t.date     "acquired"
+    
     t.integer  "account_id"
     t.string   "dd_city"
     t.string   "dd_location"
+    
     t.string   "first_name"
     t.string   "last_name"
     t.integer  "gender"
     t.date     "birthday"
     t.string   "occupation"
     t.string   "city"
-    t.string   "street_name"
-    t.string   "num_building"
-    t.string   "num_apartment"
+    t.text     "address"
     t.string   "zip_code"
+    
     t.string   "home_phone",      :limit => 12
     t.string   "mobile_phone",    :limit => 12
     t.string   "email"
+    
+    t.string   "citizen_id"
     t.boolean  "receive_updates"
-    t.integer  "ap_monthly"
-    t.integer  "ap_one_off"
+
+    t.integer  "amount"
+    t.string   "key"
+    t.string   "cc_expiry"
+    t.string   "cc_last4d"
+    t.string   "cc_voucher"
+
     t.text     "notes"
-    t.datetime "created_at",                    :null => false
-    t.datetime "updated_at",                    :null => false
+    
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
   end
 
 end
