@@ -48,12 +48,6 @@
       .controls
         =f.text_field :city, :class => 'input-xlarge input-with-feedback'
 
-    - error = @supporter.errors.include?(:street_name)
-    %fieldset.control-group{:class => error ? 'has-error' : ''}
-      %label.control-label{:for=>'supporter_street_name'}= :street_name
-      .controls
-        =f.text_field :street_name, :class => 'input-xlarge input-with-feedback'
-
     .row
       .col-sm-4.col-4
         - error = @supporter.errors.include?(:zip_code)
