@@ -30,34 +30,38 @@ D2d::Admin.controllers :supporters do
     @sups = Supporter.where('acquired <= ?',endd+1.days).where('acquired >= ?',strd)
     #puts @sups
     #puts @sups.count
-    hdrline = '"UniqNum","Date","DD_Recruiter","DD_City","DD_Location","First Name","Last Name","Gender","Birthday","Occupation","City","Address","Post code","Home Phone","Mobile Phone","E-mail","Citizen ID","Receive updates?","Amount","Encrypted CC Key","CC Expiry","CC Last Digits","CC Voucher ID"'
+    hdrline = '"debit date","token","cc exp date","cc holder","amount on the spot","amount regular","cc number","first name","last name","gender","birthdate","ssn","home phone","mobile","email","address","city","post code","occupation","citizen id","receive updates?","cc last digits","cc voucher id","dd_recruiter","dd_city","dd_location","uniqnum"'
     File.open('tmp/sup.csv',"w:utf-8") do |output|
       output << hdrline+"\n"
       @sups.each do |s|
         line = []
-        line << s.uniqnum
         line << s.acquired.strftime('%d/%m/%Y')
-        line << s.account ? s.account.name : ''
-        line << s.dd_city
-        line << s.dd_location
+        line << s.key
+        line << s.cc_expiry
+        line << s.first_name+' '+s.last_name
+        line << ''
+        line << s.amount.to_s
+        line << ''
         line << s.first_name
         line << s.last_name
         line << s.gender == 1 ? 'm' : 'f'
         line << s.birthday.nil? ? '' : s.birthday.strftime('%d/%m/%Y')
-        line << s.occupation
-        line << s.city
-        line << s.address
-        line << s.zip_code
+        line << ''
         line << s.home_phone
         line << s.mobile_phone
         line << s.email
+        line << s.address
+        line << s.city
+        line << s.zip_code
+        line << s.occupation
         line << s.citizen_id
         line << s.receive_updates ? 't' : 'f'
-        line << s.amount
-        line << s.key
-        line << s.cc_expiry
         line << s.cc_last4d
         line << s.cc_voucher
+        line << s.account ? s.account.name : ''
+        line << s.dd_city
+        line << s.dd_location
+        line << s.uniqnum
         output << '"'+line.join('","')+'"'+"\n"
       end
     end
