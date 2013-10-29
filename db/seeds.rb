@@ -2,7 +2,7 @@
 
 email     = '@greenpeace.org'
 password  = 'supp0rter'
-name      = 'Ahmet'
+name      = 'Tomer'
 surname   = 'Greenpeace'
 
 admin = false
