@@ -30,7 +30,7 @@ D2d::Admin.controllers :supporters do
     @sups = Supporter.where('acquired <= ?',endd+1.days).where('acquired >= ?',strd)
     #puts @sups
     #puts @sups.count
-    hdrline = '"debit date","token","cc exp date","cc holder","amount on the spot","amount regular","cc number","first name","last name","gender","birthdate","ssn","home phone","mobile","email","address","city","post code","occupation","citizen id","receive updates?","cc last digits","cc voucher id","dd_recruiter","dd_city","dd_location","uniqnum"'
+    hdrline = '"debit date","token","cc exp date","cc holder","amount on the spot","amount regular","cc number","first name","last name","gender","birthdate","ssn","home phone","mobile","email","address","city","post code","occupation","receive updates?","cc last digits","cc voucher id","dd_recruiter","dd_city","dd_location","uniqnum"'
     File.open('tmp/sup.csv',"w:utf-8") do |output|
       output << hdrline+"\n"
       @sups.each do |s|
@@ -46,7 +46,7 @@ D2d::Admin.controllers :supporters do
         line << s.last_name
         line << s.gender == 1 ? 'm' : 'f'
         line << s.birthday.nil? ? '' : s.birthday.strftime('%d/%m/%Y')
-        line << ''
+        line << s.citizen_id
         line << s.home_phone
         line << s.mobile_phone
         line << s.email
@@ -54,11 +54,10 @@ D2d::Admin.controllers :supporters do
         line << s.city
         line << s.zip_code
         line << s.occupation
-        line << s.citizen_id
         line << s.receive_updates ? 't' : 'f'
         line << s.cc_last4d
         line << s.cc_voucher
-        line << s.account ? s.account.name : ''
+        line << (s.account ? s.account.name : '')
         line << s.dd_city
         line << s.dd_location
         line << s.uniqnum
