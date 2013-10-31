@@ -65,7 +65,7 @@ D2d::Admin.controllers :supporters do
       end
     end
 
-    send_file 'tmp/sup.csv', :type=> :csv
+    send_file 'tmp/sup.csv', :type=> :csv, :filename => "gp_supporters_#{strd.strftime('%d.%m')}-#{endd.strftime('%d.%m')}.csv"
 
   end
 

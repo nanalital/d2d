@@ -42,25 +42,25 @@
 
 .row
   .col-sm-6.col-6
-    - error = @supporter.errors.include?(:city)
+    - error = @supporter.errors.include?(:address)
     %fieldset.control-group{:class => error ? 'has-error' : ''}
-      %label.control-label{:for=>'supporter_city'}= 'עיר'
+      %label.control-label{:for=>'supporter_address'}= 'הערות'
       .controls
-        =f.text_field :city, :class => 'input-xlarge input-with-feedback'
+        ~f.text_area :address, :class => 'input-xlarge input-with-feedback', :rows=>4, :style=>'resize:none;width:100%;max-width:100%;min-width:100%;height:158px;max-height:158px'
 
     .row
+      .col-sm-8.col-8
+        - error = @supporter.errors.include?(:city)
+        %fieldset.control-group{:class => error ? 'has-error' : ''}
+          %label.control-label{:for=>'supporter_city'}= 'עיר'
+          .controls
+            =f.text_field :city, :class => 'input-xlarge input-with-feedback'
       .col-sm-4.col-4
         - error = @supporter.errors.include?(:zip_code)
         %fieldset.control-group{:class => error ? 'has-error' : ''}
           %label.control-label{:for=>'supporter_zip_code'}= 'מיקוד'
           .controls
             =f.text_field :zip_code, :class => 'input-xlarge input-with-feedback number'
-      .col-sm-8.col-8
-        - error = @supporter.errors.include?(:address)
-        %fieldset.control-group{:class => error ? 'has-error' : ''}
-          %label.control-label{:for=>'supporter_address'}= 'הערות'
-          .controls
-            ~f.text_area :address, :class => 'input-xlarge input-with-feedback', :rows=>4, :style=>'max-width:100%;'
     %hr/
 
   .col-sm-6.col-6
