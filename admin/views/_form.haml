@@ -44,9 +44,9 @@
   .col-sm-6.col-6
     - error = @supporter.errors.include?(:address)
     %fieldset.control-group{:class => error ? 'has-error' : ''}
-      %label.control-label{:for=>'supporter_address'}= 'הערות'
+      %label.control-label{:for=>'supporter_address'}= 'כתובת'
       .controls
-        ~f.text_area :address, :class => 'input-xlarge input-with-feedback', :rows=>4, :style=>'resize:none;width:100%;max-width:100%;min-width:100%;height:158px;max-height:158px'
+        ~f.text_area :address, :class => 'input-xlarge input-with-feedback', :rows=>4, :style=>'height:158px;max-height:158px'
 
     .row
       .col-sm-8.col-8

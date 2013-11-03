@@ -33,6 +33,8 @@ module D2d
 
     access_control.roles_for :any do |role|
       role.allow   '/'
+      role.allow   '/donate'
+      role.allow   '/result'
       role.protect '/accounts'
     end
 
@@ -68,6 +70,12 @@ module D2d
       render 'index'
     end
 
+    get :donate do
+      @title = "Donate"
+      @supporter = Supporter.new
+      render 'new', :layout => :web
+    end
+
     get :new do
       @title = pat(:new_title, :model => 'supporter')
       @supporter = Supporter.new
@@ -92,10 +100,12 @@ module D2d
 
     get :result do
       @sup = Supporter.find_by_uniqnum("p"+params["p120"].split('p')[1])
-      return render 'failure' unless params["p1"] == "000"
+      layout = :application
+      layout = :web if params["web"] == 1
+      return render 'failure', :layout => layout unless params["p1"] == "000"
       unless @sup
         puts params.to_s
-        return render 'failure'
+        return render 'failure', :layout => layout
       else
         @sup.key = params["key"]
         @sup.cc_last4d = params["p5"]
@@ -104,9 +114,9 @@ module D2d
         @sup.citizen_id = params["71"]
         @sup.cc_voucher = params["p96"]
         if @sup.save
-          return render 'thanks'
+          return render 'thanks', :layout => layout
         else
-          return render 'failure'
+          return render 'failure', :layout => layout
         end
       end
     end
