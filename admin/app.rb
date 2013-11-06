@@ -138,8 +138,10 @@ module D2d
       @supporter = Supporter.new(params[:supporter])
       @supporter.account = current_account
       @supporter.acquired = Time.now
-      @supporter.dd_city = current_account.city
-      @supporter.dd_location = current_account.location
+      if current_account
+        @supporter.dd_city = current_account.city
+        @supporter.dd_location = current_account.location
+      end
       amount = (@supporter.amount*100).to_s
       if @supporter.save
         @title = pat(:create_title, :model => "supporter #{@supporter.id}")

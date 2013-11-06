@@ -103,9 +103,10 @@
         .row
           -$prices.each do |p|
             .col-3.col-sm-3
-              %input{:type=>:radio,:name=>:monthly,:onclick=>'setMonthly('+p.to_s+')'}= ' '+p.to_s+' ILS'
+              %input{:type=>:radio,:name=>:monthly,"data-value"=>p.to_s}= ' '+p.to_s+' ILS'
           .col-3.col-sm-3
-            %input{:type=>:radio,:name=>:monthly,:onclick=>'resetMonthly()'}= ' Other'
+            %input{:type=>:radio,:name=>:monthly}= ' Other'
+        .row
           .col-12.col-sm-12
             - error = @supporter.errors.include?(:amount)
             %fieldset.control-group{:class => error ? 'has-error' : ''}
@@ -175,4 +176,12 @@
     $('.phonemask').attr('placeholder','___ ___ ____');
     $('.phonemask').css('direction','ltr');
     $('.number').css('direction','ltr');
+    $('input[name=monthly]').on('click', function(e) {
+      val = $(e.target).attr('data-value');
+      if (val > 0) {
+        setMonthly(val);
+      } else {
+        resetMonthly();
+      }
+    });
   });

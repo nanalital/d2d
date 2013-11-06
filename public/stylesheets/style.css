@@ -145,7 +145,7 @@ padding: 4px;
 font-size: 16px;
 }
 
-input[type=radio] {
+input[type=radio], input[type=checkbox] {
   width: 16px;
 }
 
@@ -163,4 +163,8 @@ textarea {
 #supporter_address {
   height: 63px !important;
   max-height: 63px !important;
+}
+
+#mainBox1 h2, .control-label {
+  color: #060;
 }
