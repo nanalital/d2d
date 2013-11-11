@@ -169,10 +169,11 @@
 
 :javascript
   $(document).ready(function(){
+    $.mask.definitions['~']='[0123456789_]';
     $(".datemask").mask("99/99/9999");
     $('.datemask').attr('placeholder','__/__/____');
     $('.datemask').css('direction','ltr');
-    $(".phonemask").mask("999 999 9999");
+    $(".phonemask").mask("999 999 999~");
     $('.phonemask').attr('placeholder','___ ___ ____');
     $('.phonemask').css('direction','ltr');
     $('.number').css('direction','ltr');
