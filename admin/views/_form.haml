@@ -3,13 +3,13 @@
   .col-sm-6.col-6
     - error = @supporter.errors.include?(:first_name)
     %fieldset.control-group{:class => error ? 'has-error' : ''}
-      %label.control-label{:for=>'supporter_first_name'}= 'שם פרטי'
+      %label.required.control-label{:for=>'supporter_first_name'}= 'שם פרטי'
       .controls
         =f.text_field :first_name, :class => 'input-xlarge input-with-feedback'
   .col-sm-6.col-6
     - error = @supporter.errors.include?(:last_name)
     %fieldset.control-group{:class => error ? 'has-error' : ''}
-      %label.control-label{:for=>'supporter_last_name'}= 'שם משפחה'
+      %label.required.control-label{:for=>'supporter_last_name'}= 'שם משפחה'
       .controls
         =f.text_field :last_name, :class => 'input-xlarge input-with-feedback'
 
@@ -17,13 +17,13 @@
   .col-sm-6.col-6
     - error = @supporter.errors.include?(:birthday)
     %fieldset.control-group{:class => error ? 'has-error' : ''}
-      %label.control-label{:for=>'supporter_birthday'}= 'תאריך לידה'
+      %label.required.control-label{:for=>'supporter_birthday'}= 'תאריך לידה'
       .controls
         =f.text_field :birthday, :class => 'input-xlarge input-with-feedback datemask'
   .col-sm-6.col-6
     - error = @supporter.errors.include?(:gender)
     %fieldset.control-group{:class => error ? 'has-error' : ''}
-      %label.control-label{:for=>'supporter_gender'}= 'מין'
+      %label.required.control-label{:for=>'supporter_gender'}= 'מין'
       .controls
         .row
           .col-sm-6.col-6
@@ -35,7 +35,7 @@
   .col-sm-12.col-12
     - error = @supporter.errors.include?(:occupation)
     %fieldset.control-group{:class => error ? 'has-error' : ''}
-      %label.control-label{:for=>'supporter_occupation'}= 'מקצוע'
+      %label.required.control-label{:for=>'supporter_occupation'}= 'מקצוע'
       .controls
         =f.text_field :occupation, :class => 'input-xlarge input-with-feedback'
     %hr/
@@ -44,7 +44,7 @@
   .col-sm-6.col-6
     - error = @supporter.errors.include?(:address)
     %fieldset.control-group{:class => error ? 'has-error' : ''}
-      %label.control-label{:for=>'supporter_address'}= 'כתובת'
+      %label.required.control-label{:for=>'supporter_address'}= 'כתובת'
       .controls
         ~f.text_area :address, :class => 'input-xlarge input-with-feedback', :rows=>4, :style=>'height:158px;max-height:158px'
 
@@ -52,13 +52,13 @@
       .col-sm-8.col-8
         - error = @supporter.errors.include?(:city)
         %fieldset.control-group{:class => error ? 'has-error' : ''}
-          %label.control-label{:for=>'supporter_city'}= 'עיר'
+          %label.required.control-label{:for=>'supporter_city'}= 'עיר'
           .controls
             =f.text_field :city, :class => 'input-xlarge input-with-feedback'
       .col-sm-4.col-4
         - error = @supporter.errors.include?(:zip_code)
         %fieldset.control-group{:class => error ? 'has-error' : ''}
-          %label.control-label{:for=>'supporter_zip_code'}= 'מיקוד'
+          %label.required.control-label{:for=>'supporter_zip_code'}= 'מיקוד'
           .controls
             =f.text_field :zip_code, :class => 'input-xlarge input-with-feedback number'
     %hr/
@@ -66,17 +66,33 @@
   .col-sm-6.col-6
     - error = @supporter.errors.include?(:home_phone)
     %fieldset.control-group{:class => error ? 'has-error' : ''}
-      %label.control-label{:for=>'supporter_home_phone'}= 'טלפון בבית'
-      .controls
-        =f.text_field :home_phone, :class => 'input-xlarge input-with-feedback phonemask'
+      %label.required.control-label{:for=>'supporter_home_phone'}= 'טלפון בבית'
+      .row.controls
+        .col-sm-9.col-9
+          %input#home_phone.input-xlarge.input-with-feedback.hphonemask.hphone{:type=>"text",:name=>"home_phone"}
+          %input#supporter_home_phone{:type=>"hidden",:name=>"supporter[home_phone]"}
+        .col-sm-3.col-3
+          %select#home_phone_prefix.hphone{:name=>"home_phone_prefix"}
+            %optgroup
+              -["--","02","03","04","06","072","073","076","077","078","08","09"].each do |pref|
+                %option{:value=>pref}= pref
+
     - error = @supporter.errors.include?(:mobile_phone)
     %fieldset.control-group{:class => error ? 'has-error' : ''}
-      %label.control-label{:for=>'supporter_mobile_phone'}= 'טלפון נייד'
-      .controls
-        =f.text_field :mobile_phone, :class => 'input-xlarge input-with-feedback phonemask'
+      %label.required.control-label{:for=>'supporter_mobile_phone'}= 'טלפון נייד'
+      .row.controls
+        .col-sm-9.col-9
+          %input#mobile_phone.input-xlarge.input-with-feedback.mphonemask.mphone{:type=>"text",:name=>"mobile_phone"}
+          %input#supporter_mobile_phone{:type=>"hidden",:name=>"supporter[mobile_phone]"}
+        .col-sm-3.col-3
+          %select#mobile_phone_prefix.mphone{:name=>"mobile_phone_prefix"}
+            %optgroup
+              -["--","050","051","052","053","054","055","056","057","058","059"].each do |pref|
+                %option{:value=>pref}= pref
+
     - error = @supporter.errors.include?(:email)
     %fieldset.control-group{:class => error ? 'has-error' : ''}
-      %label.control-label{:for=>'supporter_email'}= 'אי-מייל'
+      %label.required.control-label{:for=>'supporter_email'}= 'אי-מייל'
       .controls
         =f.text_field :email, :class => 'input-xlarge input-with-feedback'
     %hr/
@@ -169,14 +185,28 @@
 
 :javascript
   $(document).ready(function(){
-    $.mask.definitions['~']='[0123456789_]';
     $(".datemask").mask("99/99/9999");
     $('.datemask').attr('placeholder','__/__/____');
     $('.datemask').css('direction','ltr');
-    $(".phonemask").mask("999 999 999~");
-    $('.phonemask').attr('placeholder','___ ___ ____');
-    $('.phonemask').css('direction','ltr');
+
+    $(".mphonemask").mask("999 9999");
+    $('.mphonemask').attr('placeholder','___ ____');
+    $('.mphonemask').css('direction','ltr');
+
+    $(".hphonemask").mask("999 9999");
+    $('.hphonemask').attr('placeholder','___ ____');
+    $('.hphonemask').css('direction','ltr');
+
     $('.number').css('direction','ltr');
+
+    $('.hphone').on('change', function(e) {
+      $("#supporter_home_phone").val($("#home_phone_prefix option:selected").val()+$("#home_phone").val());
+    });
+    
+    $('.mphone').on('change', function(e) {
+      $("#supporter_mobile_phone").val($("#mobile_phone_prefix option:selected").val()+$("#mobile_phone").val());
+    });
+    
     $('input[name=monthly]').on('click', function(e) {
       val = $(e.target).attr('data-value');
       if (val > 0) {

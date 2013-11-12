@@ -161,10 +161,27 @@ textarea {
 }
 
 #supporter_address {
-  height: 63px !important;
-  max-height: 63px !important;
+  height: 84px !important;
+  max-height: 84px !important;
+}
+
+select {
+  width: 60px;
+  margin: 4px -16px 0 10px;
+  -webkit-box-sizing:border-box;
+  -moz-box-sizing:border-box;
+  box-sizing:border-box;
+  font-size:16px;
+}
+
+select optgroup {
+  font-size:24px;
 }
 
 #mainBox1 h2, .control-label {
   color: #060;
+}
+label.required:after {
+  content: " *";
+  color: red;
 }

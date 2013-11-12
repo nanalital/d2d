@@ -17,14 +17,13 @@
     if (parts[1] > 12) return false
     return new Date(parts[2],parts[1]-1,parts[0]);
   }, $.validator.format("Please specify a reasonable birthdate."));
-  $.validator.addMethod('ilmphone', function(value, element, arg) {
+  $.validator.addMethod('prefix', function(value, element, arg) {
+    if (value != "--") { return true; } else return false
+  }, $.validator.format("Please choose a valid prefix"))
+  $.validator.addMethod('phone', function(value, element, arg) {
     value = value.replace(/\D/g,'');
-    if (value.match(/^05\d{8}$/)) { return true; } else return false
-  }, $.validator.format("Please a valid mobile phone number for Israel."))
-  $.validator.addMethod('ilhphone', function(value, element, arg) {
-    value = value.replace(/\D/g,'');
-    if (value.match(/^07{0,1}\d{8}$/)) { return true; } else return false
-  }, $.validator.format("Please a valid landphone number for Israel."))
+    if (value.length == 7) { return true; } else return false
+  }, $.validator.format("Please type a valid phone number with 7 digits."))
   $.validator.addMethod('daterange', function(value, element, arg) {
        var startDate = new Date().getFullYear()-120,
            endDate = new Date().getFullYear()-18,
@@ -66,13 +65,17 @@
          "required": true,
          "minlength": 5},
 
-       "supporter[home_phone]": {
+       "home_phone_prefix": {
+         "prefix": true},
+       "home_phone": {
          "required": true,
-         "ilhphone": true},
+         "phone": true},
 
-       "supporter[mobile_phone]": {
+       "mobile_phone_prefix": {
+         "prefix": true},
+       "mobile_phone": {
          "required": true,
-         "ilmphone": true},
+         "phone": true},
 
        "supporter[email]": {
          "email": true,
