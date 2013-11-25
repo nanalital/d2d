@@ -8,7 +8,7 @@
 %h2 טופס הצטרפות כחבר גרינפיס -
 %p.large גרינפיס הוא ארגון ללא מטרות רווח המתבסס אך ורק על אנשים פרטיים - כמוך. תרומה לגרינפיס היא תרומה לעתיד ולאיכות החיים של כולנו.
 
--form_for :supporter, url(:create), :class => 'form-horizontal' do |f|
+-form_for :supporter, url(:create), :class => 'form-horizontal', :autocomplete => 'off' do |f|
   =partial 'form', :locals => { :f => f }
 
 :javascript
