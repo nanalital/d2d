@@ -29,9 +29,10 @@
   =f.label :location, :class => 'control-label'
   .controls
     %select#account_location.input-xlarge{:name=>'account[location_id]'}
-      -@account.city.locations.each do |l|
-        -puts @account.location_id == l.id
-        %option{:value=>l.id, :selected=>@account.location_id == l.id}= l.name
+      -if @account.city
+        -@account.city.locations.each do |l|
+          -puts @account.location_id == l.id
+          %option{:value=>l.id, :selected=>@account.location_id == l.id}= l.name
 
 :javascript
   var citylocs = #{@citylocs}
