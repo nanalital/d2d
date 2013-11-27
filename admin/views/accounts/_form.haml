@@ -57,11 +57,12 @@
   .controls
     =f.password_field :password_confirmation, :class => 'input-xlarge input-with-feedback'
 
-- error = @account.errors.include?(:role)
-%fieldset.control-group{:class => error ? 'has-error' : ''}
-  =f.label :role, :class => 'control-label'
-  .controls
-    =f.text_field :role, :class => 'input-xlarge input-with-feedback'
+-if @admin
+  - error = @account.errors.include?(:role)
+  %fieldset.control-group{:class => error ? 'has-error' : ''}
+    =f.label :role, :class => 'control-label'
+    .controls
+      =f.text_field :role, :class => 'input-xlarge input-with-feedback'
 
 .form-actions
   =f.submit pat(:save), :class => 'btn btn-primary'

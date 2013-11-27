@@ -52,6 +52,7 @@ module D2d
 
     access_control.roles_for :recruiter do |role|
       role.allow '/supporters/mine'
+      role.allow '/accounts/edit'
     end
 
     $title = 'd2d'

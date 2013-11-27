@@ -42,7 +42,17 @@ D2d::Admin.controllers :accounts do
     end
   end
 
-  get :edit, :protect => true, :with => :id do
+  get :edit, :protect => false, :with => :id do
+    @admin = true
+    if current_account
+      if current_account.id.to_s === params[:id] or ['admin','coach'].include? current_account.role
+        @admin = false
+      else
+        redirect to "/" 
+      end
+    else
+      redirect to "/"
+    end
     @title = pat(:edit_title, :model => "account #{params[:id]}")
     @account = Account.find(params[:id])
     if @account
@@ -53,7 +63,15 @@ D2d::Admin.controllers :accounts do
     end
   end
 
-  put :update, :protect => true, :with => :id do
+  put :update, :protect => false, :with => :id do
+    if current_account
+      if current_account.id.to_s === params[:id] or ['admin','coach'].include? current_account.role
+      else
+        redirect to "/" 
+      end
+    else
+      redirect to "/"
+    end
     @title = pat(:update_title, :model => "account #{params[:id]}")
     @account = Account.find(params[:id])
     if @account
