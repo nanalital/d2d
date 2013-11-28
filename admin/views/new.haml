@@ -28,7 +28,7 @@
   $.validator.addMethod('phone', function(value, element, arg) {
     value = value.replace(/\D/g,'');
     if (value.length == 7) { return true; } else return false
-  }, $.validator.format("Please type a valid phone number with 7 digits."))
+  }, $.validator.format("נא למלא מספר נייד בן 7 ספרות"))
   $.validator.addMethod('daterange', function(value, element, arg) {
        var startDate = new Date().getFullYear()-120,
            endDate = new Date().getFullYear()-18,

@@ -12,54 +12,47 @@
     .ltr
       %h2 Hello Tomer!
       %p
-        Click
-        %a{:href=>'/cities'} here
-        to manage cities &amp; locations;
+        לניהול ערים
+        %a{:href=>'/cities'} לחץ כאן
+        ומיקומים
       %p
-        Click
-        %a{:href=>'/accounts'} here
-        to manage people.
+        %a{:href=>'/accounts'} לחץ כאן
+        לניהול עובדים
       %p
-        Click
-        %a{:href=>'/supporters'} here
-        to see supporters.
+        %a{:href=>'/supporters'} לחץ כאן
+        לצפייה בתומכים
       %p
-        Click
-        %a{:href=>'/supporters/export'} here
-        to export supporters.
+        %a{:href=>'/supporters/export'} לחץ כאן
+        לייצוא תומכים
       %p
-        Click
-        %a{:href=>'/new'} here
-        to add a new supporter.
+        חדש
+        %a{:href=>'/new'} לחץ כאן
+        להוספת תומך 
 
 
   -elsif current_account.role == 'coach'
     .ltr
       %h2= 'Hello '+current_account.name
       %p
-        Click
-        %a{:href=>'/cities'} here
-        to manage cities &amp; locations;
+        לניהול ערים
+        %a{:href=>'/cities'} לחץ כאן
+        ומיקומים
       %p
-        Click
-        %a{:href=>'/accounts'} here
-        to manage people.
+        %a{:href=>'/accounts'} לחץ כאן
+        לניהול עובדים
       %p
-        Click
-        %a{:href=>'/supporters'} here
-        to see supporters.
+        %a{:href=>'/supporters'} לחץ כאן
+        לצפייה בתומכים
       %p
-        Click
-        %a{:href=>'/new'} here
-        to add a new supporter.
-
+        חדש
+        %a{:href=>'/new'} לחץ כאן
+        להוספת תומך 
   -else
     %h2= 'Hello '+current_account.name
     %p
-      Click
-      %a{:href=>'/new'} here
-      to add a new supporter.
+      חדש
+      %a{:href=>'/new'} לחץ כאן
+      להוספת תומך 
     %p
-      Click
-      %a{:href=>"/accounts/edit/#{current_account.id}"} here
-      to manage people.
+      %a{:href=>'/accounts'} לחץ כאן
+      לניהול עובדים
