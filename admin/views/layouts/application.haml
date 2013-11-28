@@ -64,10 +64,10 @@
 
                 %li
                   -unless current_account
-                    %a{:href=>'/sessions/new'} Log in
+                    %a{:href=>'/sessions/new'} התחברות
                   -else
                     -form_for :account, url(:sessions, :destroy), :class => 'hide', :id=>'signout', :method=>'post'  do |f|
                       %input{:value=>'delete',:name=>'_method',:type=>'hidden'}
-                    %a{:href=>'#',:onclick=>'$("#signout").submit()'} Logout
+                    %a{:href=>'#',:onclick=>'$("#signout").submit()'} התנתקות
 
 

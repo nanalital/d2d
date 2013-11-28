@@ -1,1 +1,18 @@
-%h1= 'Thanks '+@sup.first_name+'!'
+-#coding:utf-8
+.row
+  .col-sm-6.col-6.col-md-6
+    %img{:src=>'/images/thanksbear.jpg',:style=>'max-width:100%;'}
+  .col-sm-6.col-6.col-md-6
+    %h1= 'שלום '+@sup.first_name+','
+    %p אני רוצה להודות לך מקרב לב על הצטרפותך לארגוננו.
+    %p בקרוב תתחיל לקבל מהארגון ניוזלטר למייל ובו תוכל להתעדכן בכל מה שאנחנו משיגים בזכותך.
+    %p
+      ניתן ליצור איתנו קשר בטלפון 072-2204510 או במייל
+      %a{:href=>'mailto:gpmedisr@greenpeace.org'} gpmedisr@greenpeace.org
+    %br/
+    -if @sup.account
+      %p= "#{@sup.account.name} #{@sup.account.surname}"
+      %p= "#{@sup.dd_location}, #{@sup.dd_city}"
+    %p= "#{@sup.acquired}"
+    %p מקום
+    %p תאריך

@@ -12,11 +12,16 @@
   =partial 'form', :locals => { :f => f }
 
 :javascript
+  $.extend($.validator.messages, {
+      required: "שדה חובה",
+      email: "כתובת אימייל",
+  });
+
   $.validator.addMethod("ildate", function(value, element) { 
     var parts = value.split('/');
     if (parts[1] > 12) return false
     return new Date(parts[2],parts[1]-1,parts[0]);
-  }, $.validator.format("Please specify a reasonable birthdate."));
+  }, $.validator.format("תאריך יום הולדת מלא"));
   $.validator.addMethod('prefix', function(value, element, arg) {
     if (value != "--") { return true; } else return false
   }, $.validator.format("Please choose a valid prefix"))
@@ -29,7 +34,7 @@
            endDate = new Date().getFullYear()-18,
            enteredDate = value.split('/')[2]
        if (enteredDate < endDate && enteredDate > startDate ) { return true; } else return false
-   }, $.validator.format("Please specify a reasonable birthdate."))
+   }, $.validator.format("תאריך יום הולדת מלא"))
   $("form").validate({
      errorPlacement: function(error, element) {
        error.appendTo( element.closest("fieldset").find("label") );
