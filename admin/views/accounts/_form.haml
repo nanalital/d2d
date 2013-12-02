@@ -62,7 +62,7 @@
   %fieldset.control-group{:class => error ? 'has-error' : ''}
     =f.label :role, :class => 'control-label'
     .controls
-      =f.text_field :role, :class => 'input-xlarge input-with-feedback'
+      =f.text_field :role, :class => 'input-xlarge input-with-feedback', :value => 'user'
 
 .form-actions
   =f.submit pat(:save), :class => 'btn btn-primary'

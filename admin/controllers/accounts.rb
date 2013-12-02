@@ -24,6 +24,16 @@ D2d::Admin.controllers :accounts do
   end
 
   get :new, :protect => true do
+    @admin = true
+    if current_account
+      if current_account.id.to_s === params[:id] or ['admin','coach'].include? current_account.role
+        @admin = false
+      else
+        redirect to "/" 
+      end
+    else
+      redirect to "/"
+    end
     @title = pat(:new_title, :model => 'account')
     @account = Account.new
     render 'accounts/new'
