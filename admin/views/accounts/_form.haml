@@ -57,7 +57,7 @@
   .controls
     =f.password_field :password_confirmation, :class => 'input-xlarge input-with-feedback'
 
--if @admin
+.hide
   - error = @account.errors.include?(:role)
   %fieldset.control-group{:class => error ? 'has-error' : ''}
     =f.label :role, :class => 'control-label'
