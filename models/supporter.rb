@@ -3,6 +3,8 @@ class Supporter < ActiveRecord::Base
   validate :unique
   belongs_to :account
 
+  before_save :beforesave
+
   def self.randomize
     'p'+(0..5).map{ ((0..9).to_a)[rand(10)] }.join
   end
@@ -20,5 +22,8 @@ class Supporter < ActiveRecord::Base
     end
   end
 
+  def beforesave
+    p self.attributes
+  end
 
 end

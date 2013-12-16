@@ -30,22 +30,24 @@ D2d::Admin.controllers :supporters do
     @sups = Supporter.where('acquired <= ?',endd+1.days).where('acquired >= ?',strd)
     #puts @sups
     #puts @sups.count
-    hdrline = '"debit date","token","cc exp date","cc holder","amount on the spot","amount regular","cc number","first name","last name","gender","birthdate","ssn","home phone","mobile","email","address","city","post code","occupation","receive updates?","cc last digits","cc voucher id","dd_recruiter","dd_city","dd_location","uniqnum"'
+    hdrline = '"debit date","token","cc exp date","cc holder","intended_amount","amount on the spot","amount regular","cc number","first name","last name","gender","birthdate","ssn","home phone","mobile","email","address","city","post code","occupation","receive updates?","cc last digits","cc voucher id","dd_recruiter","dd_city_id","dd_city","dd_location_id","dd_location","uniqnum","notes","mamber name","member phone"'
     File.open('tmp/sup.csv',"w:utf-8") do |output|
       output << hdrline+"\n"
       @sups.each do |s|
+
         line = []
         line << s.acquired.strftime('%d/%m/%Y')
         line << s.key
         line << s.cc_expiry
-        line << s.first_name+' '+s.last_name
+        line << s.cc_holder
+        line << s.intended_amount
         line << ''
         line << s.amount.to_s
         line << ''
         line << s.first_name
         line << s.last_name
         line << s.gender == 1 ? 'm' : 'f'
-        line << s.birthday.nil? ? '' : s.birthday.strftime('%d/%m/%Y')
+        line << (s.birthday.nil? ? '' : s.birthday)
         line << s.citizen_id
         line << s.home_phone
         line << s.mobile_phone
@@ -58,9 +60,23 @@ D2d::Admin.controllers :supporters do
         line << s.cc_last4d
         line << s.cc_voucher
         line << (s.account ? s.account.name : '')
-        line << s.dd_city
-        line << s.dd_location
+        begin
+          if (s.dd_city)
+            city = City.find (s.dd_city.to_i)
+            location = Location.find (s.dd_location.to_i)
+          end
+
+          line << city.other_id
+          line << city.name
+          line << location.other_id
+          line << location.name
+        rescue
+          4.times {line << ''}
+        end
         line << s.uniqnum
+        line << s.notes
+        line << s.member_name
+        line << s.member_phone
         output << '"'+line.join('","')+'"'+"\n"
       end
     end

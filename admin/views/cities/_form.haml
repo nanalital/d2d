@@ -1,3 +1,9 @@
+- error = @city.errors.include?(:other_id)
+%fieldset.control-group{:class => error ? 'has-error' : ''}
+  =f.label :id, :class => 'control-label'
+  .controls
+    =f.text_field :other_id, :class => 'input-with-feedback', :autofocus => true
+
 - error = @city.errors.include?(:name)
 %fieldset.control-group{:class => error ? 'has-error' : ''}
   =f.label :name, :class => 'control-label'
@@ -8,7 +14,8 @@
 - @city.locations.order('updated_at DESC').each do |l|
   %fieldset.control-group{:class => error ? 'has-error' : ''}
   .controls
-    %input.input-with-feedback{:id=>'location_'+l.id.to_s+'_name',:name=>'location['+l.id.to_s+']',:value=>l.name,:type=>'text'}
+    %input.input-with-feedback{:id=>'location_'+l.id.to_s+'_name',:name=>'location['+l.id.to_s+'][name]',:value=>l.name,:type=>'text',:style=>'width:480px;'}
+    %input.input-with-feedback{:id=>'location_'+l.id.to_s+'_other_id',:name=>'location['+l.id.to_s+'][other_id]',:value=>l.other_id,:type=>'text',:style=>'width:120px;',:placeholder=>l.id}
     %a.btn.btn-danger{:href=>'/deletelocation/'+l.id.to_s} DELETE
 
 %fieldset.control-group{:class => error ? 'has-error' : ''}
@@ -18,7 +25,6 @@
 
 :javascript
   function slideNew() {
-    console.log('niye?');
     $("#location_new").slideDown();
   }
 

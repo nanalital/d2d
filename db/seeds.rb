@@ -59,9 +59,13 @@ cities.each do |k,v|
   c = City.new
   c.name = k
   c.save
+  c.other_id = c.id
+  c.save
   v.each do |o|
     l = Location.new
     l.name = o
+    l.save
+    l.other_id = l.id
     l.save
     c.locations << l
   end

@@ -65,6 +65,10 @@ module D2d
 
     enable :sessions
 
+    get :recruit do
+      recruit
+    end
+
     get :index do
       @title = "Supporters"
       @supporters = Supporter.all
@@ -112,8 +116,9 @@ module D2d
         @sup.cc_last4d = params["p5"]
         @sup.cc_expiry = params["p30"]
         @sup.amount = params["p36"].to_i
-        @sup.citizen_id = params["71"]
         @sup.cc_voucher = params["p96"]
+        @sup.citizen_id = params["200"]
+        @sup.cc_holder = params["p201"]
         if @sup.save
           return render 'thanks', :layout => layout
         else
@@ -134,7 +139,7 @@ module D2d
       paymauthurl = "https://online.premiumfs.co.il/Sites/greenpeace/pfsAuth.aspx"
       paympaymurl = 'https://online.premiumfs.co.il/Sites/greenpeace/payment.aspx'
 
-      refURL = 'https://med.greenpeace.org/israel/d2d/thankyou/'#request.url
+      refURL = 'https://med.greenpeace.org/israel/d2d/thankyou/'
 
       @supporter = Supporter.new(params[:supporter])
       @supporter.account = current_account

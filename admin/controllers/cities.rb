@@ -57,7 +57,8 @@ D2d::Admin.controllers :cities do
         l = nil
         l = Location.find k.to_i unless k == 'new'
         if l
-          l.name = v
+          l.name = v["name"]
+          l.other_id = v["other_id"]
           l.save
         end
       end

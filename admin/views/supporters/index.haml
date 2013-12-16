@@ -1,9 +1,10 @@
+-#coding:utf-8
 -content_for :header do
   %link{:src=>'/admin/stylesheets/application.css', :type=>'text/css' }
 .ltr
   %ul.nav.nav-tabs
     %li.active=link_to tag_icon(:list, pat(:list)), url(:supporters, :index)
-    %li=link_to tag_icon(:plus, pat(:new)), url(:new)
+    %li=link_to tag_icon(:plus, "חדש"), url(:new)
 
   .tabs-content
     %table#list.table.table-striped.table-hover.table-condensed
@@ -30,16 +31,13 @@
                           =hidden_field_tag :supporter_ids, :'data-delete-many-ids' => true
                           =submit_tag pat(:delete), :class =>'list-menu-popover-delete-selected-btn btn btn-danger btn-small'
                           .btn.btn-small.cancel=pat(:cancel)
-          %th.header= mat(:supporter, :uniqnum)
+          %th.header= ""
+          %th.header= mat(:supporter, :age)
+          %th.header= mat(:supporter, :name)
+          %th.header= mat(:supporter, :email)
+          %th.header= mat(:supporter, :amount)
           %th.header= mat(:supporter, :acquired_at)
           %th.header= mat(:supporter, :acquired_by)
-          %th.header= mat(:supporter, :first_name)
-          %th.header= mat(:supporter, :last_name)
-          %th.header= mat(:supporter, :occupation)
-          %th.header= mat(:supporter, :city)
-          %th.header= mat(:supporter, :email)
-          %th.header= mat(:supporter, :ap_monthly)
-          %th.header= mat(:supporter, :acquired_at)
           %th.header.list-row-action-header
 
       %tbody
@@ -52,14 +50,12 @@
               -if ['admin','coach'].include? current_account.role
                 %a{:href=>'/supporters/edit/'+supporter.id.to_s}=supporter.uniqnum
               -else
-                =supporter.uniqnum
-            %td.list-column=supporter.acquired
-            %td.list-column=supporter.account.name
-            %td.list-column=supporter.first_name
-            %td.list-column=supporter.last_name
-            %td.list-column=supporter.occupation
-            %td.list-column=supporter.city
+                &nbsp;
+            -#%td.list-column=supporter.birthday.strftime "%Y"
+            %td.list-column=time_ago_in_words supporter.birthday
+            %td.list-column #{supporter.first_name} #{supporter.last_name}
             %td.list-column=supporter.email
-            %td.list-column=supporter.ap_monthly
+            %td.list-column=supporter.intended_amount	    
             %td.list-column=time_ago_in_words supporter.acquired
+            %td.list-column=supporter.account.name
             %td.list-column.list-row-action

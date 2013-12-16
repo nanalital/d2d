@@ -9,7 +9,7 @@
 -if current_account
   %p= "id:#{current_account.id}"
   -if current_account.role == 'admin'
-    .ltr
+    .ltrn
       %h2 Hello Tomer!
       %p
         לניהול ערים
@@ -31,7 +31,7 @@
 
 
   -elsif current_account.role == 'coach'
-    .ltr
+    .ltrn
       %h2= 'Hello '+current_account.name
       %p
         לניהול ערים
@@ -53,6 +53,8 @@
       חדש
       %a{:href=>'/new'} לחץ כאן
       להוספת תומך 
+      %p
+        %a{:href=>'/supporters/mine'} לחץ כאן
     %p
       %a{:href=>'/accounts/edit/'+current_account.id.to_s} לחץ כאן
       לניהול עובדים

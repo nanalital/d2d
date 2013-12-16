@@ -29,12 +29,14 @@ ActiveRecord::Schema.define(:version => 4) do
 
   create_table "cities", :force => true do |t|
     t.string   "name"
+    t.integer  "other_id"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
 
   create_table "locations", :force => true do |t|
     t.string   "name"
+    t.integer  "other_id"
     t.integer  "city_id"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
@@ -66,12 +68,17 @@ ActiveRecord::Schema.define(:version => 4) do
     t.boolean  "receive_updates"
 
     t.integer  "amount"
+    t.integer  "intended_amount"
     t.string   "key"
     t.string   "cc_expiry"
     t.string   "cc_last4d"
     t.string   "cc_voucher"
+    t.string   "cc_holder"
 
     t.text     "notes"
+
+    t.string   "member_name"
+    t.string   "member_phone"
     
     t.datetime "created_at",      :null => false
     t.datetime "updated_at",      :null => false

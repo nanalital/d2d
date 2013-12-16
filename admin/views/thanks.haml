@@ -12,8 +12,9 @@
         %a{:href=>'mailto:gpmedisr@greenpeace.org'} gpmedisr@greenpeace.org
       %br/
       %p= "#{@sup.account.name} #{@sup.account.surname}"
-      %p= "#{@sup.dd_location}, #{@sup.dd_city}"
-      %p= "#{@sup.acquired}"
+      -if @sup.dd_location
+        %p= "#{@sup.dd_location.name}, #{@sup.dd_city.name}"
+      %p= "#{@sup.acquired.strftime("%d/%m/%Y")}"
       %p מקום
       %p תאריך
     -else
@@ -45,3 +46,7 @@
       %p שלמה פלדמן,
       %p מנהל קשרי תומכים,
       %p בשם צוות גרינפיס ים תיכון ישראל
+    -12.times do
+      %br/
+
+    %p=link_to tag_icon(:list, pat(:list)), url(:supporters, :mine)
