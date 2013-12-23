@@ -22,7 +22,7 @@ def recruit
         end
       end
       tr = cs[2].to_ascii.gsub(' ','_').gsub(/['`]/,'-')
-      Account.create :name => cs[2], :email => tr+'@d2d.org', :stype => cs[1], :city_id => city, :role => 'recruiter', :password => 'recruiter', :password_confirmation => 'recruiter', :old_id => cs[0].to_i
+      Account.create :name => cs[2], :email => tr+'@greenpeace.org', :stype => cs[1], :city_id => city, :role => 'recruiter', :password => 'recruiter', :password_confirmation => 'recruiter', :old_id => cs[0].to_i
     end
   end
 end

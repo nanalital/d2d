@@ -30,7 +30,7 @@ D2d::Admin.controllers :supporters do
     @sups = Supporter.where('acquired <= ?',endd+1.days).where('acquired >= ?',strd)
     #puts @sups
     #puts @sups.count
-    hdrline = '"debit date","token","cc exp date","cc holder","intended_amount","amount on the spot","amount regular","cc number","first name","last name","gender","birthdate","ssn","home phone","mobile","email","address","city","post code","occupation","receive updates?","cc last digits","cc voucher id","dd_recruiter","dd_city_id","dd_city","dd_location_id","dd_location","uniqnum","notes","mamber name","member phone"'
+    hdrline = '"debit date","token","cc exp date","cc holder","intended_amount","amount on the spot","amount regular","cc number","first name","last name","gender","birthdate","ssn","home phone","mobile","email","address","city","post code","occupation","receive updates?","cc voucher id","uniqnum","notes"'#,"cc last digits","dd_recruiter","dd_city_id","dd_city","dd_location_id","dd_location","mamber name","member phone"'
     File.open('tmp/sup.csv',"w:utf-8") do |output|
       output << hdrline+"\n"
       @sups.each do |s|
@@ -57,8 +57,11 @@ D2d::Admin.controllers :supporters do
         line << s.zip_code
         line << s.occupation
         line << s.receive_updates ? 't' : 'f'
-        line << s.cc_last4d
         line << s.cc_voucher
+        line << s.uniqnum
+=begin
+        line << s.notes
+        line << s.cc_last4d
         line << (s.account ? s.account.name : '')
         begin
           if (s.dd_city)
@@ -73,10 +76,9 @@ D2d::Admin.controllers :supporters do
         rescue
           4.times {line << ''}
         end
-        line << s.uniqnum
-        line << s.notes
         line << s.member_name
         line << s.member_phone
+=end
         output << '"'+line.join('","')+'"'+"\n"
       end
     end

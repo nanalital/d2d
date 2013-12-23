@@ -22,13 +22,14 @@
   .controls
     =f.text_field :email, :class => 'input-xlarge input-with-feedback'
 
-- error = @account.errors.include?(:city_id)
-%fieldset.control-group{:class => error ? 'has-error' : ''}
-  =f.label :city, :class => 'control-label'
-  .controls{:style=>'height:52px;'}
-    %select#account_city.input-xlarge{:name=>'account[city_id]'}
-      -City.all.each do |c|
-        %option{:value=>c.id, :selected=>@account.city_id == c.id}= c.name
+-if ["admin","coach"].include? current_account.role
+  - error = @account.errors.include?(:city_id)
+  %fieldset.control-group{:class => error ? 'has-error' : ''}
+    =f.label :city, :class => 'control-label'
+    .controls{:style=>'height:52px;'}
+      %select#account_city.input-xlarge{:name=>'account[city_id]'}
+        -City.all.each do |c|
+          %option{:value=>c.id, :selected=>@account.city_id == c.id}= c.name
 
 - error = @account.errors.include?(:location_id)
 %fieldset.control-group{:class => error ? 'has-error' : ''}
@@ -37,11 +38,10 @@
     %select#account_location.input-xlarge{:name=>'account[location_id]'}
       -if @account.city
         -@account.city.locations.each do |l|
-          -puts @account.location_id == l.id
           %option{:value=>l.id, :selected=>@account.location_id == l.id}= l.name
 
 :javascript
-  var citylocs = #{@citylocs}
+  var citylocs = #{@citylocs};
   $('#account_city').on('change',function(){
     lc = $('#account_city option:selected').val();
     locs = '';
@@ -74,5 +74,8 @@
   =f.submit pat(:save), :class => 'btn btn-primary'
   &nbsp;
   =f.submit pat(:save_and_continue), :class => 'btn btn-info', :name => 'save_and_continue'
+  -if ["admin","coach"].include? current_account.role
+    &nbsp;
+    =f.submit pat(:delete), :class => 'btn btn-danger', :name => 'delete'
   &nbsp;
   =link_to pat(:cancel), url(:accounts, :index), :class => 'btn'

@@ -85,7 +85,11 @@ D2d::Admin.controllers :accounts do
     @title = pat(:update_title, :model => "account #{params[:id]}")
     @account = Account.find(params[:id])
     if @account
-      puts params[:account]
+      if params[:delete] == "Delete"
+        if @account.destroy
+          redirect(url(:accounts, :index))
+        end
+      end
       if @account.update_attributes(params[:account])
         flash[:success] = pat(:update_success, :model => 'Account', :id =>  "#{params[:id]}")
         params[:save_and_continue] ?
