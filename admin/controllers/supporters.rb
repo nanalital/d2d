@@ -59,8 +59,8 @@ D2d::Admin.controllers :supporters do
         line << s.receive_updates ? 't' : 'f'
         line << s.cc_voucher
         line << s.uniqnum
-=begin
         line << s.notes
+=begin
         line << s.cc_last4d
         line << (s.account ? s.account.name : '')
         begin

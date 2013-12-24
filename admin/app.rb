@@ -117,7 +117,7 @@ module D2d
         @sup.cc_expiry = params["p30"]
         @sup.amount = params["p36"].to_i
         @sup.cc_voucher = params["p96"]
-        @sup.citizen_id = params["200"]
+        @sup.citizen_id = params["200"].to_i
         @sup.cc_holder = params["p201"]
         if @sup.save
           return render 'thanks', :layout => layout
