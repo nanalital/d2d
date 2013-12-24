@@ -255,4 +255,7 @@
         resetMonthly();
       }
     });
+    $('#supporter_amount').blur(function(e){
+      $('#supporter_intended_amount').val($(e.target).val());
+    });
   });

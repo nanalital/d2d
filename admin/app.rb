@@ -109,7 +109,7 @@ module D2d
       layout = :web if params["web"] == 1
       return render 'failure', :layout => layout unless params["p1"] == "000"
       unless @sup
-        puts params.to_s
+        puts "sup not found"
         return render 'failure', :layout => layout
       else
         @sup.key = params["key"]
@@ -117,7 +117,7 @@ module D2d
         @sup.cc_expiry = params["p30"]
         @sup.amount = params["p36"].to_i
         @sup.cc_voucher = params["p96"]
-        @sup.citizen_id = params["200"].to_i
+        @sup.citizen_id = params["p200"]
         @sup.cc_holder = params["p201"]
         if @sup.save
           return render 'thanks', :layout => layout
@@ -145,8 +145,8 @@ module D2d
       @supporter.account = current_account
       @supporter.acquired = Time.now
       if current_account
-        @supporter.dd_city = current_account.city
-        @supporter.dd_location = current_account.location
+        @supporter.dd_city = current_account.city.name
+        @supporter.dd_location = current_account.location.name
       end
       amount = (@supporter.amount*100).to_s
       if @supporter.save
