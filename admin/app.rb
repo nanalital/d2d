@@ -145,8 +145,8 @@ module D2d
       @supporter.account = current_account
       @supporter.acquired = Time.now
       if current_account
-        @supporter.dd_city = current_account.city.name
-        @supporter.dd_location = current_account.location.name
+        @supporter.dd_city = current_account.city.id
+        @supporter.dd_location = current_account.location.id
       end
       amount = (@supporter.amount*100).to_s
       if @supporter.save
