@@ -30,7 +30,7 @@ D2d::Admin.controllers :supporters do
     @sups = Supporter.where('acquired <= ?',endd+1.days).where('acquired >= ?',strd)
     #puts @sups
     #puts @sups.count
-    hdrline = '"debit date","token","cc exp date","cc holder","intended_amount","amount on the spot","amount regular","cc number","first name","last name","gender","birthdate","ssn","home phone","mobile","email","address","city","post code","occupation","receive updates?","cc voucher id","dd_city_id","dd_location_id","uniqnum","notes"'#,"cc last digits","dd_recruiter","dd_city","dd_location","mamber name","member phone"'
+    hdrline = '"debit date","token","cc exp date","cc holder","intended_amount","amount on the spot","amount regular","cc number","first name","last name","gender","birthdate","ssn","home phone","mobile","email","address","city","post code","occupation","receive updates?","cc voucher id","dd_id","dd_city_id","dd_location_id","uniqnum","notes"'#,"cc last digits","dd_recruiter","dd_city","dd_location","mamber name","member phone"'
     File.open('tmp/sup.csv',"w:utf-8") do |output|
       output << hdrline+"\n"
       @sups.each do |s|
@@ -59,14 +59,16 @@ D2d::Admin.controllers :supporters do
         line << s.receive_updates ? 't' : 'f'
         line << s.cc_voucher
         begin
-          if (s.dd_city)
+          if (s.account)
+            account = s.account
             city = City.find (s.dd_city.to_i)
             location = Location.find (s.dd_location.to_i)
           end
+          line << account.old_id
           line << city.other_id
           line << location.other_id
         rescue
-          2.times {line << ''}
+          3.times {line << ''}
         end
         line << s.uniqnum
         line << s.notes

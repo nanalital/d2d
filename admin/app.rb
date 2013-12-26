@@ -115,7 +115,7 @@ module D2d
         @sup.key = params["key"]
         @sup.cc_last4d = params["p5"]
         @sup.cc_expiry = params["p30"]
-        @sup.amount = params["p36"].to_i
+        @sup.amount = params["p36"].to_i / 100
         @sup.cc_voucher = params["p96"]
         @sup.citizen_id = params["p200"]
         @sup.cc_holder = params["p201"]
@@ -145,8 +145,8 @@ module D2d
       @supporter.account = current_account
       @supporter.acquired = Time.now
       if current_account
-        @supporter.dd_city = current_account.city.id
-        @supporter.dd_location = current_account.location.id
+        @supporter.dd_city = current_account.city_id
+        @supporter.dd_location = current_account.location_id
       end
       amount = (@supporter.amount*100).to_s
       if @supporter.save
