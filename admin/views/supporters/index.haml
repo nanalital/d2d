@@ -57,5 +57,8 @@
             %td.list-column=supporter.email
             %td.list-column=supporter.intended_amount	    
             %td.list-column=time_ago_in_words supporter.acquired
-            %td.list-column=supporter.account.name
+            -if supporter.account
+              %td.list-column=supporter.account.name
+            -else
+              %td.list-column -
             %td.list-column.list-row-action
