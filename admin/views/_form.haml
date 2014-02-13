@@ -191,13 +191,13 @@
   .col-sm-6.col-6
     - error = @supporter.errors.include?(:member_name)
     %fieldset.control-group{:class => error ? 'has-error' : ''}
-      %label.required.control-label{:for=>'supporter_member_name'}= 'שם מלא'
+      %label.control-label{:for=>'supporter_member_name'}= 'שם מלא'
       .controls
         =f.text_field :member_name, :class => 'input-xlarge input-with-feedback'
   .col-sm-6.col-6
     - error = @supporter.errors.include?(:member_phone)
     %fieldset.control-group{:class => error ? 'has-error' : ''}
-      %label.required.control-label{:for=>'supporter_member_phone'}= 'טלפון'
+      %label.control-label{:for=>'supporter_member_phone'}= 'טלפון'
       .row.controls
         .col-sm-9.col-9
           %input#member_phone.input-xlarge.input-with-feedback.ephonemask.mphone{:type=>"text",:name=>"member_phone"}
@@ -213,10 +213,12 @@
 .row
   .col-sm-12.col-12
     .form-actions
-      =f.submit pat(:submit), :class => 'btn btn-success input-xlarge', :style => 'height: 72px; padding:24px 0;'
+      =f.submit pat("לשליחה"), :class => 'btn btn-success input-xlarge', :style => 'height: 72px; padding:12px; font-size:32px'
 
 :javascript
   $(document).ready(function(){
+    $('select').css('margin','0 -22px 0 10px');
+    $('select').css('width','70px');
     $(".datemask").mask("99/99/9999");
     $('.datemask').attr('placeholder','__/__/____');
     $('.datemask').css('direction','ltr');
