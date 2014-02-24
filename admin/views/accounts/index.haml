@@ -38,7 +38,7 @@
           %tr.list-row
             %td.list-column.list-selectable
               =check_box_tag 'account_ids[]', :value => account.id, :class => 'list-selectable-checkbox'
-            %td.list-column=account.id
+            %td.list-column=account.old_id
             %td.list-column
               %a{:href=>'/accounts/edit/'+account.id.to_s}=account.name
             %td.list-column=account.surname
