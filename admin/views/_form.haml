@@ -58,7 +58,7 @@
       .col-sm-4.col-4
         - error = @supporter.errors.include?(:zip_code)
         %fieldset.control-group{:class => error ? 'has-error' : ''}
-          %label.required.control-label{:for=>'supporter_zip_code'}= 'מיקוד'
+          %label.control-label{:for=>'supporter_zip_code'}= 'מיקוד'
           .controls
             =f.text_field :zip_code, :class => 'input-xlarge input-with-feedback number'
     %hr/

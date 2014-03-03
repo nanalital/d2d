@@ -31,7 +31,7 @@
   }, $.validator.format(""))
   $.validator.addMethod('phone', function(value, element, arg) {
     value = value.replace(/\D/g,'');
-    if (value.length == 7) { return true; } else return false
+    if (value.length == 7 or value.length == 0) { return true; } else return false
   }, $.validator.format("נא למלא מספר נייד בן 7 ספרות"))
   $.validator.addMethod('daterange', function(value, element, arg) {
        var startDate = new Date().getFullYear()-120,
