@@ -1,8 +1,9 @@
-- error = @account.errors.include?(:old_id)
-%fieldset.control-group{:class => error ? 'has-error' : ''}
-  =f.label :old_id, :class => 'control-label'
-  .controls.rtl
-    =f.text_field :old_id, :class => 'input-xlarge input-with-feedback', :autofocus => true
+-if ["admin","coach"].include? current_account.role
+  - error = @account.errors.include?(:old_id)
+  %fieldset.control-group{:class => error ? 'has-error' : ''}
+    =f.label :old_id, :class => 'control-label'
+    .controls.rtl
+      =f.text_field :old_id, :class => 'input-xlarge input-with-feedback', :autofocus => true
 
 - error = @account.errors.include?(:name)
 %fieldset.control-group{:class => error ? 'has-error' : ''}
@@ -31,14 +32,14 @@
         -City.all.each do |c|
           %option{:value=>c.id, :selected=>@account.city_id == c.id}= c.name
 
-- error = @account.errors.include?(:location_id)
-%fieldset.control-group{:class => error ? 'has-error' : ''}
-  =f.label :location, :class => 'control-label'
-  .controls
-    %select#account_location.input-xlarge{:name=>'account[location_id]'}
-      -if @account.city
-        -@account.city.locations.each do |l|
-          %option{:value=>l.id, :selected=>@account.location_id == l.id}= l.name
+  - error = @account.errors.include?(:location_id)
+  %fieldset.control-group{:class => error ? 'has-error' : ''}
+    =f.label :location, :class => 'control-label'
+    .controls
+      %select#account_location.input-xlarge{:name=>'account[location_id]'}
+        -if @account.city
+          -@account.city.locations.each do |l|
+            %option{:value=>l.id, :selected=>@account.location_id == l.id}= l.name
 
 :javascript
   var citylocs = #{@citylocs};

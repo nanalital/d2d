@@ -92,6 +92,10 @@ module D2d
       render 'thanks'
     end
 
+    get :recruit do
+      recruit
+    end
+
     get :deletelocation, :with => :id do
       if current_account
         if current_account.role = 'admin'

@@ -7,6 +7,7 @@ require 'rubygems' unless defined?(Gem)
 require 'bundler/setup'
 Bundler.require(:default, PADRINO_ENV)
 
+Padrino::Logger::Config[:development] = { :log_level => :warn, :stream => :stdout }
 ##
 # ## Enable devel logging
 #

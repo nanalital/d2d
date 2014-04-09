@@ -1,28 +1,24 @@
 require 'unidecoder'
-require 'csv'
-
 def recruit 
-  csv = File.readlines './tmp/Recruiters.csv'
+  require 'csv'
 
-  csv.each do |c|
-    cs = c.split(',')
-    ci = cs[3]
-    cit = City.find_by_name ci
-    unless ci == 'sCity'
-      if cit
-        puts cit.name + ' ' + cit.id.to_s
-        city = cit.id
-      else
-        unless ci == ''
-          puts ci + ' ' + 'creating'.foreground(:red)
-          cit = City.create :name => ci
-          city = cit.id
-        else
-          city = nil
-        end
-      end
-      tr = cs[2].to_ascii.gsub(' ','_').gsub(/['`]/,'-')
-      Account.create :name => cs[2], :email => tr+'@greenpeace.org', :stype => cs[1], :city_id => city, :role => 'recruiter', :password => 'recruiter', :password_confirmation => 'recruiter', :old_id => cs[0].to_i
+  csv = CSV.read './tmp/Recruiters.csv'
+
+  puts
+  csv.each_with_index do |cs,i|
+    #break if i > 4
+    tr = cs[1].to_ascii.gsub(' ','_').gsub(/['`]/,'-').gsub(/\n/,'')+"@greenpeace.org"
+    if a = Account.find_by_email(tr) and a.old_id = cs[0].to_i
+      puts 'FOUND'
+    elsif a = Account.find_by_email(tr) and a.old_id != cs[0].to_i
+      #a.old_id = cs[0].to_i
+      #a.save
+      puts "MISMATCH: #{cs[0]} | #{a.old_id}"
+    elsif a = Account.find_by_old_id(cs[0].to_i)
+      puts "MISMATCH: #{tr} | #{a.email}"
+    else
+      puts "CREATED: #{tr}"
+      Account.create :name => cs[1], :email => tr+'@greenpeace.org', :role => 'recruiter', :password => 'recruiter', :password_confirmation => 'recruiter', :old_id => cs[0].to_i
     end
   end
 end
