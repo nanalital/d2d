@@ -5,16 +5,11 @@
         = [:error, :warning, :notice].map { |type| flash_tag(type, :class => "alert alert-#{type} fade in", :bootstrap => true) }.join.html_safe
 
         %fieldset.control-group
-          %label.login-input-label.control-label{:for => :email}= pat('login.email')
-          .login-controls.controls=email_field_tag :email, :value => params[:email], :autofocus => true
+          %label.login-input-label.control-label{:for => :old_id} ID
+          .login-controls.controls=text_field_tag :old_id, :value => params[:old_id], :autofocus => true
         %fieldset.control-group
           %label.login-input-label.control-label{:for => :password}= pat('login.password')
           .login-controls.controls=password_field_tag :password, :value => params[:password]
-        -#%fieldset.login-control-group-last.control-group
-          .login-controls.controls
-            %label.login-bypass-label.checkbox
-              =check_box_tag :bypass
-              =pat('login.bypass')
 
       .login-footer.modal-footer
         =submit_tag(pat('login.sign_in'), :class => 'btn btn-primary pull-right')

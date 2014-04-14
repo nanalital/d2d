@@ -14,6 +14,7 @@ class Account < ActiveRecord::Base
   validates_confirmation_of :password,                   :if => :password_required
   validates_length_of       :email,    :within => 5..100
   validates_uniqueness_of   :email,    :case_sensitive => false
+  validates_uniqueness_of   :old_id
   #validates_format_of       :email,    :with => /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/i
   validates_format_of       :role,     :with => /[A-Za-z]/
 

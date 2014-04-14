@@ -7,10 +7,10 @@
 %p משימתנו דורשת כמות עצומה של משאבים, אנושיים וכספיים כאחד, תמיכתך בנו תעזור להבטיח עולם ירוק ובריא יותר עבור כולנו.
 
 -if current_account
-  %p= "id:#{current_account.id}"
+  %p= "id:#{current_account.old_id}"
   -if current_account.role == 'admin'
     .ltrn
-      %h2 Hello Tomer!
+      %h2= 'שלום '+current_account.name
       %p
         לניהול ערים
         %a{:href=>'/cities'} לחץ כאן
@@ -32,7 +32,7 @@
 
   -elsif current_account.role == 'coach'
     .ltrn
-      %h2= 'Hello '+current_account.name
+      %h2= 'שלום '+current_account.name
       %p
         לניהול ערים
         %a{:href=>'/cities'} לחץ כאן

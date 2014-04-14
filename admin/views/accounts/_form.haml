@@ -2,7 +2,7 @@
   - error = @account.errors.include?(:old_id)
   %fieldset.control-group{:class => error ? 'has-error' : ''}
     =f.label :old_id, :class => 'control-label'
-    .controls.rtl
+    .controls.ltr
       =f.text_field :old_id, :class => 'input-xlarge input-with-feedback', :autofocus => true
 
 - error = @account.errors.include?(:name)
