@@ -78,6 +78,7 @@ module D2d
     get :donate do
       @title = "Donate"
       @supporter = Supporter.new
+      @web = true 
       render 'new', :layout => :web
     end
 
@@ -145,12 +146,24 @@ module D2d
 
       refURL = 'https://med.greenpeace.org/israel/d2d/thankyou/'
 
+      web = params.delete('web')
+      puts web
       @supporter = Supporter.new(params[:supporter])
-      @supporter.account = current_account
       @supporter.acquired = Time.now
-      if current_account
+
+      if web
+        account = Account.find(555)
+        @supporter.account = account
+        @supporter.dd_city = account.city_id
+        @supporter.dd_location = account.location_id
+      elsif current_account
+        @supporter.account = current_account
         @supporter.dd_city = current_account.city_id
         @supporter.dd_location = current_account.location_id
+      else
+        @supporter.account = nil
+        @supporter.dd_city = 'error'
+        @supporter.dd_location = 'error'
       end
       amount = (@supporter.amount*100).to_s
       if @supporter.save
