@@ -7,7 +7,7 @@
       =f.label 'מגייס', :class => 'control-label'
       .controls
         %select#account{:name=>'supporter[account_id]', :style=>'width:100%'}
-          -Account.all.each do |a|
+          -Account.all.order(:name).order(:surname).each do |a|
             - option_string = "#{a.name} #{a.surname}"
             - option_string += " - #{a.location.name}" if a.location.present?
             %option{:value=>a.id, :selected => current_account.old_id == a.id}= option_string
