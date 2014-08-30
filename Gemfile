@@ -23,11 +23,15 @@ gem 'activerecord', '>= 3.1', :require => 'active_record'
 gem 'pg'
 gem 'unidecoder'
 gem 'rainbow'
+gem 'mysql2', '~> 0.3.16'
 
 # Test requirements
 
 # Padrino Stable Gem
 gem 'padrino', '0.11.3'
+
+gem 'execjs'
+gem 'therubyracer'
 
 # Or Padrino Edge
 # gem 'padrino', :github => 'padrino/padrino-framework'

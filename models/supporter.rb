@@ -16,6 +16,7 @@ class Supporter < ActiveRecord::Base
 =end
 
   private
+
   def unique
     while self.new_record? && (self.uniqnum == nil || Supporter.find_by_uniqnum(self.uniqnum))
       self.uniqnum = Supporter.randomize
@@ -23,6 +24,12 @@ class Supporter < ActiveRecord::Base
   end
 
   def beforesave
+
+    if self.account
+      self.dd_city = self.account.city_id
+      self.dd_location = self.account.location_id
+    end
+
     p self.attributes
   end
 

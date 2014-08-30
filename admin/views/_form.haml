@@ -1,4 +1,17 @@
 -#coding:utf-8
+
+.row
+  .col-sm-8.col-8
+    - error = @supporter.errors.include?(:account_id)
+    %fieldset.control-group{:class => error ? 'has-error' : ''}
+      =f.label 'מגייס', :class => 'control-label'
+      .controls
+        %select#account{:name=>'supporter[account_id]', :style=>'width:100%'}
+          -Account.all.each do |a|
+            - option_string = "#{a.name} #{a.surname}"
+            - option_string += " - #{a.location.name}" if a.location.present?
+            %option{:value=>a.id, :selected => current_account.old_id == a.id}= option_string
+
 .row
   .col-sm-6.col-6
     - error = @supporter.errors.include?(:first_name)
@@ -127,9 +140,8 @@
           .col-12.col-sm-12
             - error = @supporter.errors.include?(:amount)
             %fieldset.control-group{:class => error ? 'has-error' : ''}
-              %label.control-label{:for=>'supporter_amount'}= ''
               .controls
-                =f.text_field :amount, :class => 'input-xlarge input-with-feedback'
+                =f.number_field :amount, :min => 55, :step => 1, :class => 'input-with-feedback', :style => 'margin-top: 15px;'
 
             %fieldset.control-group.hide{:class => error ? 'has-error' : ''}
               %label.control-label{:for=>'supporter_intended_amount'}= ''
@@ -217,8 +229,6 @@
 
 :javascript
   $(document).ready(function(){
-    $('select').css('margin','0 -22px 0 10px');
-    $('select').css('width','70px');
     $(".datemask").mask("99/99/9999");
     $('.datemask').attr('placeholder','__/__/____');
     $('.datemask').css('direction','ltr');

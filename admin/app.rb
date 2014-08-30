@@ -1,3 +1,4 @@
+# encoding: utf-8
 module D2d
   class Admin < Padrino::Application
     use ActiveRecord::ConnectionAdapters::ConnectionManagement
@@ -23,6 +24,15 @@ module D2d
     # disable :flash                  # Disables sinatra-flash (enabled by default if Sinatra::Flash is defined)
     # layout  :my_layout              # Layout can be in views/layouts/foo.ext or views/foo.ext (default :application)
     #
+
+    # set :delivery_method, :smtp => {
+    #   :address              => "smtp.gmail.com",
+    #   :port                 => 587,
+    #   :user_name            => '###',
+    #   :password             => '###',
+    #   :authentication       => :plain,
+    #   :enable_starttls_auto => true
+    # }
 
     set :admin_model, 'Account'
     set :login_page,  '/sessions/new'
@@ -89,8 +99,19 @@ module D2d
     end
 
     get :thanks, :with => :id do
-      @sup = Supporter.find params[:id]
+      @sup = Supporter.find(params[:id])
+      #deliver(:main, :thank_you_email, @sup, env["HTTP_ORIGIN"])
       render 'thanks'
+    end
+
+    mailer :main do
+      email :thank_you_email do |supporter, root_url|
+        from $sitemail
+        to   supporter.email
+        content_type :html
+        subject  "תודה על תרומתך הראשונה לגרינפיס"
+        body render('thanks', :locals => {:sup => supporter, :root_url => root_url} )
+      end
     end
 
     get :recruit do
@@ -134,10 +155,10 @@ module D2d
 
 
     post :create do
-      testrefURL = '0.0.0.0:3000/success'
-      testauth = "2851500dbdf34ad3a21e3eb417ffef28"
-      testauthurl = 'https://online.premiumfs.co.il/Sites/opencarttest/pfsAuth.aspx'
-      testpaymurl = 'https://online.premiumfs.co.il/Sites/opencarttest/payment.aspx'
+      #testrefURL = '0.0.0.0:3000/success'
+      #testauth = "2851500dbdf34ad3a21e3eb417ffef28"
+      #testauthurl = 'https://online.premiumfs.co.il/Sites/opencarttest/pfsAuth.aspx'
+      #testpaymurl = 'https://online.premiumfs.co.il/Sites/opencarttest/payment.aspx'
 
       paymrefURL = 'med.greenpeace.org/israel/d2d/success'
       paymauth = "22d9e751aade4446ab3dc61209b4fe52"
@@ -147,24 +168,10 @@ module D2d
       refURL = 'https://med.greenpeace.org/israel/d2d/thankyou/'
 
       web = params.delete('web')
-      puts web
+      params['supporter']['account_id'] = 555 if web
       @supporter = Supporter.new(params[:supporter])
       @supporter.acquired = Time.now
 
-      if web
-        account = Account.find(555)
-        @supporter.account = account
-        @supporter.dd_city = account.city_id
-        @supporter.dd_location = account.location_id
-      elsif current_account
-        @supporter.account = current_account
-        @supporter.dd_city = current_account.city_id
-        @supporter.dd_location = current_account.location_id
-      else
-        @supporter.account = nil
-        @supporter.dd_city = 'error'
-        @supporter.dd_location = 'error'
-      end
       amount = (@supporter.amount*100).to_s
       if @supporter.save
         @title = pat(:create_title, :model => "supporter #{@supporter.id}")
@@ -179,12 +186,11 @@ module D2d
         request.body = "a="+amount+"&uniqnum="+@supporter.uniqnum+"&pfsAuthCode="+paymauth
         response = http.request(request)
         #puts response.value
-
         if response.code[0].to_i < 3
           dt = response.read_body.split('~')[1].gsub('MD=','').split('&TT=')
           puts dt
           @url = paympaymurl
-          @post = {:a=>amount,:uniqNum=>@supporter.uniqnum,:id=>"",:refURL=>refURL,:refURL_Cancel=>"",:TT=>dt[1],:MD=>dt[0],:pfsAuthCode=>paymauth,:multi_settings_id=>""}
+          @post = {:a=>amount,:uniqNum=>@supporter.uniqnum,:id=>"",:refURL=>refURL,:refURL_Cancel=>env["HTTP_ORIGIN"],:TT=>dt[1],:MD=>dt[0],:pfsAuthCode=>paymauth,:multi_settings_id=>""}
           @verbose = nil#response.read_body
           render 'redirect', :layout=>false
         else
