@@ -1,17 +1,24 @@
 -#coding:utf-8
-
-.row
-  .col-sm-8.col-8
-    - error = @supporter.errors.include?(:account_id)
-    %fieldset.control-group{:class => error ? 'has-error' : ''}
-      =f.label 'מגייס', :class => 'control-label'
-      .controls
-        %select#account{:name=>'supporter[account_id]', :style=>'width:100%'}
-          -Account.find(:all, :order => "name, surname").each do |a|
-            - option_string = "#{a.name} #{a.surname}"
-            - option_string += " - #{a.location.name}" if a.location.present?
-            %option{:value=>a.id, :selected => current_account.old_id == a.id}= option_string
-
+- if current_account
+  .row
+    .col-sm-6.col-6
+      - error = @supporter.errors.include?(:account_id)
+      %fieldset.control-group{:class => error ? 'has-error' : ''}
+        =f.label 'מגייס', :class => 'control-label'
+        .controls
+          %select#account{:name=>'supporter[account_id]', :style=>'width:100%'}
+            -Account.find(:all, :order => "name, surname").each do |a|
+              - option_string = "#{a.name} #{a.surname} - #{a.id}"
+              %option{:value=>a.id, :location => a.location_id, :selected => (current_account.old_id == a.id)}= option_string
+    .col-sm-6.col-6
+      - error = @supporter.errors.include?(:account_id)
+      %fieldset.control-group{:class => error ? 'has-error' : ''}
+        =f.label 'מיקום', :class => 'control-label'
+        .controls
+          %select#dd_location{:name=>'supporter[dd_location]', :style=>'width:100%'}
+            -Location.find(:all, :order => "city_id, name").each do |l|
+              - option_string = "#{l.city.name} - #{l.name}"
+              %option{:value=>l.id, :selected => (current_account.location.present? && current_account.location.id == l.id)}= option_string
 .row
   .col-sm-6.col-6
     - error = @supporter.errors.include?(:first_name)
@@ -269,5 +276,13 @@
     });
     $('#supporter_amount').blur(function(e){
       $('#supporter_intended_amount').val($(e.target).val());
+    });
+
+    $("#account").on('change', function(e) {
+      new_location = $("#account option:selected")[0].attributes.location;
+      alert(new_location);
+      if ( new_location ) {
+        $("#dd_location")[0].value = new_location.value ;
+      }
     });
   });
