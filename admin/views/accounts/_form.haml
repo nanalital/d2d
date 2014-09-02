@@ -1,3 +1,9 @@
+- error = @account.errors.include?(:active)
+%fieldset.control-group{:class => error ? 'has-error' : ''}
+  =f.label :active?, :class => 'control-label'
+  .controls.rtl
+    =f.check_box :active, :class => 'input-xlarge input-with-feedback', :autofocus => true
+
 -if ["admin","coach"].include? current_account.role
   - error = @account.errors.include?(:old_id)
   %fieldset.control-group{:class => error ? 'has-error' : ''}

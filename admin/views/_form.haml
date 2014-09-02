@@ -7,8 +7,8 @@
         =f.label 'מגייס', :class => 'control-label'
         .controls
           %select#account{:name=>'supporter[account_id]', :style=>'width:100%'}
-            -Account.find(:all, :order => "name, surname").each do |a|
-              - option_string = "#{a.name} #{a.surname} - #{a.id}"
+            -Account.active.order("name, surname").each do |a|
+              - option_string = "#{a.name} #{a.surname} - #{a.old_id}"
               %option{:value=>a.id, :location => a.location_id, :selected => (current_account.old_id == a.id)}= option_string
     .col-sm-6.col-6
       - error = @supporter.errors.include?(:account_id)
@@ -280,7 +280,6 @@
 
     $("#account").on('change', function(e) {
       new_location = $("#account option:selected")[0].attributes.location;
-      alert(new_location);
       if ( new_location ) {
         $("#dd_location")[0].value = new_location.value ;
       }
