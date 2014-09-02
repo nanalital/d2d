@@ -1,16 +1,16 @@
 -#coding:utf-8
-
-.row
-  .col-sm-8.col-8
-    - error = @supporter.errors.include?(:account_id)
-    %fieldset.control-group{:class => error ? 'has-error' : ''}
-      =f.label 'מגייס', :class => 'control-label'
-      .controls
-        %select#account{:name=>'supporter[account_id]', :style=>'width:100%'}
-          -Account.find(:all, :order => "name, surname").each do |a|
-            - option_string = "#{a.name} #{a.surname}"
-            - option_string += " - #{a.location.name}" if a.location.present?
-            %option{:value=>a.id, :selected => current_account.old_id == a.id}= option_string
+- if current_account
+  .row
+    .col-sm-8.col-8
+      - error = @supporter.errors.include?(:account_id)
+      %fieldset.control-group{:class => error ? 'has-error' : ''}
+        =f.label 'מגייס', :class => 'control-label'
+        .controls
+          %select#account{:name=>'supporter[account_id]', :style=>'width:100%'}
+            -Account.find(:all, :order => "name, surname").each do |a|
+              - option_string = "#{a.name} #{a.surname}"
+              - option_string += " - #{a.location.name}" if a.location.present?
+              %option{:value=>a.id, :selected => current_account.old_id == a.id}= option_string
 
 .row
   .col-sm-6.col-6
