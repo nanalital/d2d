@@ -8,7 +8,7 @@
         .controls
           %select#account{:name=>'supporter[account_id]', :style=>'width:100%'}
             -Account.active.order("name, surname").each do |a|
-              - option_string = "#{a.name} #{a.surname} - #{a.old_id}"
+              - option_string = "#{a.old_id} - #{a.name} #{a.surname}"
               %option{:value=>a.id, :location => a.location_id, :selected => (current_account.old_id == a.id)}= option_string
     .col-sm-6.col-6
       - error = @supporter.errors.include?(:account_id)
