@@ -22,7 +22,7 @@ class Account < ActiveRecord::Base
   before_save :encrypt_password, :if => :password_required
 
   # Scopes
-  scope :active, :conditions => {:active => true}
+  scope :active, :conditions => {:active => 1}
 
   ##
   # This method is for authentication purpose
