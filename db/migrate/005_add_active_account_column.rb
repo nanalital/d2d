@@ -1,6 +1,6 @@
 class AddActiveAccountColumn < ActiveRecord::Migration
   def self.up
-    add_column :accounts, :active, :boolean, :default => true
+    add_column :accounts, :active, :integer, :default => 1
   end
 
   def self.down
