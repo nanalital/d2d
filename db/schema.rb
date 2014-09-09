@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 4) do
+ActiveRecord::Schema.define(:version => 5) do
 
   create_table "accounts", :force => true do |t|
     t.string   "name"
@@ -19,12 +19,13 @@ ActiveRecord::Schema.define(:version => 4) do
     t.string   "email"
     t.string   "crypted_password"
     t.string   "role"
-    t.datetime "created_at",       :null => false
-    t.datetime "updated_at",       :null => false
+    t.datetime "created_at",                         :null => false
+    t.datetime "updated_at",                         :null => false
     t.integer  "city_id"
     t.integer  "location_id"
     t.string   "stype"
     t.integer  "old_id"
+    t.boolean  "active",           :default => true
   end
 
   create_table "cities", :force => true do |t|
@@ -43,14 +44,11 @@ ActiveRecord::Schema.define(:version => 4) do
   end
 
   create_table "supporters", :force => true do |t|
-
     t.string   "uniqnum"
     t.date     "acquired"
-    
     t.integer  "account_id"
     t.string   "dd_city"
     t.string   "dd_location"
-    
     t.string   "first_name"
     t.string   "last_name"
     t.integer  "gender"
@@ -59,14 +57,11 @@ ActiveRecord::Schema.define(:version => 4) do
     t.string   "city"
     t.text     "address"
     t.string   "zip_code"
-    
     t.string   "home_phone",      :limit => 12
     t.string   "mobile_phone",    :limit => 12
     t.string   "email"
-    
     t.string   "citizen_id"
     t.boolean  "receive_updates"
-
     t.integer  "amount"
     t.integer  "intended_amount"
     t.string   "key"
@@ -74,14 +69,11 @@ ActiveRecord::Schema.define(:version => 4) do
     t.string   "cc_last4d"
     t.string   "cc_voucher"
     t.string   "cc_holder"
-
     t.text     "notes"
-
     t.string   "member_name"
     t.string   "member_phone"
-    
-    t.datetime "created_at",      :null => false
-    t.datetime "updated_at",      :null => false
+    t.datetime "created_at",                    :null => false
+    t.datetime "updated_at",                    :null => false
   end
 
 end

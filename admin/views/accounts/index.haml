@@ -1,3 +1,4 @@
+-#ecoding:utf-8
 .ltr
   %ul.nav.nav-tabs
     %li.active=link_to tag_icon(:list, pat(:list)), url(:accounts, :index)
@@ -32,6 +33,8 @@
           %th.header= mat(:account, :surname)
           %th.header= mat(:account, :email)
           %th.header= mat(:account, :role)
+          %th.header= mat(:account, :acitve)
+
 
       %tbody
         -@accounts.each do |account|
@@ -44,3 +47,4 @@
             %td.list-column=account.surname
             %td.list-column=account.email
             %td.list-column=account.role
+            %td.list-column='✔' if (account.active)

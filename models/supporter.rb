@@ -24,8 +24,10 @@ class Supporter < ActiveRecord::Base
   end
 
   def beforesave
-
-    if self.account
+    if self.dd_location
+      location_obj = Location.find(self.dd_location)
+      self.dd_city = location_obj.city_id if location_obj
+    elsif self.account
       self.dd_city = self.account.city_id
       self.dd_location = self.account.location_id
     end
