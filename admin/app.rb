@@ -167,15 +167,21 @@ module D2d
 
       refURL = 'https://med.greenpeace.org/israel/d2d/thankyou/'
 
+      # validation prepare
+      params['supporter']['account_id'] = nil if params['supporter']['account_id'].to_i == 0
+      params['supporter']['dd_location'] = nil if params['supporter']['dd_location'].to_i == 0
+      # for independent donation
       web = params.delete('web')
       params['supporter']['account_id'] = 555 if web
-      @supporter = Supporter.new(params[:supporter])
-      @supporter.acquired = Time.now
 
-      amount = (@supporter.amount*100).to_s
+      @supporter = Supporter.new(params['supporter'])
+      @supporter.acquired = Time.now
+      amount = (@supporter.amount*100).to_s if @supporter.amount
+
       if @supporter.save
         @title = pat(:create_title, :model => "supporter #{@supporter.id}")
         flash[:success] = pat(:create_success, :model => 'Supporter')
+        handle_cancel and return if params[:cancel_btn].present?
 
         uri = URI.parse(paymauthurl)
         http = Net::HTTP.new(uri.host, uri.port)
@@ -197,10 +203,21 @@ module D2d
           return "<html>"+response.body+"<br /><h3>response type</h3>"+response.code.to_s+' '+response.msg+"<br /><h5>--- end response ---</h5><h2>uri:</h2>"+uri.host+':'+uri.port.to_s+''+uri.path+"<br/><h2>request header:</h2>"+request.to_hash.to_s+"<br/><br/><h2>request body:</h2>"+request.body+"</html>"
         end
       else
+        handle_cancel and return if params[:cancel_btn].present?
         @title = pat(:create_title, :model => 'supporter')
         flash.now[:error] = pat(:create_error, :model => 'supporter')
         render 'new'
       end
+    end
+
+    def handle_cancel
+      if @supporter.first_name.present? && @supporter.last_name.present? &&
+        (@supporter.email.present? || @supporter.mobile_phone.present? || @supporter.home_phone.present?)
+        @supporter.notes ||= ""
+        @supporter.notes += "|canceled"
+        @supporter.save(:validate => false)
+      end
+      redirect_to '/' and return true
     end
 
     # Custom error management 
