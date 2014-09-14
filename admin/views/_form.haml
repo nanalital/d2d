@@ -7,18 +7,20 @@
         =f.label 'מגייס', :class => 'control-label'
         .controls
           %select#account{:name=>'supporter[account_id]', :style=>'width:100%'}
+            %option{ :value => 0, :selected => true}
             -Account.active.order("old_id").each do |a|
               - option_string = "#{a.old_id} - #{a.name} #{a.surname}"
-              %option{:value=>a.id, :location => a.location_id, :selected => (current_account.old_id == a.id)}= option_string
+              %option{ :value => a.id, :location => a.location_id, :city => a.city_id }= option_string
     .col-sm-6.col-6
       - error = @supporter.errors.include?(:account_id)
       %fieldset.control-group{:class => error ? 'has-error' : ''}
         =f.label 'מיקום', :class => 'control-label'
         .controls
           %select#dd_location{:name=>'supporter[dd_location]', :style=>'width:100%'}
+            %option{ :value => 0, :selected => true}
             -Location.find(:all, :order => "city_id, name").each do |l|
               - option_string = "#{l.city.name} - #{l.name}"
-              %option{:value=>l.id, :selected => (current_account.location.present? && current_account.location.id == l.id)}= option_string
+              %option{ :value=>l.id, :city=> l.city.id}= option_string
 .row
   .col-sm-6.col-6
     - error = @supporter.errors.include?(:first_name)
@@ -136,34 +138,34 @@
 
     .tab-content
       .tab-pane.active#monthly
-        %p  סכום תרומה חודשי 
-        .row
-          -$prices.each do |p|
+        - error = @supporter.errors.include?(:amount)
+        %fieldset.control-group{:class => error ? 'has-error' : ''}
+          %label.control-label{:for=>'supporter_amount'}= 'סכום תרומה חודשי'
+          .row
+            -$prices.each do |p|
+              .col-3.col-sm-3
+                %input{:type=>:radio,:name=>:monthly,"data-value"=>p.to_s}= ' '+p.to_s+' ש"ח'
             .col-3.col-sm-3
-              %input{:type=>:radio,:name=>:monthly,"data-value"=>p.to_s}= ' '+p.to_s+' ש"ח'
-          .col-3.col-sm-3
-            %input{:type=>:radio,:name=>:monthly}= ' אחר'
-        .row
-          .col-12.col-sm-12
-            - error = @supporter.errors.include?(:amount)
-            %fieldset.control-group{:class => error ? 'has-error' : ''}
+              %input{:type=>:radio,:name=>:monthly}= ' אחר'
+          .row
+            .col-12.col-sm-12
               .controls
                 =f.number_field :amount, :min => 55, :step => 1, :class => 'input-with-feedback', :style => 'margin-top: 15px;'
 
-            %fieldset.control-group.hide{:class => error ? 'has-error' : ''}
-              %label.control-label{:for=>'supporter_intended_amount'}= ''
-              .controls
-                =f.text_field :intended_amount, :class => 'input-xlarge input-with-feedback'
-        :javascript
-          function resetMonthly() {
-            $('#supporter_amount').val('');
-            $('#supporter_intended_amount').val('');
-            $('#supporter_amount').focus();
-          }
-          function setMonthly(x) {
-            $('#supporter_amount').val(x)
-            $('#supporter_intended_amount').val(x)
-          }
+              %fieldset.control-group.hide{:class => error ? 'has-error' : ''}
+                %label.control-label{:for=>'supporter_intended_amount'}= ''
+                .controls
+                  =f.text_field :intended_amount, :class => 'input-xlarge input-with-feedback'
+          :javascript
+            function resetMonthly() {
+              $('#supporter_amount').val('');
+              $('#supporter_intended_amount').val('');
+              $('#supporter_amount').focus();
+            }
+            function setMonthly(x) {
+              $('#supporter_amount').val(x)
+              $('#supporter_intended_amount').val(x)
+            }
     -#
       .tab-pane#oneoff
         .row
@@ -230,9 +232,11 @@
 
 
 .row
-  .col-sm-12.col-12
-    .form-actions
-      =f.submit pat("לשליחה"), :class => 'btn btn-success input-xlarge', :style => 'height: 72px; padding:12px; font-size:32px'
+  .form-actions
+    .col-sm-10.col-10
+      =f.submit pat("לשליחה"), :class => 'btn btn-success input-xlarge', :style => 'height: 72px; padding:12px; font-size:32px', :name => 'approve_btn'
+    .col-sm-2.col-2
+      = f.submit pat("ביטול"), :class => 'btn btn-info input-xlarge', :style => 'height: 72px; padding:12px; font-size:32px', :name => 'cancel_btn'
 
 :javascript
   $(document).ready(function(){
@@ -278,10 +282,32 @@
       $('#supporter_intended_amount').val($(e.target).val());
     });
 
-    $("#account").on('change', function(e) {
-      new_location = $("#account option:selected")[0].attributes.location;
-      if ( new_location ) {
-        $("#dd_location")[0].value = new_location.value ;
-      }
-    });
+    (function () {
+        var previous;
+
+        $("#account").on('focus', function () {
+            // Store the current value on focus and on change
+            previous_city = $("#account option:selected")[0].getAttribute('city');
+        }).change(function() {
+            new_location = $("#account option:selected")[0].getAttribute('location');
+            new_city = $("#account option:selected")[0].getAttribute('city');
+
+            if ( previous_city ) {
+              $("#dd_location option[city!=" + previous_city + "]").unwrap("<span>");
+            }
+
+            $("#dd_location option[value=0]")[0].setAttribute("city", new_city);
+
+            if ( new_location && new_city) {
+              $("#dd_location option[city!=" + new_city + "]").wrap("<span>");
+              $("#dd_location")[0].value = new_location ;
+            } else {
+              $("#dd_location")[0].value = ' 0' ;
+            }
+
+            // Make sure the previous value is updated
+            previous_city = $("#account option:selected")[0].getAttribute('city');
+        });
+    })();
+
   });
