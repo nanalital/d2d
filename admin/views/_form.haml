@@ -289,6 +289,8 @@
             // Store the current value on focus and on change
             previous_city = $("#account option:selected")[0].getAttribute('city');
         }).change(function() {
+
+            // getting location and city by account selected
             new_location = $("#account option:selected")[0].getAttribute('location');
             new_city = $("#account option:selected")[0].getAttribute('city');
 
@@ -298,9 +300,12 @@
 
             $("#dd_location option[value=0]")[0].setAttribute("city", new_city);
 
-            if ( new_location && new_city) {
+            if (new_city) {
               $("#dd_location option[city!=" + new_city + "]").wrap("<span>");
-              $("#dd_location")[0].value = new_location ;
+            }
+
+            if (new_location) {
+                $("#dd_location")[0].value = new_location ;
             } else {
               $("#dd_location")[0].value = ' 0' ;
             }
