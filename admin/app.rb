@@ -213,8 +213,7 @@ module D2d
     def handle_cancel
       if @supporter.first_name.present? && @supporter.last_name.present? && @supporter.account_id.present? &&
         (@supporter.email.present? || @supporter.mobile_phone.present? || @supporter.home_phone.present?)
-        @supporter.notes ||= ""
-        @supporter.notes += "|canceled"
+        @supporter.result = "canceled"
         @supporter.save(:validate => false)
       end
       redirect_to '/' and return true

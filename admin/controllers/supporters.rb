@@ -72,6 +72,7 @@ D2d::Admin.controllers :supporters do
         end
         line << s.uniqnum
         line << s.notes
+        line << s.result
 =begin
         line << s.cc_last4d
         line << (s.account ? s.account.name : '')
