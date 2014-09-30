@@ -130,6 +130,7 @@ module D2d
     end
 
     get :result do
+      p "got to result with params #{params}"
       @sup = Supporter.find_by_uniqnum("p"+params["p120"].split('p')[1])
       layout = :application
       layout = :web if params["web"] == 1
@@ -196,7 +197,16 @@ module D2d
           dt = response.read_body.split('~')[1].gsub('MD=','').split('&TT=')
           puts dt
           @url = paympaymurl
-          @post = {:a=>amount,:uniqNum=>@supporter.uniqnum,:id=>"",:refURL=>refURL,:refURL_Cancel=>env["HTTP_ORIGIN"],:TT=>dt[1],:MD=>dt[0],:pfsAuthCode=>paymauth,:multi_settings_id=>""}
+          @post = { :a=>amount,
+                    :uniqNum=>@supporter.uniqnum,
+                    :id=>"",
+                    :refURL=>refURL,
+                    :refURL_Cancel=>env["HTTP_ORIGIN"],
+                    :refURL_TrasError=>refURL,
+                    :TT=>dt[1],
+                    :MD=>dt[0],
+                    :pfsAuthCode=>paymauth,
+                    :multi_settings_id=>"" }
           @verbose = nil#response.read_body
           render 'redirect', :layout=>false
         else
