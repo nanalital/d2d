@@ -1593,6 +1593,11 @@ textarea.input-sm {
   border-color: #c09853;
   background-color: #fcf8e3;
 }
+
+.error-span {
+  padding: 0 10px;
+  font-size: medium;
+}
 .has-error .help-block,
 .has-error .control-label {
   color: #b94a48;

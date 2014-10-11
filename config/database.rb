@@ -1,26 +1,26 @@
 ##
 # You can use other adapters like:
 #
-  # ActiveRecord::Base.configurations[:development] = {
-  #   :adapter   => 'mysql2',
-  #   :encoding  => 'utf8',
-  #   :reconnect => true,
-  #   :database  => 'd2d',
-  #   :pool      => 5,
-  #   :username  => 'root',
-  #   :password  => '',
-  #   :host      => 'localhost',
-  #   :socket    => '/tmp/mysql.sock'
-  # }
+  ActiveRecord::Base.configurations[:development] = {
+    :adapter   => 'mysql2',
+    :encoding  => 'utf8',
+    :reconnect => true,
+    :database  => 'd2d',
+    :pool      => 5,
+    :username  => 'root',
+    :password  => '',
+    :host      => 'localhost',
+    :socket    => '/tmp/mysql.sock'
+  }
 
-ActiveRecord::Base.configurations[:development] = {
-  :adapter  => 'postgresql',
-  :encoding => 'utf8',
-  :database => 'd2d',
-  :username => 'yakup',
-  :password => 'a4k70ch1',
-  :host     => '127.0.0.1'
-}
+# ActiveRecord::Base.configurations[:development] = {
+#   :adapter  => 'postgresql',
+#   :encoding => 'utf8',
+#   :database => 'd2d',
+#   :username => 'yakup',
+#   :password => 'a4k70ch1',
+#   :host     => '127.0.0.1'
+# }
 
 postgres = URI.parse(ENV['DATABASE_URL'] || '')
 
