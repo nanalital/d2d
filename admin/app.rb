@@ -172,8 +172,8 @@ module D2d
       params['supporter']['account_id'] = nil if params['supporter']['account_id'].to_i == 0
       params['supporter']['dd_location'] = nil if params['supporter']['dd_location'].to_i == 0
       # for independent donation
-      web = params.delete('web')
-      params['supporter']['account_id'] = 555 if web
+      @web = params.delete('web')
+      params['supporter']['account_id'] = 555 if @web
 
       @supporter = Supporter.new(params['supporter'])
       @supporter.acquired = Time.now
@@ -216,7 +216,7 @@ module D2d
         handle_cancel and return if params[:cancel_btn].present?
         @title = pat(:create_title, :model => 'supporter')
         flash.now[:error] = pat(:create_error, :model => 'supporter')
-        web ? render('new', :layout => :web) : render('new')
+        @web ? render('new', :layout => :web) : render('new')
       end
     end
 
