@@ -2,9 +2,10 @@
 - if current_account
   .row
     .col-sm-6.col-6
-      - error = @supporter.errors.include?(:account_id)
-      %fieldset.control-group{:class => error ? 'has-error' : ''}
+      %fieldset.control-group
         =f.label 'מגייס', :class => 'control-label'
+        - if @supporter.errors.include?(:account_id)
+          %span{:class => 'alert-danger error-span'}= @supporter.errors[:account_id].first
         .controls
           %select#account{:name=>'supporter[account_id]', :style=>'width:100%'}
             %option{ :value => 0, :selected => true}
@@ -12,9 +13,10 @@
               - option_string = "#{a.old_id} - #{a.name} #{a.surname}"
               %option{ :value => a.id, :location => a.location_id, :city => a.city_id }= option_string
     .col-sm-6.col-6
-      - error = @supporter.errors.include?(:account_id)
-      %fieldset.control-group{:class => error ? 'has-error' : ''}
+      %fieldset.control-group
         =f.label 'מיקום', :class => 'control-label'
+        - if @supporter.errors.include?(:dd_location)
+          %span{:class => 'alert-danger error-span'}= @supporter.errors[:dd_location].first
         .controls
           %select#dd_location{:name=>'supporter[dd_location]', :style=>'width:100%'}
             %option{ :value => 0, :selected => true}
@@ -138,9 +140,10 @@
 
     .tab-content
       .tab-pane.active#monthly
-        - error = @supporter.errors.include?(:amount)
-        %fieldset.control-group{:class => error ? 'has-error' : ''}
+        %fieldset.control-group
           %label.control-label{:for=>'supporter_amount'}= 'סכום תרומה חודשי'
+          - if @supporter.errors.include?(:amount)
+            %span{:class => 'alert-danger error-span'}= @supporter.errors[:amount].first
           .row
             -$prices.each do |p|
               .col-3.col-sm-3
@@ -150,7 +153,7 @@
           .row
             .col-12.col-sm-12
               .controls
-                =f.number_field :amount, :min => 55, :step => 1, :class => 'input-with-feedback', :style => 'margin-top: 15px;'
+                =f.number_field :amount, :step => 1, :class => 'input-with-feedback', :style => 'margin-top: 15px;'
 
               %fieldset.control-group.hide{:class => error ? 'has-error' : ''}
                 %label.control-label{:for=>'supporter_intended_amount'}= ''
@@ -233,9 +236,9 @@
 
 .row
   .form-actions
-    .col-sm-10.col-10
+    .col-sm-9.col-9
       =f.submit pat("לשליחה"), :class => 'btn btn-success input-xlarge', :style => 'height: 72px; padding:12px; font-size:32px', :name => 'approve_btn'
-    .col-sm-2.col-2
+    .col-sm-3.col-3
       = f.submit pat("ביטול"), :class => 'btn btn-info input-xlarge', :style => 'height: 72px; padding:12px; font-size:32px', :name => 'cancel_btn'
 
 :javascript

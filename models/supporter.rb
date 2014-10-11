@@ -1,7 +1,9 @@
+#coding:utf-8
 class Supporter < ActiveRecord::Base
 
   validates_uniqueness_of :uniqnum
-  validates_presence_of :amount, :account_id, :dd_location
+  validates_presence_of :amount, :account_id, :dd_location, :message => 'שדה חובה'
+  validates_numericality_of :amount, :greater_than_or_equal_to => 55, :message => "סכום המינימום הוא 55 ש״ח"
   validate :unique
 
   belongs_to :account
