@@ -206,7 +206,7 @@ module D2d
         handle_cancel and return if params[:cancel_btn].present?
         @title = pat(:create_title, :model => 'supporter')
         flash.now[:error] = pat(:create_error, :model => 'supporter')
-        render 'new'
+        web ? render('new', :layout => :web) : render 'new'
       end
     end
 
