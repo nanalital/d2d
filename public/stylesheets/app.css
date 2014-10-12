@@ -1595,7 +1595,8 @@ textarea.input-sm {
 }
 
 .error-span {
-  padding: 0 10px;
+  margin: 0px 10px;
+  padding: 0px 5px;
   font-size: medium;
 }
 .has-error .help-block,

@@ -143,7 +143,7 @@
         %fieldset.control-group
           %label.control-label{:for=>'supporter_amount'}= 'סכום תרומה חודשי'
           - if @supporter.errors.include?(:amount)
-            %span{:class => 'alert-danger error-span'}= @supporter.errors[:amount].first
+            %span{:id => 'amount-error', :class => 'alert-danger error-span'}= @supporter.errors[:amount].first
           .row
             -$prices.each do |p|
               .col-3.col-sm-3
@@ -273,17 +273,34 @@
       $("#supporter_member_phone").val($("#member_phone_prefix option:selected").val()+" "+$("#member_phone").val().replace(/\D/g,""));
     });
     
-    $('input[name=monthly]').on('click', function(e) {
+    $('input[name=monthly]').click(function(e) {
       val = $(e.target).attr('data-value');
       if (val > 0) {
         setMonthly(val);
       } else {
         resetMonthly();
       }
+
+      if ( $('#amount-error').length ) {
+        $('#amount-error').remove();
+      }
     });
+
     $('#supporter_amount').blur(function(e){
       $('#supporter_intended_amount').val($(e.target).val());
     });
+
+    $('#supporter_amount').focusout(vaidateAmount);
+    function vaidateAmount(){
+      var amount = $('#supporter_amount')[0].valueAsNumber
+      if (amount && amount < 55) {
+        if($('#amount-error').length == 0) {
+          $('label[for="supporter_amount"]').after("<span id='amount-error' class='alert-danger error-span'>סכום המינימום הוא 55 ש״ח</span>");
+        }
+      } else if ( $('#amount-error').length ) {
+        $('#amount-error').remove();
+      }
+    }
 
     (function () {
         var previous;
