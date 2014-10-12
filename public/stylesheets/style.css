@@ -153,6 +153,11 @@ input[type=radio], input[type=checkbox] {
   color: red;
 }
 
+.error-span {
+  margin: 0px 10px;
+  padding: 0px 5px;
+}
+
 textarea {
   resize:none;
   width:100%;

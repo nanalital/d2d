@@ -1599,10 +1599,12 @@ textarea.input-sm {
   padding: 0px 5px;
   font-size: medium;
 }
+
 .has-error .help-block,
 .has-error .control-label {
   color: #b94a48;
 }
+
 .has-error .form-control {
   border-color: #b94a48;
   -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
