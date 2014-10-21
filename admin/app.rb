@@ -27,7 +27,7 @@ module D2d
 
     set :delivery_method, :smtp => {
       :address              => 'smtp-out-pool.greenpeace.org',
-      :port                 => 25,
+      :port                 => 587,
       :user_name            => '',
       :password             => '',
       :authentication       => :plain,
