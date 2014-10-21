@@ -24,6 +24,7 @@ gem 'pg'
 gem 'unidecoder'
 gem 'rainbow'
 gem 'mysql2', '~> 0.3.16'
+gem 'rest-client'
 
 # Test requirements
 
