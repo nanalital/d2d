@@ -31,7 +31,6 @@ GEM
     mime-types (1.23)
     multi_json (1.7.9)
     mysql2 (0.3.16)
-    netrc (0.8.0)
     padrino (0.11.3)
       padrino-admin (= 0.11.3)
       padrino-cache (= 0.11.3)
@@ -69,9 +68,6 @@ GEM
     rainbow (1.1.4)
     rake (10.1.0)
     ref (1.0.5)
-    rest-client (1.7.2)
-      mime-types (>= 1.16, < 3.0)
-      netrc (~> 0.7)
     sinatra (1.4.3)
       rack (~> 1.4)
       rack-protection (~> 1.4)
@@ -106,7 +102,6 @@ DEPENDENCIES
   pg
   rainbow
   rake
-  rest-client
   therubyracer
   thin
   unidecoder
