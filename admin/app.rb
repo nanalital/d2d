@@ -30,7 +30,7 @@ module D2d
       :port                 => 25,
       :user_name            => '',
       :password             => '',
-      #:authentication       => :plain,
+      :authentication       => :plain,
       :enable_starttls_auto => false,
       :openssl_verify_mode  => 'none'
     }
