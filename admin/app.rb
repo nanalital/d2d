@@ -1,5 +1,4 @@
 # encoding: utf-8
-
 module D2d
   class Admin < Padrino::Application
     use ActiveRecord::ConnectionAdapters::ConnectionManagement
@@ -9,7 +8,7 @@ module D2d
     register Padrino::Admin::AccessControl
 
     require 'net/http'
-    require 'rest-client'
+
     ##
     # Application configuration options
     #
@@ -101,11 +100,9 @@ module D2d
     end
 
     get :thanks, :with => :id do
-      res = RestClient.get("http://www.whatsmyip.org/")
-      puts "lital #{res}"
       @sup = Supporter.find(params[:id])
- #     deliver(:main, :thank_you_email, @sup, env["HTTP_ORIGIN"]) if @sup.email.present?
-     render 'thanks'
+      deliver(:main, :thank_you_email, @sup, env["HTTP_ORIGIN"]) if @sup.email.present?
+      render 'thanks'
     end
 
     mailer :main do
