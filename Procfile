@@ -1,1 +1,0 @@
-web: bin/proximo rackup config.ru
