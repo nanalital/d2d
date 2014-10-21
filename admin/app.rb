@@ -8,6 +8,7 @@ module D2d
     register Padrino::Admin::AccessControl
 
     require 'net/http'
+    require 'rest-client'
 
     ##
     # Application configuration options
@@ -100,8 +101,10 @@ module D2d
     end
 
     get :thanks, :with => :id do
+      RestClient.get("http://www.google.com")
+
       @sup = Supporter.find(params[:id])
-      deliver(:main, :thank_you_email, @sup, env["HTTP_ORIGIN"]) if @sup.email.present?
+      #deliver(:main, :thank_you_email, @sup, env["HTTP_ORIGIN"]) if @sup.email.present?
       render 'thanks'
     end
 
