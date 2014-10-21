@@ -31,7 +31,8 @@ module D2d
       #:user_name            => '###',
       #:password             => '###',
       #:authentication       => :plain,
-      :enable_starttls_auto => false
+      :enable_starttls_auto => false,
+      :openssl_verify_mode  => 'none'
     }
 
     set :admin_model, 'Account'
