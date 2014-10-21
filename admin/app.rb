@@ -96,7 +96,7 @@ module D2d
 
     get :thanks, :with => :id do
       @sup = Supporter.find(params[:id])
-      deliver(:main, :thank_you_email, @sup, env["HTTP_ORIGIN"]) if @sup.email.present?
+      deliver(:main, :thank_you_email, @sup) if @sup.email.present?
       render 'thanks'
     end
 
