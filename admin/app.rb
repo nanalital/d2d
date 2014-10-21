@@ -28,11 +28,6 @@ module D2d
     set :delivery_method, :smtp => {
       :address              => 'smtp-out-pool.greenpeace.org',
       :port                 => 25
-      #:user_name            => '',
-      #:password             => '',
-      #:authentication       => :plain,
-      #:enable_starttls_auto => false,
-      #:openssl_verify_mode  => 'none'
     }
 
     set :admin_model, 'Account'
