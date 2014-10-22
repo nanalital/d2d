@@ -98,8 +98,8 @@ module D2d
       @sup = Supporter.find(params[:id])
       begin
         deliver(:main, :thank_you_email, @sup) if @sup.email.present?
-      rescue
-        p "Error in sending email to #{@sup}"
+      rescue => e
+        p "Error in sending email to #{@sup}, exception => #{e}"
       end
       render 'thanks'
     end
