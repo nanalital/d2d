@@ -96,7 +96,11 @@ module D2d
 
     get :thanks, :with => :id do
       @sup = Supporter.find(params[:id])
-      deliver(:main, :thank_you_email, @sup) if @sup.email.present?
+      begin
+        deliver(:main, :thank_you_email, @sup) if @sup.email.present?
+      rescue
+        p "Error in sending email to #{@sup}"
+      end
       render 'thanks'
     end
 
