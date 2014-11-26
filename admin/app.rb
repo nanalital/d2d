@@ -166,7 +166,7 @@ module D2d
       paymauthurl = "https://online.premiumfs.co.il/Sites/greenpeace/pfsAuth.aspx"
       paympaymurl = 'https://online.premiumfs.co.il/Sites/greenpeace/payment.aspx'
 
-      refURL = 'https://med.greenpeace.org/israel/d2d/thankyou'
+      refURL = 'https://med.greenpeace.org/israel/d2d/thankyou/'
 
       # validation prepare
       params['supporter']['account_id'] = nil if params['supporter']['account_id'].to_i == 0
