@@ -129,6 +129,10 @@ module D2d
       end
     end
 
+    post :result do
+      p "Lital is checking, #{params}"
+    end
+
     get :result do
       p "got to result with params #{params}"
       @sup = Supporter.find_by_uniqnum("p"+params["p120"].split('p')[1])
