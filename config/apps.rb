@@ -30,6 +30,7 @@ Padrino.configure_apps do
   set :session_secret, '4484470360a1550444473adafdafeabce2fea28620096328e18fa2dd29af5661'
   set :protection, true
   set :protect_from_csrf, true
+  set :allow_disabled_csrf, true
 end
 
 Padrino.mount("D2d::Admin", :app_file => File.expand_path('../../admin/app.rb', __FILE__)).to("/")

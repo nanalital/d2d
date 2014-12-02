@@ -129,7 +129,7 @@ module D2d
       end
     end
 
-    post :result do
+    post :result, :csrf_protection => false  do
       p "Lital is checking, #{params}"
     end
 
