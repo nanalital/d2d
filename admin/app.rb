@@ -129,10 +129,6 @@ module D2d
       end
     end
 
-    post :result, :csrf_protection => false  do
-      p "Lital is checking, #{params}"
-    end
-
     get :result do
       p "got to result with params #{params}"
       @sup = Supporter.find_by_uniqnum("p"+params["p120"].split('p')[1])
@@ -207,8 +203,8 @@ module D2d
                     :id=>"",
                     :refURL=>refURL,
                     :refURL_Cancel=>env["HTTP_ORIGIN"],
-                    :refURL_TrasError=>errorURL,
-                    :refURL_Vrify=>errorURL,
+                    :refURL_TrasError=>refURL,
+                    :refURL_Vrify=>refURL,
                     :TT=>dt[1],
                     :MD=>dt[0],
                     :pfsAuthCode=>paymauth,
