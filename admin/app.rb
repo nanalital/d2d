@@ -132,13 +132,13 @@ module D2d
 
     get :payment_response do
       p "got to payment_response with params #{params}"
-      render :nothing => true and return if params["p1"] == "000" # continue if payment succeeded
+      return if params['p1'] == "000" # continue if payment succeeded
       @sup = Supporter.find_by_uniqnum("p"+params["p120"].split('p')[1])
       unless @sup
-        puts "sup not found"
-        render :nothing => true and return
+        puts "sup #{params['p120']} not found"
+        return
       else
-        @sup.result = "payment failed"
+        @sup.result = "payment failed with status: #{params['p1']}"
         @sup.key = params["key"]
         @sup.cc_last4d = params["p5"]
         @sup.cc_expiry = params["p30"]
@@ -147,7 +147,7 @@ module D2d
         @sup.citizen_id = params["p200"]
         @sup.cc_holder = params["p201"]
         @sup.save
-        render :nothing => true and return
+        return
       end
     end
 
@@ -157,7 +157,7 @@ module D2d
       layout = :web if params["web"] == 1
       return render 'failure', :layout => layout unless params["p1"] == "000"
       unless @sup
-        puts "sup not found"
+        puts "sup #{params['p120']} not found"
         return render 'failure', :layout => layout
       else
         @sup.result = "payment succeeded"
@@ -218,7 +218,7 @@ module D2d
         #puts response.value
         if response.code[0].to_i < 3
           dt = response.read_body.split('~')[1].gsub('MD=','').split('&TT=')
-          puts dt
+          puts "Before payment post -> dt: #{dt}, supporter uniqnum: #{@supporter.uniqnum}"
           @url = paympaymurl
           @post = { :a=>amount,
                     :uniqNum=>@supporter.uniqnum,
