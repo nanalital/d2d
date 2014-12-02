@@ -41,6 +41,7 @@ module D2d
       role.allow   '/'
       role.allow   '/donate'
       role.allow   '/result'
+      role.allow   '/payment_response'
       role.protect '/accounts'
     end
 
@@ -129,8 +130,28 @@ module D2d
       end
     end
 
+    get :payment_response do
+      p "got to payment_response with params #{params}"
+      render :nothing => true and return if params["p1"] == "000" # continue if payment succeeded
+      @sup = Supporter.find_by_uniqnum("p"+params["p120"].split('p')[1])
+      unless @sup
+        puts "sup not found"
+        render :nothing => true and return
+      else
+        @sup.result = "payment failed"
+        @sup.key = params["key"]
+        @sup.cc_last4d = params["p5"]
+        @sup.cc_expiry = params["p30"]
+        @sup.amount = params["p36"].to_i / 100
+        @sup.cc_voucher = params["p96"]
+        @sup.citizen_id = params["p200"]
+        @sup.cc_holder = params["p201"]
+        @sup.save
+        render :nothing => true and return
+      end
+    end
+
     get :result do
-      p "got to result with params #{params}"
       @sup = Supporter.find_by_uniqnum("p"+params["p120"].split('p')[1])
       layout = :application
       layout = :web if params["web"] == 1
@@ -139,6 +160,7 @@ module D2d
         puts "sup not found"
         return render 'failure', :layout => layout
       else
+        @sup.result = "payment succeeded"
         @sup.key = params["key"]
         @sup.cc_last4d = params["p5"]
         @sup.cc_expiry = params["p30"]
@@ -167,7 +189,7 @@ module D2d
       paympaymurl = 'https://online.premiumfs.co.il/Sites/greenpeace/payment.aspx'
 
       refURL = 'https://med.greenpeace.org/israel/d2d/thankyou/'
-      errorURL = 'https://d2d.herokuapp.com/result/'
+      errorURL = 'https://d2d.herokuapp.com/payment_response/'
 
       # validation prepare
       params['supporter']['account_id'] = nil if params['supporter']['account_id'].to_i == 0
