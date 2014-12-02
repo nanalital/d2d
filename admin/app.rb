@@ -171,6 +171,7 @@ module D2d
       paympaymurl = 'https://online.premiumfs.co.il/Sites/greenpeace/payment.aspx'
 
       refURL = 'https://med.greenpeace.org/israel/d2d/thankyou/'
+      errorURL = 'https://d2d.herokuapp.com/result/'
 
       # validation prepare
       params['supporter']['account_id'] = nil if params['supporter']['account_id'].to_i == 0
@@ -206,7 +207,7 @@ module D2d
                     :id=>"",
                     :refURL=>refURL,
                     :refURL_Cancel=>env["HTTP_ORIGIN"],
-                    :refURL_TrasError=>refURL,
+                    :refURL_TrasError=>errorURL,
                     :TT=>dt[1],
                     :MD=>dt[0],
                     :pfsAuthCode=>paymauth,
