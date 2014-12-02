@@ -204,7 +204,7 @@ module D2d
                     :refURL=>refURL,
                     :refURL_Cancel=>env["HTTP_ORIGIN"],
                     :refURL_TrasError=>refURL,
-                    :refURL_Vrify=>refURL,
+                    :refURL_Vrify=>errorURL,
                     :TT=>dt[1],
                     :MD=>dt[0],
                     :pfsAuthCode=>paymauth,
