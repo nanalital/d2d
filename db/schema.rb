@@ -19,25 +19,21 @@ ActiveRecord::Schema.define(:version => 6) do
     t.string   "email"
     t.string   "crypted_password"
     t.string   "role"
-    t.datetime "created_at",                         :null => false
-    t.datetime "updated_at",                         :null => false
-    t.integer  "city_id"
-    t.integer  "location_id"
-    t.string   "stype"
-    t.integer  "old_id"
-    t.boolean  "active",           :default => true
+    t.string   "city"
+    t.string   "location"
+    t.datetime "created_at",                      :null => false
+    t.datetime "updated_at",                      :null => false
+    t.integer  "active",           :default => 1
   end
 
   create_table "cities", :force => true do |t|
     t.string   "name"
-    t.integer  "other_id"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
 
   create_table "locations", :force => true do |t|
     t.string   "name"
-    t.integer  "other_id"
     t.integer  "city_id"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
@@ -55,23 +51,18 @@ ActiveRecord::Schema.define(:version => 6) do
     t.date     "birthday"
     t.string   "occupation"
     t.string   "city"
-    t.text     "address"
+    t.string   "street_name"
+    t.string   "num_building"
+    t.string   "num_apartment"
     t.string   "zip_code"
     t.string   "home_phone",      :limit => 12
     t.string   "mobile_phone",    :limit => 12
     t.string   "email"
-    t.string   "citizen_id"
     t.boolean  "receive_updates"
-    t.integer  "amount"
-    t.integer  "intended_amount"
-    t.string   "key"
-    t.string   "cc_expiry"
-    t.string   "cc_last4d"
-    t.string   "cc_voucher"
-    t.string   "cc_holder"
+    t.boolean  "existing"
+    t.integer  "ap_monthly"
+    t.integer  "ap_one_off"
     t.text     "notes"
-    t.string   "member_name"
-    t.string   "member_phone"
     t.datetime "created_at",                    :null => false
     t.datetime "updated_at",                    :null => false
     t.string   "result"

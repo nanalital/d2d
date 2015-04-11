@@ -1,4 +1,4 @@
-source 'https://rubygems.org'
+source 'http://rubygems.org'
 
 #ruby '1.9.3'
 
@@ -23,7 +23,6 @@ gem 'activerecord', '>= 3.1', :require => 'active_record'
 gem 'pg'
 gem 'unidecoder'
 gem 'rainbow'
-gem 'mysql2', '~> 0.3.16'
 
 # Test requirements
 
@@ -31,7 +30,16 @@ gem 'mysql2', '~> 0.3.16'
 gem 'padrino', '0.11.3'
 
 gem 'execjs'
-gem 'therubyracer'
+
+group :production do
+	gem 'therubyracer', :platform => :ruby
+end
+
+group :develpment do
+	gem 'mysql2', '~> 0.3.18'
+	gem 'debugger'
+end
+# gem 'therubyracer'
 
 # Or Padrino Edge
 # gem 'padrino', :github => 'padrino/padrino-framework'
