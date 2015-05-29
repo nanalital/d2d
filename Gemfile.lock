@@ -70,7 +70,6 @@ GEM
     padrino-mailer (0.11.3)
       mail (~> 2.5.3)
       padrino-core (= 0.11.3)
-    pg (0.16.0)
     pg (0.16.0-x86-mingw32)
     polyglot (0.3.3)
     rack (1.5.2)

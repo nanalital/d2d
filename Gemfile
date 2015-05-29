@@ -35,11 +35,10 @@ group :production do
 	gem 'therubyracer', :platform => :ruby
 end
 
-group :develpment do
+group :development do
 	gem 'mysql2', '~> 0.3.18'
 	gem 'debugger'
 end
-# gem 'therubyracer'
 
 # Or Padrino Edge
 # gem 'padrino', :github => 'padrino/padrino-framework'

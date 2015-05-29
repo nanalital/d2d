@@ -41,6 +41,7 @@ D2d::Admin.controllers :accounts do
 
   post :create, :protect => true do
     @account = Account.new(params[:account])
+    @account.email = nil if @account.email == ''
     if @account.save
       @title = pat(:create_title, :model => "account #{@account.id}")
       flash[:success] = pat(:create_success, :model => 'Account')
@@ -90,6 +91,7 @@ D2d::Admin.controllers :accounts do
           redirect(url(:accounts, :index))
         end
       end
+      params[:account][:email] = nil if params[:account][:email] == ''
       if @account.update_attributes(params[:account])
         flash[:success] = pat(:update_success, :model => 'Account', :id =>  "#{params[:id]}")
         params[:save_and_continue] ?

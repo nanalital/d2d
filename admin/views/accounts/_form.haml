@@ -25,7 +25,7 @@
 
 - error = @account.errors.include?(:email)
 %fieldset.control-group{:class => error ? 'has-error' : ''}
-  =f.label :email, :class => 'control-label'
+  =f.label "Email (not mandatory)", :class => 'control-label'
   .controls
     =f.text_field :email, :class => 'input-xlarge input-with-feedback'
 
