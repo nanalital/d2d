@@ -19,6 +19,7 @@ D2d::Admin.controllers :supporters do
 
   post :export, :protect => true do
     puts params
+    redirect_to 'supporters/export' and return if Supporter.first.nil?
     strd = Date.parse Supporter.first.acquired.to_s
     endd = Date.today
     if params[:supporter][:start].length > 0
@@ -30,7 +31,7 @@ D2d::Admin.controllers :supporters do
     @sups = Supporter.where('acquired <= ?',endd+1.days).where('acquired >= ?',strd)
     #puts @sups
     #puts @sups.count
-    hdrline = '"debit date","token","cc exp date","cc holder","intended_amount","amount on the spot","amount regular","cc number","first name","last name","gender","birthdate","ssn","home phone","mobile","email","address","city","post code","occupation","receive updates?","cc voucher id","dd_id","dd_city_id","dd_location_id","uniqnum","notes"'#,"cc last digits","dd_recruiter","dd_city","dd_location","mamber name","member phone"'
+    hdrline = '"debit date","token","cc exp date","cc holder","amount on the spot","amount regular","cc number","first name","last name","gender","birthdate","ssn","home phone","mobile","email","address","city","post code","occupation","receive updates?","cc voucher id","dd_id","dd_location_id","uniqnum","notes","result"'
     File.open('tmp/sup.csv',"w:utf-8") do |output|
       output << hdrline+"\n"
       @sups.each do |s|
@@ -41,7 +42,6 @@ D2d::Admin.controllers :supporters do
         line << s.cc_expiry
         line << s.cc_holder
         line << s.intended_amount
-        line << ''
         line << s.amount.to_s
         line << ''
         line << s.first_name
@@ -61,11 +61,9 @@ D2d::Admin.controllers :supporters do
         begin
           if (s.account)
             account = s.account
-            city = City.find (s.dd_city.to_i)
             location = Location.find (s.dd_location.to_i)
           end
           line << account.old_id
-          line << city.other_id
           line << location.other_id
         rescue
           3.times {line << ''}

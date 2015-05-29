@@ -6,8 +6,8 @@ class CreateAccounts < ActiveRecord::Migration
       t.string :email
       t.string :crypted_password
       t.string :role
-      t.string :city
-      t.string :location
+      t.string :city_id
+      t.string :location_id
       t.integer :old_id
       t.timestamps
     end

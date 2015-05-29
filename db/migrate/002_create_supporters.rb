@@ -12,18 +12,23 @@ class CreateSupporters < ActiveRecord::Migration
       t.date :birthday
       t.string :occupation
       t.string :city
-      t.string :street_name
-      t.string :num_building
-      t.string :num_apartment
+      t.string :address
       t.string :zip_code
       t.string :home_phone, :limit => 12
       t.string :mobile_phone, :limit => 12
       t.string :email
+      t.string :citizen_id
       t.boolean :receive_updates
-      t.boolean :existing
-      t.integer :ap_monthly, :limit => 9999
-      t.integer :ap_one_off, :limit => 9999
+      t.integer :amount
+      t.integer :intended_amount
+      t.string :key
+      t.string :cc_expiry
+      t.string :cc_last4d
+      t.string :cc_voucher
+      t.string :cc_holder
       t.text :notes
+      t.string :member_name
+      t.string :member_phone
       t.timestamps
     end
   end
