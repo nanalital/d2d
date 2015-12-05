@@ -185,8 +185,8 @@ module D2d
 
       paymrefURL = 'med.greenpeace.org/israel/d2d/success'
       paymauth = "22d9e751aade4446ab3dc61209b4fe52"
-      paymauthurl = "https://online.premiumfs.co.il/Sites/greenpeace/pfsAuth.aspx"
-      paympaymurl = 'https://online.premiumfs.co.il/Sites/greenpeace/payment.aspx'
+      paymauthurl = "https://ws.payplus.co.il/Sites/greenpeace2/pfsAuth.aspx"
+      paympaymurl = "https://ws.payplus.co.il/Sites/greenpeace2/payment.aspx"
 
       refURL = 'https://med.greenpeace.org/israel/d2d/thankyou/'
       errorURL = 'https://d2d.herokuapp.com/payment_response/'

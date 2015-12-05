@@ -118,6 +118,3 @@ DEPENDENCIES
   therubyracer
   thin
   unidecoder
-
-BUNDLED WITH
-   1.10.6
