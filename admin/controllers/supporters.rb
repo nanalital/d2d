@@ -44,8 +44,8 @@ D2d::Admin.controllers :supporters do
         line << s.intended_amount
         line << s.amount.to_s
         line << ''
-        line << s.first_name
-        line << s.last_name
+        line << s.first_name.gsub("\"", '')
+        line << s.last_name.gsub("\"", '')
         line << s.gender == 1 ? 'm' : 'f'
         line << (s.birthday.nil? ? '' : s.birthday)
         line << s.citizen_id
