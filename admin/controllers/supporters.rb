@@ -69,7 +69,7 @@ D2d::Admin.controllers :supporters do
           3.times {line << ''}
         end
         line << s.uniqnum
-        line << s.notes
+        line << (s.notes ? s.notes.gsub("\"", '') : '')
         line << s.result
 =begin
         line << s.cc_last4d
