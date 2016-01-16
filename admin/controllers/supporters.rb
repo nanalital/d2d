@@ -44,18 +44,18 @@ D2d::Admin.controllers :supporters do
         line << s.intended_amount
         line << s.amount.to_s
         line << ''
-        line << s.first_name.gsub("\"", '')
-        line << s.last_name.gsub("\"", '')
+        line << s.first_name ? s.first_name.gsub("\"", '') : s.first_name
+        line << s.last_name ? s.last_name.gsub("\"", '') : s.last_name
         line << s.gender == 1 ? 'm' : 'f'
         line << (s.birthday.nil? ? '' : s.birthday)
         line << s.citizen_id
         line << s.home_phone
         line << s.mobile_phone
         line << s.email
-        line << s.address
-        line << s.city
+        line << s.address ? s.address.gsub("\"", '') : s.address
+        line << s.city ? s.city.gsub("\"", '') : s.city
         line << s.zip_code
-        line << s.occupation
+        line << s.occupation ? s.occupation.gsub("\"", '') : s.occupation
         line << s.receive_updates ? 't' : 'f'
         line << s.cc_voucher
         begin
