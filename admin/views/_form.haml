@@ -293,9 +293,9 @@
     $('#supporter_amount').focusout(vaidateAmount);
     function vaidateAmount(){
       var amount = $('#supporter_amount')[0].valueAsNumber
-      if (amount && amount < 55) {
+      if (amount && amount < 40) {
         if($('#amount-error').length == 0) {
-          $('label[for="supporter_amount"]').after("<span id='amount-error' class='alert-danger error-span'>סכום המינימום הוא 55 ש״ח</span>");
+          $('label[for="supporter_amount"]').after("<span id='amount-error' class='alert-danger error-span'>סכום המינימום הוא 40 ש״ח</span>");
         }
       } else if ( $('#amount-error').length ) {
         $('#amount-error').remove();
