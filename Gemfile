@@ -37,7 +37,6 @@ end
 
 group :development do
 	gem 'mysql2', '~> 0.3.18'
-	gem 'debugger'
 end
 
 # Or Padrino Edge

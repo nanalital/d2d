@@ -2,7 +2,7 @@
 class Supporter < ActiveRecord::Base
 
   validates_uniqueness_of :uniqnum
-  validates_presence_of :amount, :account_id, :dd_location, :message => 'שדה חובה'
+  validates_presence_of :amount, :account_id, :dd_location, :mobile_phone, :message => 'שדה חובה'
   validates_numericality_of :amount, :greater_than_or_equal_to => 40, :message => "סכום המינימום הוא 40 ש״ח"
   validate :unique
 
@@ -13,12 +13,6 @@ class Supporter < ActiveRecord::Base
   def self.randomize
     'p'+(0..5).map{ ((0..9).to_a)[rand(10)] }.join
   end
-
-=begin
-  def inspect
-    self.uniqnum
-  end
-=end
 
   private
 
