@@ -1,0 +1,8 @@
+%iframe{style: 'width: 100%; height: 100%;', name: 'lp-iframe', id: 'lp-iframe'}
+
+- template = partial 'redirect_donate'
+- template.gsub!(/\n/, '')
+:javascript
+  document.getElementById('lp-iframe').contentDocument.write("#{template}");
+  document.getElementById('lp-iframe').contentDocument.getElementsByName('primum')[0].submit();
+  $('#form_wrapper').addClass('height100pcnt');

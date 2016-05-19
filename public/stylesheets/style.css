@@ -2,141 +2,159 @@
 /* CSS Document */
 
 * {
-	padding: 0;
-	margin: 0;
+  padding: 0;
+  margin: 0;
 }
 
 body {
-	background: #e2ead8 url(/images/bodybg.gif) repeat-x;
-	border-bottom: 6px solid #6c0;
-	font: 14px "Helvetica Neue", Arial, Helvetica, Geneva, sans-serif;
-	color: #000;
-	margin: 0;
+  background: #e2ead8 url(/images/bodybg.gif) repeat-x;
+  border-bottom: 6px solid #6c0;
+  font: 14px "Helvetica Neue", Arial, Helvetica, Geneva, sans-serif;
+  color: #000;
+  margin: 0;
+}
+
+body#lp {
+    /*background: url(/images/oil_1920.jpg) no-repeat;*/
+    /*background-size: cover;*/
+    background-size: initial;
+    background-color: black;
+    border-bottom: 0px;
+    margin: 0px;
+    padding: 0px;
 }
 
 a img {
-	border-style: none;
+  border-style: none;
 }
 
 .pink {
-	color: #e968a9;
+  color: #e968a9;
 }
 
 .orange {
-	color: #f60;
+  color: #f60;
 }
 
 .hide {
-	position:absolute;
-	left: -9999px;
-	top: -9999px;
+  position:absolute;
+  left: -9999px;
+  top: -9999px;
 }
 
 #contentWrap {
-	width: 960px;
-	margin: 0 auto;
+  width: 960px;
+  margin: 0 auto;
 }
 
 #header {
-	height: 100px;
+  height: 100px;
 }
 
 #header a#logo {
-	height: 53px;
-	background-image: url(/images/gplogo.gif);
-	width: 151px;
-	display: block;
-	float: left;
+  height: 53px;
+  background-image: url(/images/gplogo.gif);
+  width: 151px;
+  display: block;
+  float: left;
+}
+
+a#logo {
+    height: 53px;
+    background-image: url(/images/gplogo.gif);
+    width: 151px;
+    display: block;
+    float: left;
 }
 
 #header #lock {
-	float: right;
-	margin-top: 28px;
-	width: 94px;
-	height: 51px;
+  float: right;
+  margin-top: 28px;
+  width: 94px;
+  height: 51px;
 }
 
 
 h1 {
-	display: none;
+  display: none;
 }
 
 #wideBox {
-	width: 960px;
-	position: relative;
-	background: #ffffff;
-	height: 140px;
-	margin-bottom: 15px;
+  width: 960px;
+  position: relative;
+  background: #ffffff;
+  height: 140px;
+  margin-bottom: 15px;
 }
 
 #mainBox1 {
-	padding: 20px;
-	background-color: #ffffff;
+  padding: 20px;
+  background-color: #ffffff;
 }
 
 #sideBar {
-	width: 270px;
-	float: left;
-	background-color: #ffffff;
-	padding: 0 20px 20px;
+  width: 270px;
+  float: left;
+  background-color: #ffffff;
+  padding: 0 20px 20px;
 }
 
 #sideBar #sideBox1 h3 {
-	color: #006600;
-	font-size: 18px;
-	margin-top: 20px;
-	margin-bottom: 10px;
+  color: #006600;
+  font-size: 18px;
+  margin-top: 20px;
+  margin-bottom: 10px;
 }
 
 #sideBar #sideBox1 h3.secondpara {
-	margin-top: 30px;
+  margin-top: 30px;
 }
 
 #sideBar #sideBox1 p {
-	color: #333333;
-	font-size: 14px;
-	margin-bottom: 15px;
-	margin-top: 0;
-	line-height: 19px;
+  color: #333333;
+  font-size: 14px;
+  margin-bottom: 15px;
+  margin-top: 0;
+  line-height: 19px;
 }
 
 
 #mainContent {
-	width: 635px;
-	float: right;
+  width: 635px;
+  float: right;
 }
 
 #footer {
-	clear: both;
-	background: #66CC00 no-repeat 100% 50%;
-  	font: 1em "Helvetica Neue", Arial, Helvetica, Geneva, sans-serif;
-	height: 30px;
-	margin-top: 50px;
+  clear: both;
+  background: #66CC00 no-repeat 100% 50%;
+    font: 1em "Helvetica Neue", Arial, Helvetica, Geneva, sans-serif;
+  height: 30px;
+  margin-top: 50px;
 }
 
 #footer h2 {
-	display: none;
+  display: none;
 }
 
 #footer ul {
-	list-style-type: none;
-	display: block;
+  list-style-type: none;
+  display: block;
 }
 
 #footer li {
-	line-height: 29px;
-	margin-left: 15px;
-	float: left;
+  line-height: 29px;
+  margin-left: 15px;
+  float: left;
 }
 
 #footer li a {
   font-size: 0.8em;
-	text-decoration: none;
-	color: #fffeff;
+  text-decoration: none;
+  color: #fffeff;
 }
 
 #footer li a:hover {
-	text-decoration: underline;
+  text-decoration: underline;
 }
 
 input {
@@ -189,4 +207,102 @@ select optgroup {
 label.required:after {
   content: " *";
   color: red;
+}
+
+#form_wrapper {
+    background-color: #ffffff;
+    padding-bottom: 5px;
+    font-family: Alef;
+}
+
+.no-padding {
+    padding: 0px;
+}
+
+.fill {
+    min-height: 100%;
+    height: 100%;
+}
+
+@media only screen and (min-width: 1380px) {
+  #form_wrapper {
+    height: 100% !important;
+    position: absolute;
+  }
+
+}
+
+@media only screen and (min-width: 400px) {
+  /*******************/
+  /* non mobile only */
+  /*******************/
+
+  #form_wrapper{
+      width: 430px;
+      height: auto;
+      position: absolute;
+  }
+  #lp-header h2 {
+      font-size: 29px;
+      font-family: Alef;
+  }
+
+  #lp-header span {
+      font-size: 19px;
+  }
+}
+
+@media only screen and (max-width: 400px) {
+    /***************/
+    /* mobile only */
+    /***************/
+
+    #monthly {
+        font-size: 75%;
+    }
+    #form_wrapper{
+        margin-top: 20px;
+        min-height: 500px;
+    }
+    #lp-header h2 {
+        font-size: 24px;
+        font-family: Alef;
+    }
+    #lp-header span {
+        font-size: 16px;
+    }
+}
+
+#lp-amount-select {
+    font-weight: bold;
+    height: 30px;
+    /*line-height: 18px;*/
+    padding: 2px 10px;
+}
+
+.green-border {
+    border: 1px green solid;
+    font-size: 17px;
+}
+
+#donate_btn, #donate_btn:hover {
+  font-size: 24px;
+  background-color: #2aabe4;
+  border-color: #2aabe4;
+  color: #FFFFFF;
+}
+
+@font-face {
+    font-family: 'Alef';
+    src: url('/fonts/Alef-Regular.ttf'); /*URL to font*/
+}
+
+.height20px {
+  /*height: 20px;*/
+  /*line-height: 20px;*/
+  padding: 10px 10px 10px 10px;
+}
+
+#form_wrapper.height100pcnt {
+  height: 100% !important;
 }

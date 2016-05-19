@@ -1,0 +1,14 @@
+-# coding: utf-8
+.col-sm-12.col-xs-12#logo{style: 'padding-top: 10px'}
+  =link_to image_tag('logo_greenpeace.jpg', style: 'width: 95%;'), '/'
+
+.col-sm-12.col-xs-12#lp-header
+  %h2
+    %strong הצטרפו אלינו!
+  %span
+    %strong גרינפיס הוא ארגון בלתי תלוי וללא מטרות רווח המתבסס אך ורק על אנשים פרטיים ואכפתיים - ממש כמוך. תרומה לגרינפיס היא תרומה לעתיד, לבריאות ולאיכות החיים של כולנו.
+
+-form_for :supporter, url(:create), :class => 'form-horizontal', :autocomplete => 'off' do |f|
+  -if @web
+    %input{:type=>'hidden',:name=>'web',:value=>'1'}
+  =partial 'form_donate', :locals => { :f => f }

@@ -1,0 +1,218 @@
+-#coding:utf-8
+- if current_account && !@web
+  .row
+    .col-sm-6.col-6
+      %fieldset.control-group
+        =f.label 'מגייס', :class => 'control-label'
+        - if @supporter.errors.include?(:account_id)
+          %span{:class => 'alert-danger error-span'}= @supporter.errors[:account_id].first
+        .controls
+          %select#account{:name=>'supporter[account_id]', :style=>'width:100%'}
+            %option{ :value => 0, :selected => true}
+            -Account.active.order("old_id").each do |a|
+              - option_string = "#{a.old_id} - #{a.name} #{a.surname}"
+              %option{ :value => a.id, :location => a.location_id, :city => a.city_id }= option_string
+    .col-sm-6.col-6
+      %fieldset.control-group
+        =f.label 'מיקום', :class => 'control-label'
+        - if @supporter.errors.include?(:dd_location)
+          %span{:class => 'alert-danger error-span'}= @supporter.errors[:dd_location].first
+        .controls
+          %select#dd_location{:name=>'supporter[dd_location]', :style=>'width:100%'}
+            %option{ :value => 0, :selected => true}
+            -Location.find(:all, :order => "city_id, name").each do |l|
+              - option_string = "#{l.city.name} - #{l.name}"
+              %option{ :value=>l.id, :city=> l.city.id}= option_string
+
+.col-sm-12.col-xs-12
+  %hr{style: 'border: 1px dashed green;'}
+  %div{style: 'margin-bottom: 10px'}
+    %strong פרטים אישיים:
+  .col-sm-12.col-xs-12
+    - error = @supporter.errors.include?(:first_name)
+    .form-group
+      .control-group{:class => error ? 'has-error' : ''}
+        = f.text_field :first_name, :class => 'form-control input-sm input-with-feedback first-name green-border height20px', placeholder: 'שם פרטי'
+  .col-sm-12.col-xs-12
+    - error = @supporter.errors.include?(:last_name)
+    .form-group
+      .control-group{:class => error ? 'has-error' : ''}
+        = f.text_field :last_name, :class => 'form-control input-sm input-with-feedback last-name green-border height20px', placeholder: 'שם משפחה'
+  .col-sm-12.col-xs-12
+    - error = @supporter.errors.include?(:mobile_phone)
+    .form-group
+      .control-group{:class => error ? 'has-error' : ''}
+        %input#mobile_phone.input-xlarge.mphonemask.mphone{class: 'form-control input-sm green-border height20px', :type=>'text',:name=>'mobile_phone', inline: true}
+        = f.hidden_field :mobile_phone
+        -#%input#supporter_mobile_phone{:type=>'hidden',:name=>'supporter[mobile_phone]'}
+  .col-sm-12.col-xs-12
+    - error = @supporter.errors.include?(:email)
+    .form-group
+      .control-group{:class => error ? 'has-error' : ''}
+        = f.text_field :email, :class => 'form-control input-sm input-with-feedback green-border height20px', placeholder: 'אימייל'
+  %hr{style: 'border: 1px dashed green;'}
+  %div{style: 'margin-bottom: 10px;'}
+    %strong סכום תרומה חודשי:
+
+  .tab-content
+    .tab-pane.active#monthly
+      %fieldset.control-group{style: 'color: green'}
+        - if @supporter.errors.include?(:amount)
+          %span{:id => 'amount-error', :class => 'alert-danger error-span'}= @supporter.errors[:amount].first
+
+        = f.hidden_field :amount
+        .col-sm-12.col-xs-12.no-padding
+          -$prices.each do |p|
+            .col-sm-4.col-xs-4.no-padding
+              %input{:type => :radio, :name => :monthly, 'data-value' => p.to_s}
+              %span{style: 'margin-left: 3px;'}
+                %strong
+                  =' '+p.to_s+' ש"ח'
+
+        .col-sm-4.col-xs-4.no-padding{style: 'line-height: 38px;'}
+          %strong
+            %input{:type => :radio,:name => :monthly, id: 'amount_other', 'data-value' => ''}= ' סכום אחר'
+        .col-sm-8.col-xs-8{style: 'margin-top: 2px;'}
+          =select_tag :monthly, options: price_range_manual, :step => 1, :class => 'form-control input-sm input-with-feedback green-border height20px', id: 'lp-amount-select'
+          %fieldset.control-group.hide{:class => error ? 'has-error' : ''}
+            %label.control-label{:for=>'supporter_intended_amount'}= ''
+            .controls
+              =f.hidden_field :intended_amount, :class => 'input-sm input-with-feedback'
+  %hr{style: 'border: 1px dashed green;'}
+  = hidden_field_tag :form_donate, value: 1
+  =f.submit 'שליחה', :class => 'btn', :name => 'approve_btn', id: 'donate_btn'
+
+:javascript
+  $(document).ready(function(){
+    //$(".datemask").mask("99/99/9999");
+    //$('.datemask').attr('placeholder','__/__/____');
+    //$('.datemask').css('direction','ltr');
+
+    //$(".mphonemask").mask("9999999999");
+    $('.mphonemask').attr('placeholder','___ ____');
+    $('.mphonemask').attr('placeholder','טלפון');
+    //$('.mphonemask').css('direction','ltr');
+
+    //$(".ephonemask").mask("999 9999");
+    //$('.ephonemask').attr('placeholder','___ ____');
+    //$('.ephonemask').css('direction','ltr');
+
+    //$(".hphonemask").mask("999 9999");
+    //$('.hphonemask').attr('placeholder','___ ____');
+    //$('.hphonemask').css('direction','ltr');
+
+    //$('.number').css('direction','ltr');
+
+    //$('.hphone').on('change', function(e) {
+    //  $("#supporter_home_phone").val($("#home_phone_prefix option:selected").val()+" "+$("#home_phone").val().replace(/\D/g,""));
+    //});
+
+    $('.mphone').on('change', function(e) {
+      //$("#supporter_mobile_phone").val($("#mobile_phone_prefix option:selected").val()+" "+$("#mobile_phone").val().replace(/\D/g,""));
+      $("#supporter_mobile_phone").val($("#mobile_phone").val().replace(/\D/g,""));
+    });
+
+    $('.full-name').on('change', function(e) {
+      var full_name = $(this).val();
+      var first_name = full_name.substr(0, full_name.indexOf(' '));
+      var last_name = full_name.substr(full_name.indexOf(' ') + 1);
+      $('#supporter_first_name').val(first_name);
+      $('#supporter_last_name').val(last_name);
+      //$("#supporter_mobile_phone").val($("#mobile_phone").val().replace(/\D/g,""));
+    });
+
+    //$('.ephone').on('change', function(e) {
+    //  $("#supporter_member_phone").val($("#member_phone_prefix option:selected").val()+" "+$("#member_phone").val().replace(/\D/g,""));
+    //});
+
+    $('input[name=monthly]').click(function(e) {
+      var val = 0;
+      if ($(this).attr('id') == 'amount_other')
+        val = $('#lp-amount-select').val();
+      else
+        val = $(e.target).attr('data-value');
+
+      if (val > 0)
+        setMonthly(val);
+      else
+        resetMonthly();
+      
+      if ( $('#amount-error').length ) {
+        $('#amount-error').remove();
+      }
+    });
+
+    $('#lp-amount-select').on('change', function() {
+      var val = $(this).find('option:selected').val();
+      $('#amount_other').prop('checked', true);
+      $('#amount_other').attr('data-value', val);
+      setMonthly(val);
+    });
+
+    //$('#supporter_amount').blur(function(e){
+    //  $('#supporter_intended_amount').val($(e.target).val());
+    //});
+
+    //$('input[name=monthly_select]').on('change', function(e) {
+    //  if ($(this).attr('id') == 'amount_other')
+    //    $('#supporter_intended_amount').val($(e.target).val());
+    //});
+
+    $('#supporter_amount').focusout(vaidateAmount);
+    function vaidateAmount(){
+      var amount = $('#supporter_amount')[0].valueAsNumber
+      if (amount && amount < 40) {
+        if($('#amount-error').length == 0) {
+          $('label[for="supporter_amount"]').after("<span id='amount-error' class='alert-danger error-span'>סכום המינימום הוא 40 ש״ח</span>");
+        }
+      } else if ( $('#amount-error').length ) {
+        $('#amount-error').remove();
+      }
+    }
+
+    (function () {
+        var previous;
+
+        $("#account").on('focus', function () {
+            // Store the current value on focus and on change
+            previous_city = $("#account option:selected")[0].getAttribute('city');
+        }).change(function() {
+            // getting location and city by account selected
+            new_location = $("#account option:selected")[0].getAttribute('location');
+            new_city = $("#account option:selected")[0].getAttribute('city');
+
+            if ( previous_city ) {
+              $("#dd_location option[city!=" + previous_city + "]").unwrap("<span>");
+            }
+
+            $("#dd_location option[value=0]")[0].setAttribute("city", new_city);
+
+            if (new_city) {
+              $("#dd_location option[city!=" + new_city + "]").wrap("<span>");
+            }
+
+            if (new_location) {
+                $("#dd_location")[0].value = new_location ;
+            } else {
+              $("#dd_location")[0].value = ' 0' ;
+            }
+
+            // Make sure the previous value is updated
+            previous_city = $("#account option:selected")[0].getAttribute('city');
+        });
+    })();
+
+  });
+  function resetMonthly() {
+    $('#supporter_amount').val('');
+    $('#supporter_intended_amount').val('');
+    $('#supporter_amount').focus();
+  }
+  function setMonthly(x) {
+    $('#supporter_amount').val(x)
+    $('#supporter_intended_amount').val(x)
+  }
+
+  $('#lp-amount-select option').on('change', function() {
+    $('#amount_other').attr('data-value', $(this).value);
+  });

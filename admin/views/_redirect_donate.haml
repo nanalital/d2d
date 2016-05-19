@@ -1,0 +1,11 @@
+-if @verbose
+  %h2 Response:
+  =@verbose
+%form{:action=>@url,:method=>'post',:name=>'primum',:enctype=>'multipart/form-data'}
+  -@post.each do |k,v|
+    -if @verbose
+      %p
+        %strong= k
+        %span= v
+    %input{:type=>'hidden',:name=>k,:value=>v}
+  %input{:type=>"submit",:value=>"Please wait while redirecting to Pay-Plus Service"}

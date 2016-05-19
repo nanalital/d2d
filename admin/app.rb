@@ -86,7 +86,9 @@ module D2d
       @title = "Donate"
       @supporter = Supporter.new
       @web = true 
-      render 'new', :layout => :web
+      @show_form = 1
+      @background_image = set_background_image
+      render 'new_donate', :layout => :web_donate
     end
 
     get :new do
@@ -231,7 +233,13 @@ module D2d
                     :pfsAuthCode=>paymauth,
                     :multi_settings_id=>"" }
           @verbose = nil#response.read_body
-          render 'redirect', :layout=>false
+
+          if params[:form_donate] == '1'
+            @background_image = set_background_image
+            render 'new_donate', :layout => :web_donate
+          else
+            render 'redirect', :layout=>false
+          end
         else
           return "<html>"+response.body+"<br /><h3>response type</h3>"+response.code.to_s+' '+response.msg+"<br /><h5>--- end response ---</h5><h2>uri:</h2>"+uri.host+':'+uri.port.to_s+''+uri.path+"<br/><h2>request header:</h2>"+request.to_hash.to_s+"<br/><br/><h2>request body:</h2>"+request.body+"</html>"
         end
@@ -250,6 +258,32 @@ module D2d
         @supporter.save(:validate => false)
       end
       redirect_to '/' and return true
+    end
+
+    def price_range_manual
+      # in use in _form_donate.haml
+      @range = []
+      (200..500).each do |n|
+        @range.push(["#{n}" + ' ש"ח', "#{n}"]) if n%50 == 0
+      end
+      (600..1000).each do |n|
+        @range.push(["#{n}" + ' ש"ח', "#{n}"]) if n%100 == 0
+      end
+      (1500..5000).each do |n|
+        @range.push(["#{n}" + ' ש"ח', "#{n}"]) if n%500 == 0
+      end
+      @range
+    end
+
+    def set_background_image
+      bg_domain = 'http://www.gpi.org.il/signup/images'
+      bg_random = (1..10).to_a.sample
+      if params[:bg].present?
+        session[:bg] = "#{bg_domain}/#{params[:bg]}.jpg"
+        return session[:bg]
+      else
+        return "#{bg_domain}/#{bg_random}.jpg"
+      end
     end
 
     # Custom error management 
