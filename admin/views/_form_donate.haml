@@ -42,7 +42,7 @@
     - error = @supporter.errors.include?(:mobile_phone)
     .form-group
       .control-group{:class => error ? 'has-error' : ''}
-        %input#mobile_phone.input-xlarge.mphonemask.mphone{class: 'form-control input-sm green-border height20px', :type=>'text',:name=>'mobile_phone', inline: true}
+        %input#mobile_phone.input-xlarge.mphonemask.mphone{class: 'form-control input-sm green-border height20px', :type=>'text',:name=>'mobile_phone', inline: true, onkeypress: "return isNumber(event)"}
         = f.hidden_field :mobile_phone
         -#%input#supporter_mobile_phone{:type=>'hidden',:name=>'supporter[mobile_phone]'}
   .col-sm-12.col-xs-12
@@ -72,8 +72,10 @@
         .col-sm-4.col-xs-4.no-padding{style: 'line-height: 38px;'}
           %strong
             %input{:type => :radio,:name => :monthly, id: 'amount_other', 'data-value' => ''}= ' סכום אחר'
-        .col-sm-8.col-xs-8{style: 'margin-top: 2px;'}
-          =select_tag :monthly, options: price_range_manual, :step => 1, :class => 'form-control input-sm input-with-feedback green-border height20px', id: 'lp-amount-select'
+        .col-sm-6.col-xs-6.no-padding{style: 'margin-top: 5px;'}
+          = text_field_tag :monthly, :class => 'form-control input-sm input-with-feedback green-border height20px', id: 'lp-amount-select', onkeypress: "return isNumber(event)"
+          %span.hidden#custom-monthly-error{style: 'color: red;'}
+            סכום המינימום הוא 40 ש"ח
           %fieldset.control-group.hide{:class => error ? 'has-error' : ''}
             %label.control-label{:for=>'supporter_intended_amount'}= ''
             .controls
@@ -84,6 +86,13 @@
 
 :javascript
   $(document).ready(function(){
+
+    $('#donate_btn').on('click', function(e) {
+      if ($('#amount_other').is(':checked') && $('#amount_other').attr('data-value') < 40) {
+        e.preventDefault();
+        $('#custom-monthly-error').removeClass('hidden');
+      }
+    });
     //$(".datemask").mask("99/99/9999");
     //$('.datemask').attr('placeholder','__/__/____');
     //$('.datemask').css('direction','ltr');
@@ -129,21 +138,24 @@
       var val = 0;
       if ($(this).attr('id') == 'amount_other')
         val = $('#lp-amount-select').val();
-      else
+      else {
         val = $(e.target).attr('data-value');
+      }
 
       if (val > 0)
         setMonthly(val);
       else
         resetMonthly();
       
+      $('#custom-monthly-error').addClass('hidden');
+
       if ( $('#amount-error').length ) {
         $('#amount-error').remove();
       }
     });
 
     $('#lp-amount-select').on('change', function() {
-      var val = $(this).find('option:selected').val();
+      var val = $(this).val();
       $('#amount_other').prop('checked', true);
       $('#amount_other').attr('data-value', val);
       setMonthly(val);
@@ -203,16 +215,23 @@
     })();
 
   });
+
   function resetMonthly() {
     $('#supporter_amount').val('');
     $('#supporter_intended_amount').val('');
     $('#supporter_amount').focus();
   }
+  
   function setMonthly(x) {
     $('#supporter_amount').val(x)
     $('#supporter_intended_amount').val(x)
   }
 
-  $('#lp-amount-select option').on('change', function() {
-    $('#amount_other').attr('data-value', $(this).value);
-  });
+  function isNumber(evt) {
+    evt = (evt) ? evt : window.event;
+    var charCode = (evt.which) ? evt.which : evt.keyCode;
+    if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+        return false;
+    }
+    return true;
+  }
