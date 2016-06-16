@@ -88,6 +88,7 @@ module D2d
       @web = true 
       @show_form = 1
       @background_image = set_background_image
+      session[:donate] = 1
       render 'new_donate', :layout => :web_donate
     end
 
@@ -104,7 +105,13 @@ module D2d
       rescue => e
         p "Error in sending email to #{@sup}, exception => #{e}"
       end
-      render 'thanks'
+
+      if session[:donate].present?
+        @background_image = set_background_image
+        render 'landingpage/_thanks', :layout => :web_donate
+      else
+        render 'thanks'
+      end
     end
 
     mailer :main do
