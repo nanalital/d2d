@@ -1,0 +1,18 @@
+-#ecoding:utf-8
+#form_wrapper.col-sm-4.col-md-3.col-lg-2.col-xs-12
+	.col-sm-12.col-xs-12#logo{style: 'padding-top: 10px'}
+		=link_to image_tag('logo_greenpeace.jpg', style: 'width: 95%;'), '/'
+	-if @sup.account
+		%h2= "שלום #{@sup.first_name},"
+		%p אנחנו רוצים לברך אותך על הצטרפותך לגרינפיס ולהודות לך על חברותך ותמיכתך!
+		%p נשמח לשמור איתך על קשר ולעדכן אותך בכל הדברים החשובים שאנחנו עושים בזכות תמיכתך.
+		%p אף נצחון או הצלחה שלנו אינם אפשריים בלי התומכים המדהימים שלנו.
+		%p 
+			ניתן ליצור איתנו קשר בטלפון 072-2204510 או במייל 
+			%a{:href=>'mailto:gpmedisr@greenpeace.org'} gpmedisr@greenpeace.org
+		%br/
+		%p תודה,
+		%p גרינפיס ישראל
+
+:javascript
+	$('#form_wrapper').css({'height': '100%','font-size': '20px'});
