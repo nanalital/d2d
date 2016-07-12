@@ -39,7 +39,7 @@ module D2d
 
     access_control.roles_for :any do |role|
       role.allow   '/'
-      role.allow   '/home'
+      role.allow   '/dd'
       role.allow   '/result'
       role.allow   '/payment_response'
       role.protect '/accounts'
