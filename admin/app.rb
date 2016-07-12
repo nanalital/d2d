@@ -39,7 +39,7 @@ module D2d
 
     access_control.roles_for :any do |role|
       role.allow   '/'
-      role.allow   '/donate'
+      role.allow   '/home'
       role.allow   '/result'
       role.allow   '/payment_response'
       role.protect '/accounts'
@@ -76,13 +76,13 @@ module D2d
       recruit
     end
 
-    get :index do
+    get :dd do
       @title = "Supporters"
       @supporters = Supporter.all
       render 'index'
     end
 
-    get :donate do
+    get :index do
       @title = "Donate"
       @supporter = Supporter.new
       @web = true 
