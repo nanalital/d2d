@@ -185,19 +185,20 @@ module D2d
       end
     end
 
-
     post :create do
       #testrefURL = '0.0.0.0:3000/success'
       #testauth = "2851500dbdf34ad3a21e3eb417ffef28"
       #testauthurl = 'https://online.premiumfs.co.il/Sites/opencarttest/pfsAuth.aspx'
       #testpaymurl = 'https://online.premiumfs.co.il/Sites/opencarttest/payment.aspx'
 
-      paymrefURL = 'med.greenpeace.org/israel/d2d/success'
+      # paymrefURL = 'med.greenpeace.org/israel/d2d/success'
+      paymrefURL = 'http://joinus.gpi.org.il/success'
       paymauth = "22d9e751aade4446ab3dc61209b4fe52"
       paymauthurl = "https://ws.payplus.co.il/Sites/greenpeace2/pfsAuth.aspx"
       paympaymurl = "https://ws.payplus.co.il/Sites/greenpeace2/payment.aspx"
 
-      refURL = 'https://med.greenpeace.org/israel/d2d/thankyou/'
+      # refURL = 'https://med.greenpeace.org/israel/d2d/thankyou/'
+      refURL = 'http://joinus.gpi.org.il/thanks/'
       errorURL = 'https://d2d.herokuapp.com/payment_response/'
 
       # validation prepare
