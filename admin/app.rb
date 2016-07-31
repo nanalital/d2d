@@ -233,7 +233,7 @@ module D2d
           @post = { :a=>amount,
                     :uniqNum=>@supporter.uniqnum,
                     :id=>"",
-                    :refURL=>refURL,
+                    :refURL=>refURL + @supporter.id,
                     :refURL_Cancel=>env["HTTP_ORIGIN"],
                     :refURL_TrasError=>errorURL,
                     :TT=>dt[1],
