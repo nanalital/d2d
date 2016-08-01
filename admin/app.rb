@@ -213,6 +213,7 @@ module D2d
       amount = (@supporter.amount*100).to_s if @supporter.amount
 
       if @supporter.save
+        thanks_callback = "#{refURL}#{@supporter.id}"
         @title = pat(:create_title, :model => "supporter #{@supporter.id}")
         flash[:success] = pat(:create_success, :model => 'Supporter')
         handle_cancel and return if params[:cancel_btn].present?
@@ -230,16 +231,16 @@ module D2d
           dt = response.read_body.split('~')[1].gsub('MD=','').split('&TT=')
           puts "Before payment post -> dt: #{dt}, supporter uniqnum: #{@supporter.uniqnum}"
           @url = paympaymurl
-          @post = { :a=>amount,
-                    :uniqNum=>@supporter.uniqnum,
-                    :id=>"",
-                    :refURL=>refURL + @supporter.id,
-                    :refURL_Cancel=>env["HTTP_ORIGIN"],
-                    :refURL_TrasError=>errorURL,
-                    :TT=>dt[1],
-                    :MD=>dt[0],
-                    :pfsAuthCode=>paymauth,
-                    :multi_settings_id=>"" }
+          @post = { :a                  =>amount,
+                    :uniqNum            =>@supporter.uniqnum,
+                    :id                 =>"",
+                    :refURL             => thanks_callback,
+                    :refURL_Cancel      =>env["HTTP_ORIGIN"],
+                    :refURL_TrasError   =>errorURL,
+                    :TT                 =>dt[1],
+                    :MD                 =>dt[0],
+                    :pfsAuthCode        =>paymauth,
+                    :multi_settings_id  =>"" }
           @verbose = nil#response.read_body
 
           if params[:form_donate] == '1'
