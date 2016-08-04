@@ -39,7 +39,7 @@ module D2d
 
     access_control.roles_for :any do |role|
       role.allow   '/'
-      role.allow   '/dd'
+      role.allow   '/donate'
       role.allow   '/result'
       role.allow   '/payment_response'
       role.protect '/accounts'
@@ -76,13 +76,13 @@ module D2d
       recruit
     end
 
-    get :dd do
+    get :index do
       @title = "Supporters"
       @supporters = Supporter.all
       render 'index'
     end
 
-    get :index do
+    get :donate do
       @title = "Donate"
       @supporter = Supporter.new
       @web = true 
@@ -191,14 +191,14 @@ module D2d
       #testauthurl = 'https://online.premiumfs.co.il/Sites/opencarttest/pfsAuth.aspx'
       #testpaymurl = 'https://online.premiumfs.co.il/Sites/opencarttest/payment.aspx'
 
-      # paymrefURL = 'med.greenpeace.org/israel/d2d/success'
-      paymrefURL = 'http://joinus.gpi.org.il/success'
+      paymrefURL = 'med.greenpeace.org/israel/d2d/success'
+      # paymrefURL = 'http://joinus.gpi.org.il/success'
       paymauth = "22d9e751aade4446ab3dc61209b4fe52"
       paymauthurl = "https://ws.payplus.co.il/Sites/greenpeace2/pfsAuth.aspx"
       paympaymurl = "https://ws.payplus.co.il/Sites/greenpeace2/payment.aspx"
 
-      # refURL = 'https://med.greenpeace.org/israel/d2d/thankyou/'
-      refURL = 'http://joinus.gpi.org.il/thanks/'
+      refURL = 'https://med.greenpeace.org/israel/d2d/thankyou/'
+      # refURL = 'http://joinus.gpi.org.il/thanks/'
       errorURL = 'https://d2d.herokuapp.com/payment_response/'
 
       # validation prepare
@@ -213,7 +213,6 @@ module D2d
       amount = (@supporter.amount*100).to_s if @supporter.amount
 
       if @supporter.save
-        thanks_callback = "#{refURL}#{@supporter.id}"
         @title = pat(:create_title, :model => "supporter #{@supporter.id}")
         flash[:success] = pat(:create_success, :model => 'Supporter')
         handle_cancel and return if params[:cancel_btn].present?
@@ -231,16 +230,16 @@ module D2d
           dt = response.read_body.split('~')[1].gsub('MD=','').split('&TT=')
           puts "Before payment post -> dt: #{dt}, supporter uniqnum: #{@supporter.uniqnum}"
           @url = paympaymurl
-          @post = { :a                  =>amount,
-                    :uniqNum            =>@supporter.uniqnum,
-                    :id                 =>"",
-                    :refURL             => thanks_callback,
-                    :refURL_Cancel      =>env["HTTP_ORIGIN"],
-                    :refURL_TrasError   =>errorURL,
-                    :TT                 =>dt[1],
-                    :MD                 =>dt[0],
-                    :pfsAuthCode        =>paymauth,
-                    :multi_settings_id  =>"" }
+          @post = { :a=>amount,
+                    :uniqNum=>@supporter.uniqnum,
+                    :id=>"",
+                    :refURL=>refURL,
+                    :refURL_Cancel=>env["HTTP_ORIGIN"],
+                    :refURL_TrasError=>errorURL,
+                    :TT=>dt[1],
+                    :MD=>dt[0],
+                    :pfsAuthCode=>paymauth,
+                    :multi_settings_id=>"" }
           @verbose = nil#response.read_body
 
           if params[:form_donate] == '1'
