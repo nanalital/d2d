@@ -39,7 +39,7 @@ module D2d
 
     access_control.roles_for :any do |role|
       role.allow   '/'
-      role.allow   '/donate'
+      role.allow   '/dd'
       role.allow   '/result'
       role.allow   '/payment_response'
       role.protect '/accounts'
@@ -76,13 +76,13 @@ module D2d
       recruit
     end
 
-    get :index do
+    get :dd do
       @title = "Supporters"
       @supporters = Supporter.all
       render 'index'
     end
 
-    get :donate do
+    get :index do
       @title = "Donate"
       @supporter = Supporter.new
       @web = true 
@@ -191,14 +191,14 @@ module D2d
       #testauthurl = 'https://online.premiumfs.co.il/Sites/opencarttest/pfsAuth.aspx'
       #testpaymurl = 'https://online.premiumfs.co.il/Sites/opencarttest/payment.aspx'
 
-      paymrefURL = 'med.greenpeace.org/israel/d2d/success'
+      # paymrefURL = 'med.greenpeace.org/israel/d2d/success'
       # paymrefURL = 'http://joinus.gpi.org.il/success'
       paymauth = "22d9e751aade4446ab3dc61209b4fe52"
       paymauthurl = "https://ws.payplus.co.il/Sites/greenpeace2/pfsAuth.aspx"
       paympaymurl = "https://ws.payplus.co.il/Sites/greenpeace2/payment.aspx"
 
-      refURL = 'https://med.greenpeace.org/israel/d2d/thankyou/'
-      # refURL = 'http://joinus.gpi.org.il/thanks/'
+      # refURL = 'https://med.greenpeace.org/israel/d2d/thankyou/'
+      refURL = 'http://joinus.gpi.org.il/result/'
       errorURL = 'https://d2d.herokuapp.com/payment_response/'
 
       # validation prepare
