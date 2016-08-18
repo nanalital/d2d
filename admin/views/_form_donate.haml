@@ -88,7 +88,7 @@
   $(document).ready(function(){
 
     $('#donate_btn').on('click', function(e) {
-      if ($('#amount_other').is(':checked') && $('#amount_other').attr('data-value') < 40) {
+      if ($('#supporter_amount').val() == '' || ($('#amount_other').is(':checked') && $('#amount_other').attr('data-value') < 40)) {
         e.preventDefault();
         $('#custom-monthly-error').removeClass('hidden');
       }
