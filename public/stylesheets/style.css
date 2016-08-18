@@ -271,6 +271,10 @@ label.required:after {
     #lp-header span {
         font-size: 16px;
     }
+    .payment-fix {
+      position: absolute;
+      left: 0px;
+    }
 }
 
 #lp-amount-select {
