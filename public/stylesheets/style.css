@@ -273,7 +273,8 @@ label.required:after {
     }
     .payment-fix {
       position: absolute;
-      left: 0px;
+      left: 2%;
+      width: 96%;
     }
 }
 
