@@ -314,4 +314,5 @@ label.required:after {
 
 .input-sm {
       height: 35px !important;
+      line-height: 1;
 }
